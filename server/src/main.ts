@@ -2,9 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { BookmarkModule } from './modules/bookmark/bookmark.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'log'],
+  });
   const swaggerConfig = new DocumentBuilder()
     .setTitle('SnipSnip Swagger')
     .setDescription('SnipSnip backend api description')
@@ -13,7 +16,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig, {
-    include: [AppModule],
+    include: [BookmarkModule],
   });
 
   const swaggerOptions: SwaggerCustomOptions = {
