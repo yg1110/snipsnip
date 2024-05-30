@@ -23,4 +23,21 @@ export class FolderService {
     }
     return this.folderRepository.save(createFolderDto);
   }
+
+  async findAllRoot(): Promise<Folder[]> {
+    return this.folderRepository
+      .createQueryBuilder('folder')
+      .select()
+      .where('folder.parentFolderId IS NULL')
+      .andWhere('folder.deletedAt IS NULL')
+      .orderBy('folder.order', 'DESC')
+      .getMany();
+  }
+
+  async findSubFolders(parentFolderId: number): Promise<Folder[]> {
+    return this.folderRepository.find({
+      where: { parentFolderId, deletedAt: null },
+      order: { order: 'ASC' },
+    });
+  }
 }
