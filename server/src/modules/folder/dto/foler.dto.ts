@@ -3,3 +3,8 @@ export class CreateFolderDto {
   parentFolderId: number | null;
   order: number;
 }
+export class UpdateFolderDto {
+  name: string | null;
+  parentFolderId: number | null;
+  order: number | null;
+}

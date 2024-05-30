@@ -21,5 +21,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'simple-import-sort/imports': 'error',
     'import/extensions': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
   },
 };

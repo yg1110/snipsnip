@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { CreateFolderDto } from './dto/foler.dto';
+import { CreateFolderDto, UpdateFolderDto } from './dto/foler.dto';
 import { FolderService } from './folder.service';
 
 @ApiTags('Folders')
@@ -64,5 +64,30 @@ export class FolderController {
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.folderService.findSubFolders(id);
+  }
+
+  @ApiOperation({
+    summary: '폴더 수정하기',
+  })
+  @ApiBody({
+    schema: {
+      example: {
+        name: '수정된 폴더 이름',
+        parentFolderId: null,
+        order: 1,
+      },
+    },
+  })
+  @Patch(':id')
+  update(@Param('id') id: number, @Body() updateFolderDto: UpdateFolderDto) {
+    return this.folderService.update(id, updateFolderDto);
+  }
+
+  @ApiOperation({
+    summary: '폴더 삭제하기',
+  })
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    return this.folderService.remove(id);
   }
 }
