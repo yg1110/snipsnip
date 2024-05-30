@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
+import { FolderModule } from './modules/folder/folder.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { BookmarkModule } from './modules/bookmark/bookmark.module';
       synchronize: true,
     }),
     BookmarkModule,
+    FolderModule,
   ],
 })
 export class AppModule {}
