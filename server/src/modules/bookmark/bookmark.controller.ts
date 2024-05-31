@@ -9,12 +9,17 @@ import { CreateBookmarkDto, UpdateBookmarkDto } from './dto/bookmark.dto';
 export class BookmarkController {
   constructor(private readonly bookmarkService: BookmarkService) {}
 
+  @ApiOperation({
+    summary: '북마크 생성하기',
+  })
   @ApiBody({
     schema: {
       example: {
-        title: '네이버 북마크',
+        title: '북마크 이름',
         url: 'https://www.naver.com',
-        description: '네이버',
+        folderId: 1,
+        thumbnail: null,
+        order: 1,
       },
     },
   })
@@ -24,55 +29,43 @@ export class BookmarkController {
   }
 
   @ApiOperation({
-    summary: '북마크 전체 조회하기',
-  })
-  @ApiOperation({
-    summary: '북마크 작성하기',
+    summary: '폴더의 북마크 전체 조회하기',
     description: `
     [
       {
         "id": 1,
-        "title": "네이버 북마크",
+        "folderId": 1,
+        "title": "북마크 이름",
+        "thumbnail": null,
         "url": "https://www.naver.com",
-        "description": "네이버",
-        "createdAt": "2024-05-22T09:41:12.000Z",
-        "updatedAt": "2024-05-22T09:41:12.000Z"
+        "order": 1,
+        "createdAt": "2024-05-31T03:06:14.000Z",
+        "updatedAt": "2024-05-31T03:06:14.000Z",
+        "deletedAt": null
       }
     ]`,
   })
-  @Get()
-  findAll() {
-    return this.bookmarkService.findAll();
+  @Get(':folderId')
+  findAllByFolderId(@Param('folderId') folderId: number) {
+    return this.bookmarkService.findAllByFolderId(folderId);
   }
 
   @ApiOperation({
-    summary: '북마크 상세 조회하기',
-    description: `
-    {
-      "id": 1,git
-      "title": "네이버 북마크",
-      "url": "https://www.naver.com",
-      "description": "네이버",
-      "createdAt": "2024-05-22T09:41:12.000Z",
-      "updatedAt": "2024-05-22T09:41:12.000Z"
-    }`,
+    summary: '북마크 수정하기',
   })
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookmarkService.findOne(+id);
-  }
-
   @ApiBody({
     schema: {
       example: {
-        title: '북마크 1',
+        title: '수정된 북마크 이름',
         url: 'https://www.naver.com',
-        description: '네이버',
+        folderId: 1,
+        thumbnail: null,
+        order: 1,
       },
     },
   })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookmarkDto: UpdateBookmarkDto) {
+  update(@Param('id') id: number, @Body() updateBookmarkDto: UpdateBookmarkDto) {
     return this.bookmarkService.update(+id, updateBookmarkDto);
   }
 

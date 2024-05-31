@@ -1,7 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { FolderService } from '../folder/folder.service';
 import { CreateBookmarkDto, UpdateBookmarkDto } from './dto/bookmark.dto';
 import { Bookmark } from './entities/bookmark.entity';
 
@@ -9,33 +16,120 @@ import { Bookmark } from './entities/bookmark.entity';
 export class BookmarkService {
   constructor(
     @InjectRepository(Bookmark)
-    private readonly bookmarkRepository: Repository<Bookmark>,
+    private bookmarkRepository: Repository<Bookmark>,
+    // forwardRef()를 사용하여 순환 참조 방지
+    @Inject(forwardRef(() => FolderService))
+    private folderRepository: FolderService,
   ) {}
 
-  create(createBookmarkDto: CreateBookmarkDto): Promise<Bookmark> {
-    const bookmark = this.bookmarkRepository.create(createBookmarkDto);
-    bookmark.createdAt = new Date();
-    bookmark.updatedAt = new Date();
-    return this.bookmarkRepository.save(bookmark);
+  async create(createBookmarkDto: CreateBookmarkDto) {
+    const folder = await this.folderRepository.findOne(createBookmarkDto.folderId);
+    if (!folder) {
+      throw new NotFoundException('폴더를 찾을 수 없습니다.');
+    }
+    try {
+      return this.bookmarkRepository.save(createBookmarkDto);
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
   }
 
-  findAll(): Promise<Bookmark[]> {
-    return this.bookmarkRepository.find();
+  async findAll(): Promise<Bookmark[]> {
+    return await this.bookmarkRepository
+      .createQueryBuilder('bookmark')
+      .select()
+      .andWhere('bookmark.deletedAt IS NULL')
+      .orderBy('bookmark.order', 'ASC')
+      .getMany();
   }
 
-  findOne(id: number): Promise<Bookmark> {
-    return this.bookmarkRepository.findOne({ where: { id } });
+  async findAllByFolderId(folderId: number): Promise<Bookmark[]> {
+    return await this.bookmarkRepository
+      .createQueryBuilder('bookmark')
+      .select()
+      .where('bookmark.folderId = :folderId', { folderId })
+      .andWhere('bookmark.deletedAt IS NULL')
+      .orderBy('bookmark.order', 'ASC')
+      .getMany();
+  }
+
+  async findOne(id: number): Promise<Bookmark> {
+    const bookmark = await this.bookmarkRepository
+      .createQueryBuilder('bookmark')
+      .select()
+      .where('bookmark.id = :id', { id })
+      .andWhere('bookmark.deletedAt IS NULL')
+      .orderBy('bookmark.order', 'ASC')
+      .getOne();
+    if (!bookmark) {
+      throw new NotFoundException('북마크를 찾을 수 없습니다.');
+    }
+    return bookmark;
   }
 
   async update(id: number, updateBookmarkDto: UpdateBookmarkDto): Promise<Bookmark> {
-    await this.bookmarkRepository.update(id, {
-      ...updateBookmarkDto,
-      updatedAt: new Date(),
-    });
-    return this.findOne(id);
+    try {
+      const bookmark = await this.bookmarkRepository
+        .createQueryBuilder('bookmark')
+        .select()
+        .where('bookmark.id = :id', { id })
+        .andWhere('bookmark.deletedAt IS NULL')
+        .getOne();
+
+      if (!bookmark) {
+        throw new NotFoundException('북마크를 찾을 수 없습니다.');
+      }
+      if (updateBookmarkDto.title !== null) {
+        bookmark.title = updateBookmarkDto.title;
+      }
+      if (updateBookmarkDto.url !== null) {
+        bookmark.url = updateBookmarkDto.url;
+      }
+      if (updateBookmarkDto.folderId !== null) {
+        bookmark.folderId = updateBookmarkDto.folderId;
+      }
+      if (updateBookmarkDto.thumbnail !== null) {
+        bookmark.thumbnail = updateBookmarkDto.thumbnail;
+      }
+      if (updateBookmarkDto.order !== null) {
+        bookmark.order = updateBookmarkDto.order;
+      }
+      await this.bookmarkRepository.save(bookmark);
+      return this.bookmarkRepository.findOne({ where: { id } });
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
   }
 
-  async remove(id: number): Promise<void> {
-    await this.bookmarkRepository.delete(id);
+  async remove(id: number): Promise<{ status: number; message: string }> {
+    try {
+      await this.bookmarkRepository.delete(id);
+      const bookmark = await this.bookmarkRepository
+        .createQueryBuilder('bookmark')
+        .select()
+        .where('bookmark.id = :id', { id })
+        .andWhere('bookmark.deletedAt IS NULL')
+        .getOne();
+      if (!bookmark) {
+        throw new NotFoundException('북마크를 찾을 수 없습니다.');
+      }
+      await this.bookmarkRepository.update(id, { deletedAt: new Date() });
+      return { status: 204, message: '북마크를 삭제했습니다.' };
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
+  async clearAllBookmarkWithId(id: number): Promise<void> {
+    try {
+      await this.bookmarkRepository
+        .createQueryBuilder()
+        .update()
+        .set({ deletedAt: new Date() })
+        .where('folderId = :folderId', { folderId: id })
+        .execute();
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
   }
 }

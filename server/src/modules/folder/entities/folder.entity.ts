@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Bookmark } from 'src/modules/bookmark/entities/bookmark.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Folder {
@@ -13,6 +14,9 @@ export class Folder {
 
   @Column()
   order: number;
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.folder)
+  bookmarks: Bookmark[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
