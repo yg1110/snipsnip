@@ -21,6 +21,8 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.3.1",
     "@nestjs/typeorm": "^10.0.2",
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
     "class-validator": "^0.14.1",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",

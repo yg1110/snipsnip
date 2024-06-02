@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { FolderModule } from './modules/folder/folder.module';
+import { MetaDataModule } from './modules/metadata/metadata.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { FolderModule } from './modules/folder/folder.module';
     }),
     BookmarkModule,
     FolderModule,
+    MetaDataModule,
   ],
 })
 export class AppModule {}

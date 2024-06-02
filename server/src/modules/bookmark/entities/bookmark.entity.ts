@@ -1,4 +1,5 @@
 import { Folder } from 'src/modules/folder/entities/folder.entity';
+import { Metadata } from 'src/modules/metadata/entities/metadata.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -10,19 +11,19 @@ export class Bookmark {
   folderId: number;
 
   @Column()
-  title: string;
-
-  @Column({ nullable: true })
-  thumbnail: string | null;
+  metadataId: number;
 
   @Column()
-  url: string;
+  title: string;
 
   @Column()
   order: number;
 
   @ManyToOne(() => Folder, (folder) => folder.bookmarks)
   folder: Folder;
+
+  @ManyToOne(() => Metadata, (metadata) => metadata.bookmarks)
+  metadata: Metadata;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

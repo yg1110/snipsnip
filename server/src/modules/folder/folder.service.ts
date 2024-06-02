@@ -16,10 +16,9 @@ import { Folder } from './entities/folder.entity';
 export class FolderService {
   constructor(
     @InjectRepository(Folder)
-    private folderRepository: Repository<Folder>,
-    // forwardRef()를 사용하여 순환 참조 방지
+    private readonly folderRepository: Repository<Folder>,
     @Inject(forwardRef(() => BookmarkService))
-    private bookmarkRepository: BookmarkService,
+    private readonly bookmarkService: BookmarkService,
   ) {}
 
   async create(createFolderDto: CreateFolderDto): Promise<Folder> {
@@ -106,7 +105,7 @@ export class FolderService {
       if (!folder) {
         throw new NotFoundException('폴더를 찾을 수 없습니다.');
       }
-      await this.bookmarkRepository.clearAllBookmarkWithId(id);
+      await this.bookmarkService.clearAllBookmarkWithId(id);
       await this.folderRepository.update(id, { deletedAt: new Date() });
       return { status: 204, message: '폴더를 삭제했습니다.' };
     } catch (error) {

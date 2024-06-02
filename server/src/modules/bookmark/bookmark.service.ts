@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { FolderService } from '../folder/folder.service';
+import { MetadataService } from '../metadata/metadata.service';
 import { CreateBookmarkDto, UpdateBookmarkDto } from './dto/bookmark.dto';
 import { Bookmark } from './entities/bookmark.entity';
 
@@ -16,37 +17,33 @@ import { Bookmark } from './entities/bookmark.entity';
 export class BookmarkService {
   constructor(
     @InjectRepository(Bookmark)
-    private bookmarkRepository: Repository<Bookmark>,
-    // forwardRef()를 사용하여 순환 참조 방지
+    private readonly bookmarkRepository: Repository<Bookmark>,
     @Inject(forwardRef(() => FolderService))
-    private folderRepository: FolderService,
+    private readonly folderService: FolderService,
+    @Inject(forwardRef(() => MetadataService))
+    private readonly metadataService: MetadataService,
   ) {}
 
   async create(createBookmarkDto: CreateBookmarkDto) {
-    const folder = await this.folderRepository.findOne(createBookmarkDto.folderId);
+    const folder = await this.folderService.findOne(createBookmarkDto.folderId);
     if (!folder) {
       throw new NotFoundException('폴더를 찾을 수 없습니다.');
     }
     try {
-      return this.bookmarkRepository.save(createBookmarkDto);
+      const metadata = await this.metadataService.create({ url: createBookmarkDto.url });
+      return this.bookmarkRepository.save({
+        ...createBookmarkDto,
+        metadata,
+      });
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
   }
 
-  async findAll(): Promise<Bookmark[]> {
-    return await this.bookmarkRepository
-      .createQueryBuilder('bookmark')
-      .select()
-      .andWhere('bookmark.deletedAt IS NULL')
-      .orderBy('bookmark.order', 'ASC')
-      .getMany();
-  }
-
   async findAllByFolderId(folderId: number): Promise<Bookmark[]> {
     return await this.bookmarkRepository
       .createQueryBuilder('bookmark')
-      .select()
+      .leftJoinAndSelect('bookmark.metadata', 'metadata')
       .where('bookmark.folderId = :folderId', { folderId })
       .andWhere('bookmark.deletedAt IS NULL')
       .orderBy('bookmark.order', 'ASC')
@@ -56,7 +53,7 @@ export class BookmarkService {
   async findOne(id: number): Promise<Bookmark> {
     const bookmark = await this.bookmarkRepository
       .createQueryBuilder('bookmark')
-      .select()
+      .leftJoinAndSelect('bookmark.metadata', 'metadata')
       .where('bookmark.id = :id', { id })
       .andWhere('bookmark.deletedAt IS NULL')
       .orderBy('bookmark.order', 'ASC')
@@ -71,7 +68,7 @@ export class BookmarkService {
     try {
       const bookmark = await this.bookmarkRepository
         .createQueryBuilder('bookmark')
-        .select()
+        .leftJoinAndSelect('bookmark.metadata', 'metadata')
         .where('bookmark.id = :id', { id })
         .andWhere('bookmark.deletedAt IS NULL')
         .getOne();
@@ -79,23 +76,23 @@ export class BookmarkService {
       if (!bookmark) {
         throw new NotFoundException('북마크를 찾을 수 없습니다.');
       }
+      if (updateBookmarkDto.url !== null) {
+        const metadata = await this.metadataService.create({
+          url: updateBookmarkDto.url,
+        });
+        bookmark.metadata = metadata;
+      }
       if (updateBookmarkDto.title !== null) {
         bookmark.title = updateBookmarkDto.title;
       }
-      if (updateBookmarkDto.url !== null) {
-        bookmark.url = updateBookmarkDto.url;
-      }
       if (updateBookmarkDto.folderId !== null) {
         bookmark.folderId = updateBookmarkDto.folderId;
-      }
-      if (updateBookmarkDto.thumbnail !== null) {
-        bookmark.thumbnail = updateBookmarkDto.thumbnail;
       }
       if (updateBookmarkDto.order !== null) {
         bookmark.order = updateBookmarkDto.order;
       }
       await this.bookmarkRepository.save(bookmark);
-      return this.bookmarkRepository.findOne({ where: { id } });
+      return this.findOne(id);
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
@@ -103,10 +100,9 @@ export class BookmarkService {
 
   async remove(id: number): Promise<{ status: number; message: string }> {
     try {
-      await this.bookmarkRepository.delete(id);
       const bookmark = await this.bookmarkRepository
         .createQueryBuilder('bookmark')
-        .select()
+        .leftJoinAndSelect('bookmark.metadata', 'metadata')
         .where('bookmark.id = :id', { id })
         .andWhere('bookmark.deletedAt IS NULL')
         .getOne();

@@ -18,7 +18,6 @@ export class BookmarkController {
         title: '북마크 이름',
         url: 'https://www.naver.com',
         folderId: 1,
-        thumbnail: null,
         order: 1,
       },
     },
@@ -36,12 +35,18 @@ export class BookmarkController {
         "id": 1,
         "folderId": 1,
         "title": "북마크 이름",
-        "thumbnail": null,
         "url": "https://www.naver.com",
         "order": 1,
         "createdAt": "2024-05-31T03:06:14.000Z",
         "updatedAt": "2024-05-31T03:06:14.000Z",
-        "deletedAt": null
+        "deletedAt": null,
+        "metadata": {
+          "url": "https://www.naver.com",
+          "title": "네이버",
+          "thumbnail": "https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png",
+          "description": "네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요",
+          "id": 1
+        },
       }
     ]`,
   })
@@ -59,14 +64,13 @@ export class BookmarkController {
         title: '수정된 북마크 이름',
         url: 'https://www.naver.com',
         folderId: 1,
-        thumbnail: null,
         order: 1,
       },
     },
   })
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateBookmarkDto: UpdateBookmarkDto) {
-    return this.bookmarkService.update(+id, updateBookmarkDto);
+    return this.bookmarkService.update(id, updateBookmarkDto);
   }
 
   @ApiOperation({
