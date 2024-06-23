@@ -1,10 +1,92 @@
 "use client";
 
-import { Button, Flex, Layout, Space, Typography } from "antd";
+import {
+  Button,
+  Col,
+  Flex,
+  Image,
+  Layout,
+  Row,
+  Space,
+  Tree,
+  Typography,
+} from "antd";
 import { headerStyle, layoutStyle } from "@/app/ui/mainLayoutStyle";
+import type { TreeDataNode } from "antd";
 
-const { Header, Content, Sider } = Layout;
+const { Header, Content } = Layout;
 const { Title } = Typography;
+const { DirectoryTree } = Tree;
+
+const treeData: TreeDataNode[] = [
+  {
+    title: "리액트",
+    key: "0-0",
+    children: [
+      {
+        title: "넥스트",
+        key: "0-0-0",
+        children: [
+          { title: "넥스트 배포하기", key: "0-0-0-0", isLeaf: true },
+          { title: "넥스트 프로젝트 설정", key: "0-0-0-1", isLeaf: true },
+          { title: "nextjs from scratch", key: "0-0-0-2", isLeaf: true },
+        ],
+      },
+      {
+        title: "리액트 관련",
+        key: "0-0-1",
+        children: [{ title: "리액트 톺아보기", key: "0-0-1-0", isLeaf: true }],
+      },
+      {
+        title: "리액트 라이브러리",
+        key: "0-0-2",
+        children: [
+          { title: "아폴로 클라이언트", key: "0-0-2-0", isLeaf: true },
+          { title: "리액트 쿼리", key: "0-0-2-1", isLeaf: true },
+        ],
+      },
+    ],
+  },
+  {
+    title: "자바스크립트",
+    key: "0-1",
+    children: [
+      {
+        title: "타입스크립트",
+        key: "0-1-0",
+        children: [
+          { title: "타입스크립트 기초", key: "0-1-0-0", isLeaf: true },
+          { title: "타입스크립트 핸드북", key: "0-1-0-1", isLeaf: true },
+        ],
+      },
+      { title: "이벤트 버블링", key: "0-1-1", isLeaf: true },
+      { title: "클로저", key: "0-1-2", isLeaf: true },
+      { title: "실행 컨텍스트", key: "0-1-3", isLeaf: true },
+      { title: "this의 이해", key: "0-1-4", isLeaf: true },
+    ],
+  },
+  {
+    title: "여행",
+    key: "0-2",
+    children: [
+      {
+        title: "후지산",
+        key: "0-2-0",
+        isLeaf: true,
+      },
+      {
+        title: "옐로스톤 국립공원",
+        key: "0-2-1",
+        isLeaf: true,
+      },
+      {
+        title: "남극정복 후기",
+        key: "0-2-2",
+        isLeaf: true,
+      },
+    ],
+  },
+];
 
 export default function Page() {
   return (
@@ -24,10 +106,28 @@ export default function Page() {
           </Space>
         </Flex>
       </Header>
-      <Layout>
-        <Content></Content>
-        <Sider></Sider>
-      </Layout>
+      <Content>
+        <Row>
+          <Col span={12}>
+            <DirectoryTree
+              showLine={true}
+              // defaultExpandedKeys={["0-0-0"]}
+              defaultExpandAll
+              treeData={treeData}
+            />
+          </Col>
+          <Col span={12}>
+            <div style={{ textAlign: "center" }}>
+              <Image
+                src="/empty-box.png"
+                width={420}
+                preview={false}
+                alt="empty-box"
+              />
+            </div>
+          </Col>
+        </Row>
+      </Content>
     </Layout>
   );
 }
