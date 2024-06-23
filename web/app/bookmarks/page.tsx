@@ -11,7 +11,12 @@ import {
   Tree,
   Typography,
 } from "antd";
-import { headerStyle, layoutStyle } from "@/app/ui/mainLayoutStyle";
+import {
+  folderTreeColumnStyle,
+  headerStyle,
+  imageColumnStyle,
+  layoutStyle,
+} from "@/app/ui/mainLayoutStyle";
 import type { TreeDataNode } from "antd";
 
 const { Header, Content } = Layout;
@@ -108,7 +113,7 @@ export default function Page() {
       </Header>
       <Content>
         <Row>
-          <Col span={12}>
+          <Col span={12} style={folderTreeColumnStyle}>
             <DirectoryTree
               showLine={true}
               // defaultExpandedKeys={["0-0-0"]}
@@ -116,15 +121,13 @@ export default function Page() {
               treeData={treeData}
             />
           </Col>
-          <Col span={12}>
-            <div style={{ textAlign: "center" }}>
-              <Image
-                src="/empty-box.png"
-                width={420}
-                preview={false}
-                alt="empty-box"
-              />
-            </div>
+          <Col span={12} style={imageColumnStyle}>
+            <Image
+              src="/empty-box.png"
+              width={420}
+              preview={false}
+              alt="empty-box"
+            />
           </Col>
         </Row>
       </Content>
