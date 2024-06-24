@@ -23,7 +23,7 @@ const { Header, Content } = Layout;
 const { Title } = Typography;
 const { DirectoryTree } = Tree;
 
-const treeData: TreeDataNode[] = [
+const bookmarks: TreeDataNode[] = [
   {
     title: "리액트",
     key: "0-0",
@@ -75,12 +75,12 @@ const treeData: TreeDataNode[] = [
     key: "0-2",
     children: [
       {
-        title: "후지산",
+        title: "후지산 등반 정보",
         key: "0-2-0",
         isLeaf: true,
       },
       {
-        title: "옐로스톤 국립공원",
+        title: "옐로스톤 국립공원에서 한 달 살기",
         key: "0-2-1",
         isLeaf: true,
       },
@@ -88,6 +88,35 @@ const treeData: TreeDataNode[] = [
         title: "남극정복 후기",
         key: "0-2-2",
         isLeaf: true,
+      },
+    ],
+  },
+  {
+    title: "엔믹스",
+    key: "0-3",
+    children: [
+      {
+        title: "dash",
+        key: "0-3-0",
+        isLeaf: true,
+      },
+      {
+        title: "love me like this",
+        key: "0-3-1",
+        isLeaf: true,
+      },
+      {
+        title: "cool(your rainbow)",
+        key: "0-3-2",
+        isLeaf: true,
+      },
+      {
+        title: "직캠",
+        key: "0-3-3",
+        children: [
+          { title: "고려대 입실렌티", key: "0-3-3-0", isLeaf: true },
+          { title: "연세대 아카라카", key: "0-3-3-1", isLeaf: true },
+        ],
       },
     ],
   },
@@ -118,7 +147,7 @@ export default function Page() {
               showLine={true}
               // defaultExpandedKeys={["0-0-0"]}
               defaultExpandAll
-              treeData={treeData}
+              treeData={bookmarks}
             />
           </Col>
           <Col span={12} style={imageColumnStyle}>
