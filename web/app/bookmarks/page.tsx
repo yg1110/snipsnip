@@ -152,7 +152,7 @@ export default function Page() {
           </Col>
           <Col span={12} style={imageColumnStyle}>
             <Image
-              src="/empty-box.png"
+              src="https://via.placeholder.com/420?text=snapshot"
               width={420}
               preview={false}
               alt="empty-box"
