@@ -7,7 +7,7 @@ import {
   contentStyle,
   flexStyle,
   inputStyle,
-} from "@/app/ui/layoutStyle";
+} from "@/app/ui/loginLayoutStyle";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
