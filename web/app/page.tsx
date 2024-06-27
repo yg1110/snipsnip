@@ -8,11 +8,22 @@ import {
   flexStyle,
   inputStyle,
 } from "@/app/ui/loginLayoutStyle";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTodos } from "./lib/fetchTodos";
 
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
 export default function Home() {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["todos"],
+    queryFn: fetchTodos,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>An error occurred: {error.message}</div>;
+
   return (
     <Flex style={flexStyle}>
       <Layout style={layoutStyle}>
@@ -21,6 +32,9 @@ export default function Home() {
         </Header>
         <Content style={contentStyle}>
           <Space direction="vertical" align="center" size="middle">
+            {data.map((todo) => (
+              <div key={todo.id}>{todo.title}</div>
+            ))}
             <Space.Compact>
               <div style={inputStyle}>
                 <Text>ID</Text>
