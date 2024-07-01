@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { FolderModule } from './modules/folder/folder.module';
 import { MetaDataModule } from './modules/metadata/metadata.module';
@@ -18,7 +19,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig, {
-    include: [BookmarkModule, FolderModule, MetaDataModule],
+    include: [BookmarkModule, FolderModule, MetaDataModule, AuthModule],
   });
 
   const swaggerOptions: SwaggerCustomOptions = {

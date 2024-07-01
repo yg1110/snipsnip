@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { AuthModule } from './modules/auth/auth.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { FolderModule } from './modules/folder/folder.module';
 import { MetaDataModule } from './modules/metadata/metadata.module';
@@ -24,6 +25,7 @@ import { MetaDataModule } from './modules/metadata/metadata.module';
     BookmarkModule,
     FolderModule,
     MetaDataModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
