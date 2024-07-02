@@ -7,11 +7,13 @@ import {
   Post,
   Put,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from './auth.service';
-import { CreateUserDto, LoginUserDto, UpdateUserDto } from './dto/auth.dto';
+import { AuthTokensResponse, CreateUserDto, LoginUserDto, UpdateUserDto } from './dto/auth.dto';
 import { User } from './entities/user.entity';
 
 @ApiTags('Auth')
@@ -47,11 +49,10 @@ export class AuthController {
     },
   })
   @Post('login')
-  async login(@Body() loginUserDto: LoginUserDto): Promise<{ accessToken: string }> {
-    const user = await this.authService.login(loginUserDto);
-    if (user) {
-      // TODO: JWT 토큰 발급
-      return { accessToken: 'some-jwt-token' };
+  async login(@Body() loginUserDto: LoginUserDto): Promise<AuthTokensResponse> {
+    const authToken = await this.authService.login(loginUserDto);
+    if (authToken) {
+      return authToken;
     }
     throw new UnauthorizedException('로그인 정보가 일치하지 않습니다.');
   }
@@ -82,6 +83,8 @@ export class AuthController {
       },
     },
   })
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth('access-token')
   @Put(':userId')
   update(@Param('userId') userId: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
     return this.authService.update(userId, updateUserDto);
@@ -90,6 +93,8 @@ export class AuthController {
   @ApiOperation({
     summary: '유저 삭제하기',
   })
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth('access-token')
   @Delete(':userId')
   remove(@Param('userId') userId: number) {
     return this.authService.remove(userId);

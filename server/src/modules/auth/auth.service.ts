@@ -4,11 +4,12 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 
-import { LoginUserDto, UpdateUserDto } from './dto/auth.dto';
+import { AuthTokensResponse, LoginUserDto, UpdateUserDto } from './dto/auth.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -16,6 +17,7 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async register(email: string, password: string): Promise<User> {
@@ -28,13 +30,13 @@ export class AuthService {
     const user = await this.userRepository
       .createQueryBuilder('auth')
       .where('auth.id = :id', { id })
-      .select(['auth.id', 'auth.email', 'auth.createdAt', 'auth.updatedAt'])
+      .select(['auth.id', 'auth.email', 'auth.createdAt', 'auth.updatedAt', 'auth.deletedAt'])
       .getOne();
     if (!user) {
       throw new NotFoundException('유저 정보를 찾을 수 없습니다.');
     }
     if (user.deletedAt !== null) {
-      throw new BadRequestException('삭제된 유저입니다.');
+      throw new BadRequestException('탈퇴된 유저입니다.');
     }
     return user;
   }
@@ -79,10 +81,23 @@ export class AuthService {
     }
   }
 
-  async login(loginUserDto: LoginUserDto): Promise<User> {
+  async login(loginUserDto: LoginUserDto): Promise<AuthTokensResponse> {
     const user = await this.userRepository.findOne({ where: { email: loginUserDto.email } });
     if (user && (await bcrypt.compare(loginUserDto.password, user.password))) {
-      return user;
+      const payload = { id: user.id, email: user.email };
+      const accessToken = this.jwtService.sign(payload, {
+        secret: process.env.JWT_ACCESS_TOKEN_SECRET,
+        expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
+      });
+      const refreshToken = this.jwtService.sign(payload, {
+        secret: process.env.JWT_REFRESH_TOKEN_SECRET,
+        expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN,
+      });
+      return {
+        id: payload.id,
+        accessToken,
+        refreshToken,
+      };
     }
     return null;
   }

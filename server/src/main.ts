@@ -16,6 +16,7 @@ async function bootstrap() {
     .setDescription('SnipSnip backend api description')
     .setVersion('1.0.0')
     .addTag('swagger')
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'Token' }, 'access-token')
     .build();
 
   app.enableCors({
