@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { FolderModule } from './modules/folder/folder.module';
 import { MetaDataModule } from './modules/metadata/metadata.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { MetaDataModule } from './modules/metadata/metadata.module';
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT, 10),
+      port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
@@ -26,6 +27,7 @@ import { MetaDataModule } from './modules/metadata/metadata.module';
     FolderModule,
     MetaDataModule,
     AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}

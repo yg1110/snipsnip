@@ -19,4 +19,7 @@ export class User {
 
   @Column({ type: 'timestamp', nullable: true })
   deletedAt: Date | null;
+
+  @Column({ nullable: true })
+  refreshToken: string;
 }

@@ -1,13 +1,12 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-
-import { AuthService } from '../auth.service';
-import { Auth } from '../dto/auth.dto';
+import { User } from 'src/modules/user/entities/user.entity';
+import { UserService } from 'src/modules/user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly authService: AuthService) {
+  constructor(private readonly userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -15,24 +14,27 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  // authGuard를 통과한 토큰을 복호화하여 사용자의 정보를 payload로 받아온다.
-  async validate(payload: Auth) {
+  async validate(payload: User): Promise<User> {
     const { id, email } = payload;
 
-    if (!id || !email) {
-      throw new UnauthorizedException('데이터가 잘못되었습니다.');
+    if (!id) {
+      throw new UnauthorizedException('유저가 아닙니다.');
     }
 
-    const user = await this.authService.findOne(id);
+    if (!email) {
+      throw new UnauthorizedException('유저가 아닙니다.');
+    }
+
+    const user = await this.userService.findByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException('접근 권한이 없습니다.');
     }
 
     if (user.deletedAt !== null) {
-      throw new BadRequestException('탈퇴된 유저입니다.');
+      throw new UnauthorizedException('탈퇴한 회원입니다.');
     }
 
-    return payload;
+    return user;
   }
 }

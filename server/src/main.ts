@@ -6,6 +6,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
 import { FolderModule } from './modules/folder/folder.module';
 import { MetaDataModule } from './modules/metadata/metadata.module';
+import { UserModule } from './modules/user/user.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -26,7 +27,7 @@ async function bootstrap() {
   });
 
   const document = SwaggerModule.createDocument(app, swaggerConfig, {
-    include: [BookmarkModule, FolderModule, MetaDataModule, AuthModule],
+    include: [BookmarkModule, FolderModule, MetaDataModule, AuthModule, UserModule],
   });
 
   const swaggerOptions: SwaggerCustomOptions = {
