@@ -6,7 +6,7 @@ export const headerStyle: React.CSSProperties = {
   lineHeight: "64px",
   backgroundColor: "#ffffff",
   marginTop: "220px",
-  width: "400px",
+  width: "800px",
 };
 
 export const contentStyle: React.CSSProperties = {
@@ -23,12 +23,12 @@ export const layoutStyle: React.CSSProperties = {
 };
 
 export const flexStyle: React.CSSProperties = {
-  // height: "600px",
   width: "1200px",
   margin: "0 auto",
 };
 
 export const inputStyle: React.CSSProperties = {
-  width: "120px",
-  wordBreak: "normal",
+  width: "200px",
+  textAlign: "right",
+  marginRight: "30px",
 };
