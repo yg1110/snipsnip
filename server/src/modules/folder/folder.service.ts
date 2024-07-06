@@ -37,41 +37,45 @@ export class FolderService {
     }
   }
 
-  async findAllRoot(): Promise<Folder[]> {
+  async findAllRoot(userId: number): Promise<Folder[]> {
     return this.folderRepository
       .createQueryBuilder('folder')
       .select()
-      .where('folder.parentFolderId IS NULL')
+      .where('folder.userId = :userId', { userId })
+      .andWhere('folder.parentFolderId IS NULL')
       .andWhere('folder.deletedAt IS NULL')
       .orderBy('folder.order', 'ASC')
       .getMany();
   }
 
-  async findSubFolders(parentFolderId: number): Promise<Folder[]> {
+  async findSubFolders(parentFolderId: number, userId: number): Promise<Folder[]> {
     return this.folderRepository
       .createQueryBuilder('folder')
       .select()
-      .where('folder.parentFolderId = :parentFolderId', { parentFolderId })
+      .where('folder.userId = :userId', { userId })
+      .andWhere('folder.parentFolderId = :parentFolderId', { parentFolderId })
       .andWhere('folder.deletedAt IS NULL')
       .orderBy('folder.order', 'ASC')
       .getMany();
   }
 
-  async findOne(id: number): Promise<Folder> {
+  async findOne(id: number, userId: number): Promise<Folder> {
     return this.folderRepository
       .createQueryBuilder('folder')
       .select()
-      .where('folder.id = :id', { id })
+      .where('folder.userId = :userId', { userId })
+      .andWhere('folder.id = :id', { id })
       .andWhere('folder.deletedAt IS NULL')
       .getOne();
   }
 
-  async update(id: number, updateFolderDto: UpdateFolderDto): Promise<Folder> {
+  async update(id: number, userId: number, updateFolderDto: UpdateFolderDto): Promise<Folder> {
     try {
       const folder = await this.folderRepository
         .createQueryBuilder('folder')
         .select()
-        .where('folder.id = :id', { id })
+        .where('folder.userId = :userId', { userId })
+        .andWhere('folder.id = :id', { id })
         .andWhere('folder.deletedAt IS NULL')
         .getOne();
 
@@ -94,12 +98,13 @@ export class FolderService {
     }
   }
 
-  async remove(id: number): Promise<{ status: number; message: string }> {
+  async remove(id: number, userId: number): Promise<{ status: number; message: string }> {
     try {
       const folder = await this.folderRepository
         .createQueryBuilder('folder')
         .select()
-        .where('folder.id = :id', { id })
+        .where('folder.userId = :userId', { userId })
+        .andWhere('folder.id = :id', { id })
         .andWhere('folder.deletedAt IS NULL')
         .getOne();
       if (!folder) {

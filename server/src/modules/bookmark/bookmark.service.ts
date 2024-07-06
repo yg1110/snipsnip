@@ -25,7 +25,10 @@ export class BookmarkService {
   ) {}
 
   async create(createBookmarkDto: CreateBookmarkDto) {
-    const folder = await this.folderService.findOne(createBookmarkDto.folderId);
+    const folder = await this.folderService.findOne(
+      createBookmarkDto.folderId,
+      createBookmarkDto.userId,
+    );
     if (!folder) {
       throw new NotFoundException('폴더를 찾을 수 없습니다.');
     }
@@ -40,11 +43,12 @@ export class BookmarkService {
     }
   }
 
-  async findAllByFolderId(folderId: number): Promise<Bookmark[]> {
+  async findAllByFolderId(folderId: number, userId: number): Promise<Bookmark[]> {
     return await this.bookmarkRepository
       .createQueryBuilder('bookmark')
       .leftJoinAndSelect('bookmark.metadata', 'metadata')
-      .where('bookmark.folderId = :folderId', { folderId })
+      .where('bookmark.userId = :userId', { userId })
+      .andWhere('bookmark.folderId = :folderId', { folderId })
       .andWhere('bookmark.deletedAt IS NULL')
       .orderBy('bookmark.order', 'ASC')
       .getMany();
@@ -64,11 +68,16 @@ export class BookmarkService {
     return bookmark;
   }
 
-  async update(id: number, updateBookmarkDto: UpdateBookmarkDto): Promise<Bookmark> {
+  async update(
+    id: number,
+    userId: number,
+    updateBookmarkDto: UpdateBookmarkDto,
+  ): Promise<Bookmark> {
     try {
       const bookmark = await this.bookmarkRepository
         .createQueryBuilder('bookmark')
         .leftJoinAndSelect('bookmark.metadata', 'metadata')
+        .where('bookmark.userId = :userId', { userId })
         .where('bookmark.id = :id', { id })
         .andWhere('bookmark.deletedAt IS NULL')
         .getOne();
@@ -98,12 +107,13 @@ export class BookmarkService {
     }
   }
 
-  async remove(id: number): Promise<{ status: number; message: string }> {
+  async remove(id: number, userId: number): Promise<{ status: number; message: string }> {
     try {
       const bookmark = await this.bookmarkRepository
         .createQueryBuilder('bookmark')
         .leftJoinAndSelect('bookmark.metadata', 'metadata')
-        .where('bookmark.id = :id', { id })
+        .where('bookmark.userId = :userId', { userId })
+        .andWhere('bookmark.id = :id', { id })
         .andWhere('bookmark.deletedAt IS NULL')
         .getOne();
       if (!bookmark) {

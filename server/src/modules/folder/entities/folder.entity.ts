@@ -1,5 +1,6 @@
 import { Bookmark } from 'src/modules/bookmark/entities/bookmark.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/modules/user/entities/user.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Folder {
@@ -9,11 +10,18 @@ export class Folder {
   @Column()
   name: string;
 
+  @Column()
+  userId: number;
+
   @Column({ nullable: true })
   parentFolderId: number | null;
 
   @Column()
   order: number;
+
+  @ManyToOne(() => User, (user) => user.folders)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 
   @OneToMany(() => Bookmark, (bookmark) => bookmark.folder)
   bookmarks: Bookmark[];

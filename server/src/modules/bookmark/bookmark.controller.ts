@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { BookmarkService } from './bookmark.service';
 import { CreateBookmarkDto, UpdateBookmarkDto } from './dto/bookmark.dto';
@@ -22,9 +23,12 @@ export class BookmarkController {
       },
     },
   })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() createBookmarkDto: CreateBookmarkDto) {
-    return this.bookmarkService.create(createBookmarkDto);
+  create(@Body() createBookmarkDto: CreateBookmarkDto, @Req() req) {
+    const userId = req.user.id;
+    return this.bookmarkService.create({ ...createBookmarkDto, userId });
   }
 
   @ApiOperation({
@@ -50,9 +54,12 @@ export class BookmarkController {
       }
     ]`,
   })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
   @Get(':folderId')
-  findAllByFolderId(@Param('folderId') folderId: number) {
-    return this.bookmarkService.findAllByFolderId(folderId);
+  findAllByFolderId(@Param('folderId') folderId: number, @Req() req) {
+    const userId = req.user.id;
+    return this.bookmarkService.findAllByFolderId(folderId, userId);
   }
 
   @ApiOperation({
@@ -68,16 +75,22 @@ export class BookmarkController {
       },
     },
   })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateBookmarkDto: UpdateBookmarkDto) {
-    return this.bookmarkService.update(id, updateBookmarkDto);
+  update(@Param('id') id: number, @Body() updateBookmarkDto: UpdateBookmarkDto, @Req() req) {
+    const userId = req.user.id;
+    return this.bookmarkService.update(id, userId, updateBookmarkDto);
   }
 
   @ApiOperation({
     summary: '북마크 삭제하기',
   })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bookmarkService.remove(+id);
+  remove(@Param('id') id: string, @Req() req) {
+    const userId = req.user.id;
+    return this.bookmarkService.remove(+id, userId);
   }
 }

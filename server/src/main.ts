@@ -12,11 +12,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log'],
   });
+  app.setGlobalPrefix('api');
+
   const swaggerConfig = new DocumentBuilder()
     .setTitle('SnipSnip Swagger')
     .setDescription('SnipSnip backend api description')
     .setVersion('1.0.0')
-    .addTag('swagger')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'Token' }, 'access-token')
     .build();
 
@@ -35,7 +36,6 @@ async function bootstrap() {
       persistAuthorization: true,
     },
   };
-
   SwaggerModule.setup('api', app, document, swaggerOptions);
   await app.listen(8000);
 }

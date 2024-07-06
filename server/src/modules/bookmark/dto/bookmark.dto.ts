@@ -1,6 +1,7 @@
 export class CreateBookmarkDto {
   title: string | null;
   url: string;
+  userId: number;
   folderId: number;
   order: number;
 }
