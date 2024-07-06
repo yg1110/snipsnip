@@ -12,12 +12,12 @@ import {
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
-export default function Home() {
+export default function Page() {
   return (
     <Flex style={flexStyle}>
       <Layout style={layoutStyle}>
         <Header style={headerStyle}>
-          <Title>SnipSnip</Title>
+          <Title>Enter to SnipSnip! </Title>
         </Header>
         <Content style={contentStyle}>
           <Space direction="vertical" align="center" size="middle">
@@ -34,11 +34,12 @@ export default function Home() {
               <Input type="password" />
             </Space.Compact>
             <Space.Compact>
-              <Button type="text">login</Button>
-              <Button type="primary" href="/register">
-                register
-              </Button>
+              <div style={inputStyle}>
+                <Text>PASSWORD check</Text>
+              </div>
+              <Input type="password" />
             </Space.Compact>
+            <Button type="primary">register</Button>
           </Space>
         </Content>
       </Layout>
