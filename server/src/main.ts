@@ -18,6 +18,12 @@ async function bootstrap() {
     .addTag('swagger')
     .build();
 
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   const document = SwaggerModule.createDocument(app, swaggerConfig, {
     include: [BookmarkModule, FolderModule, MetaDataModule, AuthModule],
   });
