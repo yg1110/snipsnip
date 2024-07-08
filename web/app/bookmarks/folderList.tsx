@@ -8,9 +8,11 @@ import { useFolders } from "@/app/lib/data/query";
 import { useAddFolder } from "@/app/lib/data/mutation";
 import { useState } from "react";
 
+const DEFAULT_FOLDER_NAME = "";
+
 export default function FolderList() {
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
-  const [folderName, setFolderName] = useState("");
+  const [folderName, setFolderName] = useState(DEFAULT_FOLDER_NAME);
 
   const { data: folders } = useFolders();
   const addFolderMutation = useAddFolder();
@@ -76,11 +78,7 @@ export default function FolderList() {
               </Button>,
             ]}
           >
-            <List.Item.Meta
-              avatar={<FolderOutlined />}
-              title={item.name}
-              // description="펼치기"
-            />
+            <List.Item.Meta avatar={<FolderOutlined />} title={item.name} />
           </List.Item>
         )}
       />
