@@ -1,68 +1,14 @@
-import { Button, Input, List, Modal } from "antd";
-import {
-  FolderAddOutlined,
-  FolderOutlined,
-  FolderTwoTone,
-} from "@ant-design/icons";
+import { Button, List } from "antd";
+import { FolderOutlined } from "@ant-design/icons";
 import { useFolders } from "@/app/lib/data/query";
-import { useAddFolder } from "@/app/lib/data/mutation";
-import { useState } from "react";
-
-const DEFAULT_FOLDER_NAME = "";
+import AddFolderModal from "./AddFolderModal";
 
 export default function FolderList() {
-  const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
-  const [folderName, setFolderName] = useState(DEFAULT_FOLDER_NAME);
-
   const { data: folders } = useFolders();
-  const addFolderMutation = useAddFolder();
-
-  const openModal = () => {
-    setAddFolderModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setAddFolderModalOpen(false);
-    setFolderName("");
-  };
-
-  const addFolder = () => {
-    addFolderMutation.mutate(
-      {
-        name: folderName,
-        order: 10,
-        parentFolderId: null,
-      },
-      {
-        onSuccess: () => {
-          closeModal();
-        },
-      }
-    );
-  };
 
   return (
     <>
-      <Button
-        type="dashed"
-        size="large"
-        icon={<FolderAddOutlined />}
-        onClick={openModal}
-      />
-      <Modal
-        title="새 폴더 추가하기"
-        open={addFolderModalOpen}
-        onOk={addFolder}
-        onCancel={closeModal}
-        confirmLoading={addFolderMutation.isPending}
-      >
-        <Input
-          value={folderName}
-          onChange={(e) => setFolderName(e.target.value)}
-          placeholder="type your folder name"
-          prefix={<FolderTwoTone />}
-        />
-      </Modal>
+      <AddFolderModal />
       <List
         itemLayout="horizontal"
         dataSource={folders ?? []}
