@@ -2,6 +2,7 @@ import { Button, List } from "antd";
 import { FolderOutlined } from "@ant-design/icons";
 import { useFolders } from "@/app/lib/data/query";
 import AddFolderModal from "./AddFolderModal";
+import DeleteFolderBtn from "./DeleteFolderBtn";
 
 export default function FolderList() {
   const { data: folders } = useFolders();
@@ -19,9 +20,7 @@ export default function FolderList() {
               <Button key="edit-folder" type="link">
                 edit
               </Button>,
-              <Button key="delete-folder" type="link" danger>
-                delete
-              </Button>,
+              <DeleteFolderBtn key="delete-folder" folderId={item.id} />,
             ]}
           >
             <List.Item.Meta avatar={<FolderOutlined />} title={item.name} />
