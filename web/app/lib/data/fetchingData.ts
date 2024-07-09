@@ -13,8 +13,6 @@ export const fetchFolders = async () => {
 };
 
 export const addFolder = async (newFolder: NewFolder) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   const response = await fetch(`${API_URL}/folders`, {
     method: "POST",
     headers: {
@@ -31,8 +29,6 @@ export const addFolder = async (newFolder: NewFolder) => {
 };
 
 export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   const response = await fetch(`${API_URL}/folders/${modifiedFolder.id}`, {
     method: "PATCH",
     headers: {
@@ -49,8 +45,6 @@ export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
 };
 
 export const deleteFolder = async (folderId: number) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   const response = await fetch(`${API_URL}/folders/${folderId}`, {
     method: "DELETE",
   });

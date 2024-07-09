@@ -21,6 +21,10 @@ export default function AddFolderModal() {
   };
 
   const addFolder = () => {
+    if (addFolderMutation.isPending) {
+      return;
+    }
+
     addFolderMutation.mutate(
       {
         name: folderName,
