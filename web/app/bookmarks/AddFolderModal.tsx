@@ -4,6 +4,7 @@ import { Button, Input, Modal, message } from "antd";
 import { FolderAddOutlined, FolderTwoTone } from "@ant-design/icons";
 
 const DEFAULT_FOLDER_NAME = "";
+const ENTER_KEYCODE = "Enter";
 
 export default function AddFolderModal() {
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
@@ -35,6 +36,16 @@ export default function AddFolderModal() {
     );
   };
 
+  const submit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const key = e.key;
+
+    if (key !== ENTER_KEYCODE) {
+      return;
+    }
+
+    addFolder();
+  };
+
   return (
     <>
       <Button
@@ -55,6 +66,7 @@ export default function AddFolderModal() {
           onChange={(e) => setFolderName(e.target.value)}
           placeholder="type your folder name"
           prefix={<FolderTwoTone />}
+          onKeyUp={submit}
         />
       </Modal>
     </>
