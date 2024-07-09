@@ -1,4 +1,4 @@
-import { NewFolder } from "@/app/lib/types/dataTypes";
+import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
 
 const API_URL = "http://localhost:8000";
 
@@ -21,6 +21,24 @@ export const addFolder = async (newFolder: NewFolder) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(newFolder),
+  });
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
+};
+
+export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const response = await fetch(`${API_URL}/folders/${modifiedFolder.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(modifiedFolder),
   });
 
   if (!response.ok) {

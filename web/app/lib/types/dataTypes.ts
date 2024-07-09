@@ -10,8 +10,6 @@ export type Folder = {
   deletedAt: Nullable<Date>;
 };
 
-export type NewFolder = {
-  name: string;
-  parentFolderId: Nullable<number>;
-  order: number;
-};
+export type NewFolder = Pick<Folder, "name" | "order" | "parentFolderId">;
+
+export type ModifiedFolder = Partial<Folder>;

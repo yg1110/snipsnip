@@ -3,9 +3,10 @@ import { FolderOutlined } from "@ant-design/icons";
 import { useFolders } from "@/app/lib/data/query";
 import AddFolderModal from "./AddFolderModal";
 import DeleteFolderBtn from "./DeleteFolderBtn";
+import EditFolderBtn from "./EditFolderBtn";
 
 export default function FolderList() {
-  const { data: folders } = useFolders();
+  const { data: folders, isLoading } = useFolders();
 
   return (
     <>
@@ -13,13 +14,12 @@ export default function FolderList() {
       <List
         itemLayout="horizontal"
         dataSource={folders ?? []}
+        loading={isLoading}
         renderItem={(item) => (
           <List.Item
             actions={[
               <Button key="add-folder">add</Button>,
-              <Button key="edit-folder" type="link">
-                edit
-              </Button>,
+              <EditFolderBtn key="edit-folder" folder={item} />,
               <DeleteFolderBtn key="delete-folder" folderId={item.id} />,
             ]}
           >
