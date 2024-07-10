@@ -2,8 +2,18 @@ import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
 
 const API_URL = "http://localhost:8000";
 
-export const fetchFolders = async () => {
+export const fetchRootFolders = async () => {
   const response = await fetch(`${API_URL}/folders`);
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
+};
+
+export const fetchChildFolders = async (parentFolderId: number) => {
+  const response = await fetch(`${API_URL}/folders/${parentFolderId}`);
 
   if (!response.ok) {
     throw new Error("Network response was not ok");

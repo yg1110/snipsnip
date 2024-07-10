@@ -13,7 +13,8 @@ export const useAddFolder = () => {
     mutationFn: (newFolder: NewFolder) => {
       return addFolder(newFolder);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["folders"] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
   });
 };
 
@@ -24,7 +25,8 @@ export const useUpdateFolder = () => {
     mutationFn: (modifiedFolder: ModifiedFolder) => {
       return updateFolder(modifiedFolder);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["folders"] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
   });
 };
 
@@ -35,6 +37,7 @@ export const useDeleteFolder = () => {
     mutationFn: (folderId: number) => {
       return deleteFolder(folderId);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["folders"] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
   });
 };
