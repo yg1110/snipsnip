@@ -1,9 +1,7 @@
 import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
 
-const API_URL = "http://localhost:8000";
-
 export const fetchRootFolders = async () => {
-  const response = await fetch(`${API_URL}/folders`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/folders`);
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -13,7 +11,9 @@ export const fetchRootFolders = async () => {
 };
 
 export const fetchChildFolders = async (parentFolderId: number) => {
-  const response = await fetch(`${API_URL}/folders/${parentFolderId}`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API}/folders/${parentFolderId}`
+  );
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -23,7 +23,7 @@ export const fetchChildFolders = async (parentFolderId: number) => {
 };
 
 export const addFolder = async (newFolder: NewFolder) => {
-  const response = await fetch(`${API_URL}/folders`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/folders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -39,13 +39,16 @@ export const addFolder = async (newFolder: NewFolder) => {
 };
 
 export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
-  const response = await fetch(`${API_URL}/folders/${modifiedFolder.id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(modifiedFolder),
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API}/folders/${modifiedFolder.id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(modifiedFolder),
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -55,9 +58,12 @@ export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
 };
 
 export const deleteFolder = async (folderId: number) => {
-  const response = await fetch(`${API_URL}/folders/${folderId}`, {
-    method: "DELETE",
-  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API}/folders/${folderId}`,
+    {
+      method: "DELETE",
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -67,7 +73,9 @@ export const deleteFolder = async (folderId: number) => {
 };
 
 export const fetchBookmarks = async (folderId: number) => {
-  const response = await fetch(`${API_URL}/bookmarks/${folderId}`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API}/bookmarks/${folderId}`
+  );
 
   if (!response.ok) {
     throw new Error("Network response was not ok");

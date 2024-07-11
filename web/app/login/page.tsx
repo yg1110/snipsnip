@@ -18,12 +18,13 @@ import generateApiClientFetcher from "../lib/generateApiClientFetcher";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 
-// TODO: move to env
-const NEXT_PUBLIC_BASE_API = "http://localhost:8000/api";
 export default function Login() {
   const router = useRouter();
   const authApi = useMemo(
-    () => new AuthApiClient(generateApiClientFetcher(NEXT_PUBLIC_BASE_API)),
+    () =>
+      new AuthApiClient(
+        generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API)
+      ),
     []
   );
 

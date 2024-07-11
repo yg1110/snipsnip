@@ -3,8 +3,6 @@ import Cookies from "js-cookie";
 import { FetcherReturnType, createFetcher } from "./createFetcher";
 
 // TODO: move to env
-const NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN = 3600000; // 1 hour
-const NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN = 1209600000; // 2 weeks;
 const generateApiClientFetcher = (
   baseURL: string,
   headers?: RawAxiosRequestHeaders
@@ -24,13 +22,19 @@ const generateApiClientFetcher = (
       const newId = data.id;
 
       Cookies.set("accessToken", newAccessToken, {
-        expires: new Date(Date.now() + NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN),
+        expires: new Date(
+          Date.now() + process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN
+        ),
       });
       Cookies.set("refreshToken", newRefreshToken, {
-        expires: new Date(Date.now() + NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN),
+        expires: new Date(
+          Date.now() + process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN
+        ),
       });
       Cookies.set("id", newId, {
-        expires: new Date(Date.now() + NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN),
+        expires: new Date(
+          Date.now() + process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN
+        ),
       });
 
       return newAccessToken;
