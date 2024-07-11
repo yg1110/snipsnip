@@ -1,30 +1,30 @@
 import { Button, List } from "antd";
 import { FolderOutlined } from "@ant-design/icons";
-import { useFolders } from "@/app/lib/data/query";
+import { useRootFolders } from "@/app/lib/data/query";
 import AddFolderModal from "./AddFolderModal";
+import DeleteFolderBtn from "./DeleteFolderBtn";
+import EditFolderBtn from "./EditFolderBtn";
+import FolderItem from "./FolderItem";
 
 export default function FolderList() {
-  const { data: folders } = useFolders();
+  const { data: rootFolders, isLoading } = useRootFolders();
 
   return (
     <>
       <AddFolderModal />
       <List
         itemLayout="horizontal"
-        dataSource={folders ?? []}
+        dataSource={rootFolders ?? []}
+        loading={isLoading}
         renderItem={(item) => (
           <List.Item
             actions={[
               <Button key="add-folder">add</Button>,
-              <Button key="edit-folder" type="link">
-                edit
-              </Button>,
-              <Button key="delete-folder" type="link" danger>
-                delete
-              </Button>,
+              <EditFolderBtn key="edit-folder" folder={item} />,
+              <DeleteFolderBtn key="delete-folder" folderId={item.id} />,
             ]}
           >
-            <List.Item.Meta avatar={<FolderOutlined />} title={item.name} />
+            <FolderItem folder={item} />
           </List.Item>
         )}
       />
