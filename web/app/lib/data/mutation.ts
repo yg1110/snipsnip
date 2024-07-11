@@ -1,6 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addFolder } from "@/app/lib/data/fetchingData";
-import { NewFolder } from "@/app/lib/types/dataTypes";
+import {
+  addFolder,
+  deleteFolder,
+  updateFolder,
+} from "@/app/lib/data/fetchingData";
+import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
 
 export const useAddFolder = () => {
   const queryClient = useQueryClient();
@@ -9,6 +13,31 @@ export const useAddFolder = () => {
     mutationFn: (newFolder: NewFolder) => {
       return addFolder(newFolder);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["folders"] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+  });
+};
+
+export const useUpdateFolder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (modifiedFolder: ModifiedFolder) => {
+      return updateFolder(modifiedFolder);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+  });
+};
+
+export const useDeleteFolder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (folderId: number) => {
+      return deleteFolder(folderId);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
   });
 };
