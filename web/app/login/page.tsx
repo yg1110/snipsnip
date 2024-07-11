@@ -31,7 +31,7 @@ export default function Login() {
   const { mutate: login } = useMutation({
     mutationFn: (command: LoginRequset) => authApi.login(command),
     onSuccess: () => {
-      router.push("/");
+      router.push("/bookmarks");
     },
     onError: (err) => {
       // TODO: show error toast

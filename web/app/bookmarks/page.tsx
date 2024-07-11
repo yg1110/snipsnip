@@ -1,5 +1,7 @@
 "use client";
 
+import Cookies from "js-cookie";
+
 import { Button, Col, Flex, Image, Layout, Row, Space, Typography } from "antd";
 import {
   folderTreeColumnStyle,
@@ -8,11 +10,17 @@ import {
   layoutStyle,
 } from "@/app/ui/mainLayoutStyle";
 import FolderList from "./folderList";
+import { useEffect } from "react";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 export default function Page() {
+  useEffect(() => {
+    if (!Cookies.get("accessToken")) {
+      location.href = "/login";
+    }
+  }, []);
   return (
     <Layout style={layoutStyle}>
       <Header style={headerStyle}>
