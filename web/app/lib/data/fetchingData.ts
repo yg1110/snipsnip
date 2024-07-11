@@ -2,7 +2,7 @@ import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
 
 const API_URL = "http://localhost:8000";
 
-export const fetchFolders = async () => {
+export const fetchRootFolders = async () => {
   const response = await fetch(`${API_URL}/folders`);
 
   if (!response.ok) {
@@ -12,9 +12,17 @@ export const fetchFolders = async () => {
   return response.json();
 };
 
-export const addFolder = async (newFolder: NewFolder) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+export const fetchChildFolders = async (parentFolderId: number) => {
+  const response = await fetch(`${API_URL}/folders/${parentFolderId}`);
 
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  return response.json();
+};
+
+export const addFolder = async (newFolder: NewFolder) => {
   const response = await fetch(`${API_URL}/folders`, {
     method: "POST",
     headers: {
@@ -31,8 +39,6 @@ export const addFolder = async (newFolder: NewFolder) => {
 };
 
 export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   const response = await fetch(`${API_URL}/folders/${modifiedFolder.id}`, {
     method: "PATCH",
     headers: {
@@ -49,8 +55,6 @@ export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
 };
 
 export const deleteFolder = async (folderId: number) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   const response = await fetch(`${API_URL}/folders/${folderId}`, {
     method: "DELETE",
   });

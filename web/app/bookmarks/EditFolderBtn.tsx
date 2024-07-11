@@ -21,6 +21,10 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
   };
 
   const editFolder = () => {
+    if (editFolderMutation.isPending) {
+      return;
+    }
+
     editFolderMutation.mutate(
       {
         id: folder.id,
