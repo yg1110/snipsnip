@@ -1,12 +1,11 @@
 "use client";
 
-import { Button, Flex, Layout, Typography, Input, Space } from "antd";
+import { Button, Flex, Layout, Typography, Input, Form } from "antd";
 import {
   layoutStyle,
   headerStyle,
   contentStyle,
   flexStyle,
-  inputStyle,
 } from "@/app/ui/loginLayoutStyle";
 import { useMemo } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -14,10 +13,16 @@ import { useRouter } from "next/navigation";
 import { AuthApiClient } from "../api/auth/AuthApiClient";
 import { LoginRequset } from "../api/auth/domain/AuthRequset";
 import generateApiClientFetcher from "../lib/generateApiClientFetcher";
+import { LoginRequest } from "../api/auth/domain/entities";
+import Link from "next/link";
 
 const { Header, Content } = Layout;
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
+type LoginFormValue = {
+  email: string;
+  password: string;
+};
 export default function Login() {
   const router = useRouter();
   const authApi = useMemo(
@@ -39,13 +44,8 @@ export default function Login() {
     },
   });
 
-  const onLogin = () => {
-    // TODO: validate email and password
-    // TODO: state management
-    login({
-      email: "yg@naver.com",
-      password: "yg",
-    });
+  const submit = (command: LoginRequest) => {
+    login(command);
   };
 
   return (
@@ -55,28 +55,35 @@ export default function Login() {
           <Title>SnipSnip</Title>
         </Header>
         <Content style={contentStyle}>
-          <Space direction="vertical" align="center" size="middle">
-            <Space.Compact>
-              <div style={inputStyle}>
-                <Text>EMAIL</Text>
-              </div>
-              <Input type="text" />
-            </Space.Compact>
-            <Space.Compact>
-              <div style={inputStyle}>
-                <Text>PASSWORD</Text>
-              </div>
-              <Input type="password" />
-            </Space.Compact>
-            <Space.Compact>
-              <Button type="text" onClick={onLogin}>
-                login
+          <Form<LoginFormValue>
+            layout="vertical"
+            autoComplete="off"
+            onFinish={submit}
+          >
+            <Form.Item
+              name="email"
+              label="이메일"
+              rules={[{ required: true, message: "이메일을 입력해주세요." }]}
+            >
+              <Input size="large" placeholder="이메일" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              label="비밀번호"
+              rules={[{ required: true, message: "비밀번호를 입력해주세요." }]}
+            >
+              <Input.Password size="large" placeholder="비밀번호" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" size="large" block htmlType="submit">
+                로그인
               </Button>
-              <Button type="primary" href="/register">
-                register
-              </Button>
-            </Space.Compact>
-          </Space>
+            </Form.Item>
+          </Form>
+          <Flex justify="right" gap="8px">
+            <Link href="/">비밀번호 찾기</Link>
+            <Link href="/register">회원가입</Link>
+          </Flex>
         </Content>
       </Layout>
     </Flex>

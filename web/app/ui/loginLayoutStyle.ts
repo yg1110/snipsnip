@@ -5,13 +5,12 @@ export const headerStyle: React.CSSProperties = {
   paddingInline: 48,
   lineHeight: "64px",
   backgroundColor: "#ffffff",
-  marginTop: "220px",
-  width: "800px",
+  width: "300px",
 };
 
 export const contentStyle: React.CSSProperties = {
   textAlign: "center",
-  width: "400px",
+  width: "300px",
   marginTop: "50px",
 };
 
@@ -20,15 +19,13 @@ export const layoutStyle: React.CSSProperties = {
   overflow: "hidden",
   alignItems: "center",
   backgroundColor: "#ffffff",
+  padding: "40px 0",
 };
 
 export const flexStyle: React.CSSProperties = {
-  width: "1200px",
+  width: "400px",
   margin: "0 auto",
-};
-
-export const inputStyle: React.CSSProperties = {
-  width: "200px",
-  textAlign: "right",
-  marginRight: "30px",
+  alignItems: "center",
+  justifyContent: "center",
+  minHeight: "100vh",
 };
