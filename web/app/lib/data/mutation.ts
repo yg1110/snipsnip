@@ -7,7 +7,7 @@ import {
   updateFolder,
 } from "@/app/lib/data/fetchingData";
 import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
-import { LoginRequest, RegisterRequest } from "../types/userTypes";
+import { LoginRequest, RegisterRequest } from "../types/authTypes";
 
 export const useAddFolder = () => {
   const queryClient = useQueryClient();

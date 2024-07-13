@@ -9,7 +9,7 @@ import {
   submitButtonStyle,
 } from "@/app/ui/loginLayoutStyle";
 import Link from "next/link";
-import { RegisterRequest } from "../lib/types/userTypes";
+import { RegisterRequest } from "../lib/types/authTypes";
 import { useRegister } from "../lib/data/mutation";
 import { useRouter } from "next/navigation";
 

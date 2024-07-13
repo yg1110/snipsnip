@@ -5,7 +5,7 @@ import {
   NewFolder,
 } from "@/app/lib/types/dataTypes";
 import generateApiClientFetcher from "../generateApiClientFetcher";
-import { LoginRequest, RegisterRequest, User } from "../types/userTypes";
+import { LoginRequest, RegisterRequest, User } from "../types/authTypes";
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   "Content-Type": "application/json",

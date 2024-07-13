@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLogin } from "../lib/data/mutation";
-import { LoginRequest } from "../lib/types/userTypes";
+import { LoginRequest } from "../lib/types/authTypes";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;

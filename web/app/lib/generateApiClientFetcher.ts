@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { FetcherOptions, createFetcher } from "./createFetcher";
-import { AuthTokensResponse } from "./types/userTypes";
+import { AuthTokensResponse } from "./types/authTypes";
 
 const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
   const fetcher = createFetcher({ baseURL, headers });
