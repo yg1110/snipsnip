@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TokenPayload } from 'src/common/tokenPayload.decorator';
 
@@ -26,7 +26,7 @@ export class AuthController {
   async login(@Res() res, @Body() body) {
     const user = await this.authService.login(body);
     if (!user) {
-      throw new UnauthorizedException({
+      throw new ForbiddenException({
         error: 'invalid_password',
         message: '잘못된 비밀번호입니다.',
       });

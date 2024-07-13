@@ -2,9 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   addFolder,
   deleteFolder,
+  login,
   updateFolder,
 } from "@/app/lib/data/fetchingData";
 import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
+import { LoginRequest } from "../types/userTypes";
 
 export const useAddFolder = () => {
   const queryClient = useQueryClient();
@@ -39,5 +41,13 @@ export const useDeleteFolder = () => {
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+  });
+};
+
+export const useLogin = () => {
+  return useMutation({
+    mutationFn: (command: LoginRequest) => {
+      return login(command);
+    },
   });
 };

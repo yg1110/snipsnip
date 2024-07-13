@@ -7,8 +7,8 @@ import {
   contentStyle,
   flexStyle,
 } from "@/app/ui/loginLayoutStyle";
-import { RegisterRequest } from "../api/auth/domain/entities";
 import Link from "next/link";
+import { RegisterRequest } from "../lib/types/userTypes";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;

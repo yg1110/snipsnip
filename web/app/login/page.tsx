@@ -1,20 +1,16 @@
 "use client";
 
-import { Button, Flex, Layout, Typography, Input, Form } from "antd";
+import { Button, Flex, Layout, Typography, Input, Form, message } from "antd";
 import {
   layoutStyle,
   headerStyle,
   contentStyle,
   flexStyle,
 } from "@/app/ui/loginLayoutStyle";
-import { useMemo } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { AuthApiClient } from "../api/auth/AuthApiClient";
-import { LoginRequset } from "../api/auth/domain/AuthRequset";
-import generateApiClientFetcher from "../lib/generateApiClientFetcher";
-import { LoginRequest } from "../api/auth/domain/entities";
 import Link from "next/link";
+import { useLogin } from "../lib/data/mutation";
+import { LoginRequest } from "../lib/types/userTypes";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -25,27 +21,17 @@ type LoginFormValue = {
 };
 export default function Login() {
   const router = useRouter();
-  const authApi = useMemo(
-    () =>
-      new AuthApiClient(
-        generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API)
-      ),
-    []
-  );
-
-  const { mutate: login } = useMutation({
-    mutationFn: (command: LoginRequset) => authApi.login(command),
-    onSuccess: () => {
-      router.push("/bookmarks");
-    },
-    onError: (err) => {
-      // TODO: show error toast
-      console.log("error", err);
-    },
-  });
+  const loginMutation = useLogin();
 
   const submit = (command: LoginRequest) => {
-    login(command);
+    loginMutation.mutate(command, {
+      onSuccess: () => {
+        router.push("/bookmarks");
+      },
+      onError: (err) => {
+        message.error("로그인에 실패했습니다.");
+      },
+    });
   };
 
   return (

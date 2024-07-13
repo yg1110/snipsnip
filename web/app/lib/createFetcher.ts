@@ -1,7 +1,30 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+type FetcherProps = {
+  baseURL: string;
+  headers?: HeadersInit;
+};
 
-export type CreateFetcher = (config: AxiosRequestConfig) => AxiosInstance;
-export type FetcherReturnType = ReturnType<CreateFetcher>;
+export type FetcherOptions = RequestInit & {
+  headers?: HeadersInit;
+};
 
-export const createFetcher: CreateFetcher = (config = {}) =>
-  axios.create({ ...config, withCredentials: true });
+export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
+  const fetcher = async <T>(
+    url: string,
+    options: FetcherOptions = {}
+  ): Promise<T> => {
+    const finalHeaders = { ...headers, ...options.headers };
+    const response = await fetch(`${baseURL}${url}`, {
+      ...options,
+      headers: finalHeaders,
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw response;
+    }
+
+    return response.json();
+  };
+
+  return fetcher;
+};
