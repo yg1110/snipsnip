@@ -10,17 +10,20 @@ import {
   layoutStyle,
 } from "@/app/ui/mainLayoutStyle";
 import FolderList from "./folderList";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 export default function Page() {
-  useEffect(() => {
-    if (!Cookies.get("accessToken")) {
-      location.href = "/login";
-    }
-  }, []);
+  const router = useRouter();
+
+  const onLogout = () => {
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+    Cookies.remove("id");
+    router.replace("/login");
+  };
   return (
     <Layout style={layoutStyle}>
       <Header style={headerStyle}>
@@ -34,7 +37,7 @@ export default function Page() {
             </Title>
           </Space>
           <Space>
-            <Button>Login</Button>
+            <Button onClick={onLogout}>Logout</Button>
           </Space>
         </Flex>
       </Header>

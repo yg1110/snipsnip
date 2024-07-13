@@ -14,3 +14,10 @@ export type RegisterRequest = {
   password: string;
   passwordConfirm: string;
 };
+
+export type User = {
+  id: number;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+};

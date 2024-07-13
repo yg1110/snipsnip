@@ -24,9 +24,9 @@ export class UserController {
   @Post('register')
   async createUser(
     @Body() createUserDto: { email: string; password: string },
-  ): Promise<Omit<User, 'password'>> {
+  ): Promise<Omit<User, 'password' | 'refreshToken'>> {
     const user = await this.userService.createUser(createUserDto.email, createUserDto.password);
-    const { password, ...result } = user;
+    const { password, refreshToken, ...result } = user;
     return result;
   }
 

@@ -3,10 +3,11 @@ import {
   addFolder,
   deleteFolder,
   login,
+  register,
   updateFolder,
 } from "@/app/lib/data/fetchingData";
 import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
-import { LoginRequest } from "../types/userTypes";
+import { LoginRequest, RegisterRequest } from "../types/userTypes";
 
 export const useAddFolder = () => {
   const queryClient = useQueryClient();
@@ -48,6 +49,14 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: (command: LoginRequest) => {
       return login(command);
+    },
+  });
+};
+
+export const useRegister = () => {
+  return useMutation({
+    mutationFn: (command: RegisterRequest) => {
+      return register(command);
     },
   });
 };

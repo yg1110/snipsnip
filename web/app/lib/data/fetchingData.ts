@@ -5,7 +5,7 @@ import {
   NewFolder,
 } from "@/app/lib/types/dataTypes";
 import generateApiClientFetcher from "../generateApiClientFetcher";
-import { LoginRequest } from "../types/userTypes";
+import { LoginRequest, RegisterRequest, User } from "../types/userTypes";
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   "Content-Type": "application/json",
@@ -85,6 +85,19 @@ export const login = async (command: LoginRequest) => {
     const response = await apiClient<void>("/auth/login", {
       method: "POST",
       body: JSON.stringify(command),
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Network response was not ok");
+  }
+};
+
+export const register = async (command: RegisterRequest) => {
+  const { passwordConfirm, ...rest } = command;
+  try {
+    const response = await apiClient<User>("/users/register", {
+      method: "POST",
+      body: JSON.stringify(rest),
     });
     return response;
   } catch (error) {

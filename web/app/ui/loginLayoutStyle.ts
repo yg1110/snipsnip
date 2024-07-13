@@ -29,3 +29,7 @@ export const flexStyle: React.CSSProperties = {
   justifyContent: "center",
   minHeight: "100vh",
 };
+
+export const submitButtonStyle: React.CSSProperties = {
+  marginTop: "20px",
+};

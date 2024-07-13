@@ -6,6 +6,7 @@ import {
   headerStyle,
   contentStyle,
   flexStyle,
+  submitButtonStyle,
 } from "@/app/ui/loginLayoutStyle";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -61,7 +62,13 @@ export default function Login() {
               <Input.Password size="large" placeholder="비밀번호" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" size="large" block htmlType="submit">
+              <Button
+                type="primary"
+                size="large"
+                block
+                htmlType="submit"
+                style={submitButtonStyle}
+              >
                 로그인
               </Button>
             </Form.Item>
