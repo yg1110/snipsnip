@@ -1,9 +1,6 @@
-import { Button, List } from "antd";
-import { FolderOutlined } from "@ant-design/icons";
+import { List } from "antd";
 import { useRootFolders } from "@/app/lib/data/query";
 import AddFolderModal from "./AddFolderModal";
-import DeleteFolderBtn from "./DeleteFolderBtn";
-import EditFolderBtn from "./EditFolderBtn";
 import FolderItem from "./FolderItem";
 
 export default function FolderList() {
@@ -17,13 +14,7 @@ export default function FolderList() {
         dataSource={rootFolders ?? []}
         loading={isLoading}
         renderItem={(item) => (
-          <List.Item
-            actions={[
-              <Button key="add-folder">add</Button>,
-              <EditFolderBtn key="edit-folder" folder={item} />,
-              <DeleteFolderBtn key="delete-folder" folderId={item.id} />,
-            ]}
-          >
+          <List.Item>
             <FolderItem folder={item} />
           </List.Item>
         )}
