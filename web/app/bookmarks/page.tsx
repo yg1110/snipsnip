@@ -9,7 +9,7 @@ import {
   imageColumnStyle,
   layoutStyle,
 } from "@/app/ui/mainLayoutStyle";
-import FolderList from "./tempFolderList";
+import FolderList from "./FolderList";
 import { useRouter } from "next/navigation";
 
 const { Header, Content } = Layout;
