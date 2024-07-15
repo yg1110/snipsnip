@@ -1,50 +1,48 @@
 import { useState } from "react";
-import { Button, Popconfirm, message } from "antd";
+import { Button, Modal, Space, message } from "antd";
 import { useDeleteFolder } from "@/app/lib/data/mutation";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 
 export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
   const [isOpen, setIsOpen] = useState(false);
   const deleteFolderMutation = useDeleteFolder();
 
-  const openPopconfirm = () => {
+  const openModal = () => {
     setIsOpen(true);
   };
 
-  const closePopconfirm = () => {
+  const closeModal = () => {
     setIsOpen(false);
   };
 
-  const handleOpenChange = (newOpen: boolean) => {
-    setIsOpen(newOpen);
-  };
-
-  const deleteFolder = (folderId: number) => {
+  const deleteFolder = () => {
     deleteFolderMutation.mutate(folderId, {
       onSuccess: () => {
         message.success("폴더가 삭제되었습니다.");
-        closePopconfirm();
+        closeModal();
       },
     });
   };
   return (
-    <Popconfirm
-      placement="right"
-      okType="danger"
-      title="정말로 삭제하시겠습니까?"
-      description="폴더를 삭제하면 포함된 즐겨찾기가 모두 제거됩니다."
-      okText="예"
-      cancelText="아니오"
-      open={isOpen}
-      onCancel={closePopconfirm}
-      onOpenChange={handleOpenChange}
-      okButtonProps={{
-        loading: deleteFolderMutation.isPending,
-        onClick: () => deleteFolder(folderId),
-      }}
-    >
-      <Button type="link" danger onClick={openPopconfirm}>
+    <>
+      <Button type="link" danger onClick={openModal}>
         delete
       </Button>
-    </Popconfirm>
+      <Modal
+        title={
+          <Space>
+            <ExclamationCircleFilled style={{ color: "#faad14" }} />
+            <p>폴더 삭제하기</p>
+          </Space>
+        }
+        open={isOpen}
+        onOk={deleteFolder}
+        onCancel={closeModal}
+        confirmLoading={deleteFolderMutation.isPending}
+      >
+        <p>폴더를 삭제하면 포함된 즐겨찾기가 모두 제거됩니다.</p>
+        <p>정말로 삭제하시겠습니까?</p>
+      </Modal>
+    </>
   );
 }
