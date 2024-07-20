@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
+import * as expressBasicAuth from 'express-basic-auth';
 
 import { AppModule } from './app.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -13,6 +14,14 @@ async function bootstrap() {
     logger: ['error', 'warn', 'log'],
   });
   app.setGlobalPrefix('api');
+
+  app.use(
+    ['/api'],
+    expressBasicAuth({
+      challenge: true,
+      users: { [process.env.SWAGGER_USER]: process.env.SWAGGER_PWD },
+    }),
+  );
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('SnipSnip Swagger')
