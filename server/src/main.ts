@@ -37,6 +37,6 @@ async function bootstrap() {
     },
   };
   SwaggerModule.setup('api', app, document, swaggerOptions);
-  await app.listen(8000);
+  await app.listen(30145);
 }
 bootstrap();

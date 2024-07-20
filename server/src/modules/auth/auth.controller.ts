@@ -33,12 +33,15 @@ export class AuthController {
     }
 
     res.cookie('accessToken', user.accessToken, {
+      domain: 'localhost',
       expires: new Date(Date.now() + Number(process.env.JWT_ACCESS_TOKEN_EXPIRES_IN)),
     });
     res.cookie('refreshToken', user.refreshToken, {
+      domain: 'localhost',
       expires: new Date(Date.now() + Number(process.env.JWT_REFRESH_TOKEN_EXPIRES_IN)),
     });
     res.cookie('id', user.id, {
+      domain: 'localhost',
       expires: new Date(Date.now() + Number(process.env.JWT_REFRESH_TOKEN_EXPIRES_IN)),
     });
     res.send({ id: user.id, accessToken: user.accessToken, refreshToken: user.refreshToken });
