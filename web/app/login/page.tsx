@@ -1,5 +1,6 @@
 "use client";
 
+import Cookies from "js-cookie";
 import { Button, Flex, Layout, Typography, Input, Form, message } from "antd";
 import {
   layoutStyle,
@@ -26,7 +27,30 @@ export default function Login() {
 
   const submit = (command: LoginRequest) => {
     loginMutation.mutate(command, {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        const {
+          accessToken: newAccessToken,
+          refreshToken: newRefreshToken,
+          id: newId,
+        } = response;
+        Cookies.set("accessToken", newAccessToken, {
+          expires: new Date(
+            Date.now() +
+              Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0
+          ),
+        });
+        Cookies.set("refreshToken", newRefreshToken, {
+          expires: new Date(
+            Date.now() +
+              Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0
+          ),
+        });
+        Cookies.set("id", newId.toString(), {
+          expires: new Date(
+            Date.now() +
+              Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0
+          ),
+        });
         router.push("/bookmarks");
       },
       onError: (err) => {

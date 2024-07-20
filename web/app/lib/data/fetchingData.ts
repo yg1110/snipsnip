@@ -5,7 +5,12 @@ import {
   NewFolder,
 } from "@/app/lib/types/dataTypes";
 import generateApiClientFetcher from "../generateApiClientFetcher";
-import { LoginRequest, RegisterRequest, User } from "../types/authTypes";
+import {
+  AuthTokensResponse,
+  LoginRequest,
+  RegisterRequest,
+  User,
+} from "../types/authTypes";
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   "Content-Type": "application/json",
@@ -82,7 +87,7 @@ export const fetchBookmarks = async (folderId: number) => {
 
 export const login = async (command: LoginRequest) => {
   try {
-    const response = await apiClient<void>("/auth/login", {
+    const response = await apiClient<AuthTokensResponse>("/auth/login", {
       method: "POST",
       body: JSON.stringify(command),
     });
