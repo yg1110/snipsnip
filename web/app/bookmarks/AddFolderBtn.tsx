@@ -6,7 +6,7 @@ import { FolderAddOutlined, FolderTwoTone } from "@ant-design/icons";
 const DEFAULT_FOLDER_NAME = "";
 const ENTER_KEYCODE = "Enter";
 
-export default function AddFolderModal() {
+export default function AddFolderBtn() {
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
   const [folderName, setFolderName] = useState(DEFAULT_FOLDER_NAME);
   const addFolderMutation = useAddFolder();
@@ -55,7 +55,7 @@ export default function AddFolderModal() {
       <Button
         type="dashed"
         size="large"
-        icon={<FolderAddOutlined />}
+        icon={<FolderAddOutlined style={{ fontSize: 22 }} />}
         onClick={openModal}
       />
       <Modal
