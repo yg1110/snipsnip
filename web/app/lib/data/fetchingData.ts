@@ -2,6 +2,7 @@ import {
   Bookmark,
   Folder,
   ModifiedFolder,
+  NewBookmark,
   NewFolder,
 } from "@/app/lib/types/dataTypes";
 import generateApiClientFetcher from "../generateApiClientFetcher";
@@ -103,6 +104,20 @@ export const register = async (command: RegisterRequest) => {
     const response = await apiClient<User>("/users/register", {
       method: "POST",
       body: JSON.stringify(rest),
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Network response was not ok");
+  }
+};
+
+export const addBookmark = async (newBookmark: NewBookmark) => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  try {
+    const response = await apiClient<Bookmark>("/bookmarks", {
+      method: "POST",
+      body: JSON.stringify(newBookmark),
     });
     return response;
   } catch (error) {
