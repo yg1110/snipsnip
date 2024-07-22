@@ -20,6 +20,9 @@ export class Bookmark {
   @Column()
   order: number;
 
+  @Column()
+  userId: number;
+
   @ManyToOne(() => Folder, (folder) => folder.bookmarks)
   @JoinColumn({ name: 'folderId' })
   folder: Folder;
