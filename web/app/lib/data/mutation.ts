@@ -2,12 +2,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   addBookmark,
   addFolder,
+  deleteBookmark,
   deleteFolder,
   login,
   register,
+  updateBookmark,
   updateFolder,
 } from "@/app/lib/data/fetchingData";
 import {
+  ModifiedBookmark,
   ModifiedFolder,
   NewBookmark,
   NewFolder,
@@ -72,6 +75,28 @@ export const useAddBookmark = () => {
   return useMutation({
     mutationFn: (newBookmark: NewBookmark) => {
       return addBookmark(newBookmark);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarks"] }),
+  });
+};
+
+export const useUpdateBookmark = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (modifiedBookmark: ModifiedBookmark) => {
+      return updateBookmark(modifiedBookmark);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarks"] }),
+  });
+};
+
+export const useDeleteBookmark = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (bookmarkId: number) => {
+      return deleteBookmark(bookmarkId);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarks"] }),
   });
