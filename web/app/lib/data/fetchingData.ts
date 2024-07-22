@@ -112,8 +112,6 @@ export const register = async (command: RegisterRequest) => {
 };
 
 export const addBookmark = async (newBookmark: NewBookmark) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   try {
     const response = await apiClient<Bookmark>("/bookmarks", {
       method: "POST",
