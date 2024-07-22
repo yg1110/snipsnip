@@ -68,17 +68,13 @@ export default function AddBookMarkBtn() {
         confirmLoading={addBookmarkMutation.isPending}
       >
         <Form name="add-bookmark" form={form}>
-          <Form.Item label="title" name="title">
+          <Form.Item label="제목" name="title">
             <Input />
           </Form.Item>
-          <Form.Item label="url" name="url" rules={[{ required: true }]}>
+          <Form.Item label="주소" name="url" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item
-            label="folderId"
-            name="folderId"
-            rules={[{ required: true }]}
-          >
+          <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="Select a folder">
               {rootFolders?.map((folder) => (
                 <Option key={folder.id} value={folder.id}>
