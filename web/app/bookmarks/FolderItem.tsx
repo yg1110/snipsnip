@@ -1,27 +1,15 @@
 import { useState } from "react";
 import { Button, Dropdown, Flex, List, MenuProps, Space } from "antd";
-import {
-  BookFilled,
-  FolderOutlined,
-  MoreOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { FolderOutlined, MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { Folder } from "@/app/lib/types/dataTypes";
 import { folderItemStyle } from "@/app/ui/folderPageStyles";
-import { useBookmarks, useChildFolders } from "@/app/lib/data/query";
 import EditFolderBtn from "./EditFolderBtn";
 import DeleteFolderBtn from "./DeleteFolderBtn";
+import BookmarkList from "./BookmarkList";
+import ChildFolderList from "./ChildFolderList";
 
 export default function FolderItem({ folder }: { folder: Folder }) {
   const [showChildren, setShowChildren] = useState(false);
-
-  const { data: childFolders, isLoading: isFoldersLoading } = useChildFolders(
-    folder.id
-  );
-
-  const { data: bookmarks, isLoading: isBookmarksLoading } = useBookmarks(
-    folder.id
-  );
 
   const folderMenuButtonGroup: MenuProps["items"] = [
     {
@@ -59,36 +47,8 @@ export default function FolderItem({ folder }: { folder: Folder }) {
       description={
         showChildren && (
           <>
-            {childFolders?.length ? (
-              <List
-                itemLayout="horizontal"
-                dataSource={childFolders}
-                loading={isFoldersLoading}
-                renderItem={(item) => (
-                  <List.Item actions={[<Button key="add-folder">add</Button>]}>
-                    <List.Item.Meta
-                      avatar={<FolderOutlined />}
-                      title={item.name}
-                    />
-                  </List.Item>
-                )}
-              />
-            ) : null}
-            {bookmarks?.length ? (
-              <List
-                itemLayout="horizontal"
-                dataSource={bookmarks}
-                loading={isBookmarksLoading}
-                renderItem={(item) => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<BookFilled />}
-                      title={item.title}
-                    />
-                  </List.Item>
-                )}
-              />
-            ) : null}
+            <ChildFolderList parentFolderId={folder.id} />
+            <BookmarkList folderId={folder.id} />
           </>
         )
       }
