@@ -10,8 +10,6 @@ type AddBookmarkFormValue = {
   folderId: number;
 };
 
-const { Option } = Select;
-
 export default function AddBookMarkBtn() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -77,9 +75,9 @@ export default function AddBookMarkBtn() {
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="Select a folder">
               {rootFolders?.map((folder) => (
-                <Option key={folder.id} value={folder.id}>
+                <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
-                </Option>
+                </Select.Option>
               ))}
             </Select>
           </Form.Item>
