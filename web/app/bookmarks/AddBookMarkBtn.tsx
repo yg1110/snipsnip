@@ -24,6 +24,7 @@ export default function AddBookMarkBtn() {
 
   const closeModal = () => {
     setIsOpen(false);
+    form.resetFields();
   };
 
   const onSubmit = () => {
@@ -35,16 +36,13 @@ export default function AddBookMarkBtn() {
 
     addBookmarkMutation.mutate(
       {
-        folderId: newBookmark.folderId,
-        title: newBookmark.title,
-        url: newBookmark.url,
+        ...newBookmark,
         order: 1,
       },
       {
         onSuccess: () => {
           message.success("새로운 즐겨찾기가 추가되었습니다.");
           closeModal();
-          form.resetFields();
         },
       }
     );
