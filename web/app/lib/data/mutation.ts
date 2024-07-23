@@ -1,12 +1,17 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
+  addBookmark,
   addFolder,
   deleteFolder,
   login,
   register,
   updateFolder,
 } from "@/app/lib/data/fetchingData";
-import { ModifiedFolder, NewFolder } from "@/app/lib/types/dataTypes";
+import {
+  ModifiedFolder,
+  NewBookmark,
+  NewFolder,
+} from "@/app/lib/types/dataTypes";
 import { LoginRequest, RegisterRequest } from "../types/authTypes";
 
 export const useAddFolder = () => {
@@ -58,5 +63,16 @@ export const useRegister = () => {
     mutationFn: (command: RegisterRequest) => {
       return register(command);
     },
+  });
+};
+
+export const useAddBookmark = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (newBookmark: NewBookmark) => {
+      return addBookmark(newBookmark);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarks"] }),
   });
 };

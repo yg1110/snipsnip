@@ -1,6 +1,7 @@
-import { List } from "antd";
+import { List, Space } from "antd";
 import { useRootFolders } from "@/app/lib/data/query";
-import AddFolderModal from "./AddFolderModal";
+import AddFolderBtn from "./AddFolderBtn";
+import AddBookMarkBtn from "./AddBookMarkBtn";
 import FolderItem from "./FolderItem";
 
 export default function FolderList() {
@@ -8,7 +9,10 @@ export default function FolderList() {
 
   return (
     <>
-      <AddFolderModal />
+      <Space>
+        <AddFolderBtn />
+        <AddBookMarkBtn />
+      </Space>
       <List
         itemLayout="horizontal"
         dataSource={rootFolders ?? []}
