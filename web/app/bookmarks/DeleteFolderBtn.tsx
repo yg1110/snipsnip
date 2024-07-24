@@ -23,6 +23,7 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
       },
     });
   };
+
   return (
     <>
       <Button type="link" danger onClick={openModal}>

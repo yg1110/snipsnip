@@ -1,6 +1,7 @@
 import {
   Bookmark,
   Folder,
+  ModifiedBookmark,
   ModifiedFolder,
   NewBookmark,
   NewFolder,
@@ -116,6 +117,32 @@ export const addBookmark = async (newBookmark: NewBookmark) => {
     const response = await apiClient<Bookmark>("/bookmarks", {
       method: "POST",
       body: JSON.stringify(newBookmark),
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Network response was not ok");
+  }
+};
+
+export const updateBookmark = async (modifiedBookmark: ModifiedBookmark) => {
+  try {
+    const response = await apiClient<Bookmark>(
+      `/bookmarks/${modifiedBookmark.id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(modifiedBookmark),
+      }
+    );
+    return response;
+  } catch (error) {
+    throw new Error("Network response was not ok");
+  }
+};
+
+export const deleteBookmark = async (bookmarkId: number) => {
+  try {
+    const response = await apiClient<void>(`/bookmarks/${bookmarkId}`, {
+      method: "DELETE",
     });
     return response;
   } catch (error) {

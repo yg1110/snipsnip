@@ -14,7 +14,7 @@ export type NewFolder = Pick<Folder, "name" | "order" | "parentFolderId">;
 
 export type ModifiedFolder = Partial<Folder>;
 
-export type MetaData = {
+export type Metadata = {
   id: number;
   url: string;
   title: Nullable<string>;
@@ -31,9 +31,11 @@ export type Bookmark = {
   createdAt: Nullable<Date>;
   updatedAt: Nullable<Date>;
   deletedAt: Nullable<Date>;
-  metaData: MetaData;
+  metadata: Metadata;
 };
 
 export type NewBookmark = Pick<Bookmark, "title" | "folderId" | "order"> & {
   url: string;
 };
+
+export type ModifiedBookmark = Partial<Bookmark>;
