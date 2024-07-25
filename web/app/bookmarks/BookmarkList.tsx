@@ -1,4 +1,3 @@
-import { BookFilled } from "@ant-design/icons";
 import { List } from "antd";
 import { useBookmarks } from "@/app/lib/data/query";
 import BookmarkItem from "./BookmarkItem";
