@@ -1,6 +1,7 @@
 import Cookies from "js-cookie";
 import { FetcherOptions, createFetcher } from "./createFetcher";
 import { AuthTokensResponse } from "./types/authTypes";
+import { ApiError, UnauthorizedError } from "../shared/ApiErrorGuard";
 
 const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
   const fetcher = createFetcher({ baseURL, headers });
@@ -61,29 +62,37 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
 
     try {
       return await fetcher<T>(url, options);
-    } catch (error: any) {
-      if (error.status === 401) {
-        const refreshToken = Cookies.get("refreshToken");
+    } catch (error) {
+      if (error instanceof UnauthorizedError) {
+        if (error.statusCode === 401) {
+          const refreshToken = Cookies.get("refreshToken");
+          if (refreshToken) {
+            try {
+              const newAccessToken = await refreshAccessToken(refreshToken);
 
-        if (refreshToken) {
-          try {
-            const newAccessToken = await refreshAccessToken(refreshToken);
+              options.headers = {
+                ...options.headers,
+                Authorization: `Bearer ${newAccessToken}`,
+              };
 
-            options.headers = {
-              ...options.headers,
-              Authorization: `Bearer ${newAccessToken}`,
-            };
-
-            return await fetcher<T>(url, options);
-          } catch (refreshError) {
-            console.error("Failed to refresh access token:", refreshError);
+              return await fetcher<T>(url, options);
+            } catch (refreshError) {
+              location.href = "/login";
+            }
+          } else {
             location.href = "/login";
           }
-        } else {
-          location.href = "/login";
         }
+        throw new ApiError(error.name, error.message, error.statusCode);
       }
-      throw error;
+      if (error instanceof ApiError) {
+        throw new ApiError(error.error, error.message, error.statusCode);
+      }
+      throw new ApiError(
+        "Unknown error",
+        "에러가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        500
+      );
     }
   };
 

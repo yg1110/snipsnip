@@ -13,6 +13,7 @@ import {
   RegisterRequest,
   User,
 } from "../types/authTypes";
+import { ApiErrorGuard } from "@/app/shared/ApiErrorGuard";
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   "Content-Type": "application/json",
@@ -20,132 +21,96 @@ const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
 });
 
 export const fetchRootFolders = async () => {
-  try {
-    const response = await apiClient<Folder[]>("/folders", {
+  return ApiErrorGuard(
+    apiClient<Folder[]>("/folders", {
       method: "GET",
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const fetchChildFolders = async (parentFolderId: number) => {
-  try {
-    const response = await apiClient<Folder[]>(`/folders/${parentFolderId}`, {
+  return ApiErrorGuard(
+    apiClient<Folder[]>(`/folders/${parentFolderId}`, {
       method: "GET",
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const addFolder = async (newFolder: NewFolder) => {
-  try {
-    const response = await apiClient<Folder>(`/folders`, {
+  return ApiErrorGuard(
+    apiClient<Folder>("/folders", {
       method: "POST",
       body: JSON.stringify(newFolder),
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
-  try {
-    const response = await apiClient<Folder>(`/folders/${modifiedFolder.id}`, {
+  return ApiErrorGuard(
+    apiClient<Folder>(`/folders/${modifiedFolder.id}`, {
       method: "PATCH",
       body: JSON.stringify(modifiedFolder),
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const deleteFolder = async (folderId: number) => {
-  try {
-    const response = await apiClient<void>(`/folders/${folderId}`, {
+  return ApiErrorGuard(
+    apiClient<void>(`/folders/${folderId}`, {
       method: "DELETE",
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const fetchBookmarks = async (folderId: number) => {
-  try {
-    const response = await apiClient<Bookmark[]>(`/bookmarks/${folderId}`, {
+  return ApiErrorGuard(
+    apiClient<Bookmark[]>(`/bookmarks/${folderId}`, {
       method: "GET",
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const login = async (command: LoginRequest) => {
-  try {
-    const response = await apiClient<AuthTokensResponse>("/auth/login", {
+  return ApiErrorGuard(
+    apiClient<AuthTokensResponse>("/auth/login", {
       method: "POST",
       body: JSON.stringify(command),
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const register = async (command: RegisterRequest) => {
   const { passwordConfirm, ...rest } = command;
-  try {
-    const response = await apiClient<User>("/users/register", {
+  return ApiErrorGuard(
+    apiClient<User>("/users/register", {
       method: "POST",
       body: JSON.stringify(rest),
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const addBookmark = async (newBookmark: NewBookmark) => {
-  try {
-    const response = await apiClient<Bookmark>("/bookmarks", {
+  return ApiErrorGuard(
+    apiClient<Bookmark>("/bookmarks", {
       method: "POST",
       body: JSON.stringify(newBookmark),
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
 
 export const updateBookmark = async (modifiedBookmark: ModifiedBookmark) => {
-  try {
-    const response = await apiClient<Bookmark>(
-      `/bookmarks/${modifiedBookmark.id}`,
-      {
-        method: "PATCH",
-        body: JSON.stringify(modifiedBookmark),
-      }
-    );
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+  return ApiErrorGuard(
+    apiClient<Bookmark>(`/bookmarks/${modifiedBookmark.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(modifiedBookmark),
+    })
+  );
 };
 
 export const deleteBookmark = async (bookmarkId: number) => {
-  try {
-    const response = await apiClient<void>(`/bookmarks/${bookmarkId}`, {
+  return ApiErrorGuard(
+    apiClient<void>(`/bookmarks/${bookmarkId}`, {
       method: "DELETE",
-    });
-    return response;
-  } catch (error) {
-    throw new Error("Network response was not ok");
-  }
+    })
+  );
 };
