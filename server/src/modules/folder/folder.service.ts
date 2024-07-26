@@ -31,6 +31,12 @@ export class FolderService {
           throw new NotFoundException('부모 폴더를 찾을 수 없습니다.');
         }
       }
+      const folder = await this.folderRepository.findOne({
+        where: { name: createFolderDto.name, userId: createFolderDto.userId },
+      });
+      if (folder) {
+        throw new InternalServerErrorException('이미 존재하는 폴더입니다.');
+      }
       return this.folderRepository.save(createFolderDto);
     } catch (error) {
       throw new InternalServerErrorException(error.message);

@@ -53,9 +53,6 @@ export default function Login() {
         });
         router.push("/bookmarks");
       },
-      onError: (err) => {
-        message.error("로그인에 실패했습니다.");
-      },
     });
   };
 

@@ -16,6 +16,7 @@ import {
   NewFolder,
 } from "@/app/lib/types/dataTypes";
 import { LoginRequest, RegisterRequest } from "../types/authTypes";
+import { message } from "antd";
 
 export const useAddFolder = () => {
   const queryClient = useQueryClient();
@@ -26,6 +27,10 @@ export const useAddFolder = () => {
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+    onError: (error) => {
+      const errorMessage = error?.message || "폴더 생성에 실패했습니다.";
+      message.error(errorMessage);
+    },
   });
 };
 
@@ -38,6 +43,10 @@ export const useUpdateFolder = () => {
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+    onError: (error) => {
+      const errorMessage = error?.message || "폴더 수정에 실패했습니다.";
+      message.error(errorMessage);
+    },
   });
 };
 
@@ -50,6 +59,10 @@ export const useDeleteFolder = () => {
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+    onError: (error) => {
+      const errorMessage = error?.message || "폴더 삭제에 실패했습니다.";
+      message.error(errorMessage);
+    },
   });
 };
 
@@ -58,6 +71,10 @@ export const useLogin = () => {
     mutationFn: (command: LoginRequest) => {
       return login(command);
     },
+    onError: (error) => {
+      const errorMessage = error?.message || "로그인에 실패했습니다.";
+      message.error(errorMessage);
+    },
   });
 };
 
@@ -65,6 +82,10 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: (command: RegisterRequest) => {
       return register(command);
+    },
+    onError: (error) => {
+      const errorMessage = error?.message || "회원가입에 실패했습니다.";
+      message.error(errorMessage);
     },
   });
 };
@@ -77,6 +98,10 @@ export const useAddBookmark = () => {
       return addBookmark(newBookmark);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarks"] }),
+    onError: (error) => {
+      const errorMessage = error?.message || "북마크 생성에 실패했습니다.";
+      message.error(errorMessage);
+    },
   });
 };
 
@@ -88,6 +113,10 @@ export const useUpdateBookmark = () => {
       return updateBookmark(modifiedBookmark);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarks"] }),
+    onError: (error) => {
+      const errorMessage = error?.message || "북마크 수정에 실패했습니다.";
+      message.error(errorMessage);
+    },
   });
 };
 
@@ -99,5 +128,9 @@ export const useDeleteBookmark = () => {
       return deleteBookmark(bookmarkId);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["bookmarks"] }),
+    onError: (error) => {
+      const errorMessage = error?.message || "북마크 삭제에 실패했습니다.";
+      message.error(errorMessage);
+    },
   });
 };
