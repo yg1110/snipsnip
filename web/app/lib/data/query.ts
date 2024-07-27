@@ -5,8 +5,8 @@ import {
   fetchRootFolders,
 } from "@/app/lib/data/fetchingData";
 import { Bookmark, Folder } from "@/app/lib/types/dataTypes";
-import { ApiError } from "@/app/shared/ApiErrorGuard";
 import { message } from "antd";
+import { ApiError } from "@/app/shared/ApiError";
 
 export const useRootFolders = () => {
   return useQuery<Folder[]>({
@@ -19,7 +19,7 @@ export const useRootFolders = () => {
         message.error(errorMessage);
         return false;
       }
-      return failureCount < 2;
+      return failureCount < 3;
     },
   });
 };
@@ -32,9 +32,10 @@ export const useChildFolders = (parentFolderId: number) => {
       if (error instanceof ApiError) {
         const errorMessage =
           error?.message || "하위 폴더 목록을 불러오는데 실패했습니다.";
+        message.error(errorMessage);
         return false;
       }
-      return failureCount < 2;
+      return failureCount < 3;
     },
   });
 };
@@ -47,9 +48,10 @@ export const useBookmarks = (parentFolderId: number) => {
       if (error instanceof ApiError) {
         const errorMessage =
           error?.message || "북마크 목록을 불러오는데 실패했습니다.";
+        message.error(errorMessage);
         return false;
       }
-      return failureCount < 2;
+      return failureCount < 3;
     },
   });
 };

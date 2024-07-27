@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { FetcherOptions, createFetcher } from "./createFetcher";
 import { AuthTokensResponse } from "./types/authTypes";
-import { ApiError, UnauthorizedError } from "../shared/ApiErrorGuard";
+import { ApiError } from "../shared/ApiError";
 
 const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
   const fetcher = createFetcher({ baseURL, headers });
@@ -63,7 +63,7 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
     try {
       return await fetcher<T>(url, options);
     } catch (error) {
-      if (error instanceof UnauthorizedError) {
+      if (error instanceof ApiError) {
         if (error.statusCode === 401) {
           const refreshToken = Cookies.get("refreshToken");
           if (refreshToken) {
@@ -83,16 +83,8 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
             location.href = "/login";
           }
         }
-        throw new ApiError(error.name, error.message, error.statusCode);
       }
-      if (error instanceof ApiError) {
-        throw new ApiError(error.error, error.message, error.statusCode);
-      }
-      throw new ApiError(
-        "Unknown error",
-        "에러가 발생했습니다. 잠시 후 다시 시도해주세요.",
-        500
-      );
+      throw error;
     }
   };
 

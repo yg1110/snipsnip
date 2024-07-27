@@ -13,7 +13,6 @@ import {
   RegisterRequest,
   User,
 } from "../types/authTypes";
-import { ApiErrorGuard } from "@/app/shared/ApiErrorGuard";
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   "Content-Type": "application/json",
@@ -21,96 +20,74 @@ const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
 });
 
 export const fetchRootFolders = async () => {
-  return ApiErrorGuard(
-    apiClient<Folder[]>("/folders", {
-      method: "GET",
-    })
-  );
+  return apiClient<Folder[]>("/folders", {
+    method: "GET",
+  });
 };
 
 export const fetchChildFolders = async (parentFolderId: number) => {
-  return ApiErrorGuard(
-    apiClient<Folder[]>(`/folders/${parentFolderId}`, {
-      method: "GET",
-    })
-  );
+  return apiClient<Folder[]>(`/folders/${parentFolderId}`, {
+    method: "GET",
+  });
 };
 
 export const addFolder = async (newFolder: NewFolder) => {
-  return ApiErrorGuard(
-    apiClient<Folder>("/folders", {
-      method: "POST",
-      body: JSON.stringify(newFolder),
-    })
-  );
+  return apiClient<Folder>("/folders", {
+    method: "POST",
+    body: JSON.stringify(newFolder),
+  });
 };
 
 export const updateFolder = async (modifiedFolder: ModifiedFolder) => {
-  return ApiErrorGuard(
-    apiClient<Folder>(`/folders/${modifiedFolder.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(modifiedFolder),
-    })
-  );
+  return apiClient<Folder>(`/folders/${modifiedFolder.id}`, {
+    method: "PATCH",
+    body: JSON.stringify(modifiedFolder),
+  });
 };
 
 export const deleteFolder = async (folderId: number) => {
-  return ApiErrorGuard(
-    apiClient<void>(`/folders/${folderId}`, {
-      method: "DELETE",
-    })
-  );
+  return apiClient<void>(`/folders/${folderId}`, {
+    method: "DELETE",
+  });
 };
 
 export const fetchBookmarks = async (folderId: number) => {
-  return ApiErrorGuard(
-    apiClient<Bookmark[]>(`/bookmarks/${folderId}`, {
-      method: "GET",
-    })
-  );
+  return apiClient<Bookmark[]>(`/bookmarks/${folderId}`, {
+    method: "GET",
+  });
 };
 
 export const login = async (command: LoginRequest) => {
-  return ApiErrorGuard(
-    apiClient<AuthTokensResponse>("/auth/login", {
-      method: "POST",
-      body: JSON.stringify(command),
-    })
-  );
+  return apiClient<AuthTokensResponse>("/auth/login", {
+    method: "POST",
+    body: JSON.stringify(command),
+  });
 };
 
 export const register = async (command: RegisterRequest) => {
   const { passwordConfirm, ...rest } = command;
-  return ApiErrorGuard(
-    apiClient<User>("/users/register", {
-      method: "POST",
-      body: JSON.stringify(rest),
-    })
-  );
+  return apiClient<User>("/users/register", {
+    method: "POST",
+    body: JSON.stringify(rest),
+  });
 };
 
 export const addBookmark = async (newBookmark: NewBookmark) => {
-  return ApiErrorGuard(
-    apiClient<Bookmark>("/bookmarks", {
-      method: "POST",
-      body: JSON.stringify(newBookmark),
-    })
-  );
+  return apiClient<Bookmark>("/bookmarks", {
+    method: "POST",
+    body: JSON.stringify(newBookmark),
+  });
 };
 
 export const updateBookmark = async (modifiedBookmark: ModifiedBookmark) => {
-  return ApiErrorGuard(
-    apiClient<Bookmark>(`/bookmarks/${modifiedBookmark.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(modifiedBookmark),
-    })
-  );
+  return apiClient<Bookmark>(`/bookmarks/${modifiedBookmark.id}`, {
+    method: "PATCH",
+    body: JSON.stringify(modifiedBookmark),
+  });
 };
 
 export const deleteBookmark = async (bookmarkId: number) => {
-  return ApiErrorGuard(
-    apiClient<void>(`/bookmarks/${bookmarkId}`, {
-      method: "DELETE",
-    })
-  );
+  return apiClient<void>(`/bookmarks/${bookmarkId}`, {
+    method: "DELETE",
+  });
 };
