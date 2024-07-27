@@ -6,6 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { validateUrl } from 'src/common/validtaion';
 import { Repository } from 'typeorm';
 
 import { FolderService } from '../folder/folder.service';
@@ -25,6 +26,9 @@ export class BookmarkService {
   ) {}
 
   async create(createBookmarkDto: CreateBookmarkDto) {
+    if (validateUrl(createBookmarkDto.url)) {
+      throw new InternalServerErrorException('유효하지 않은 URL입니다.');
+    }
     const folder = await this.folderService.findOne(
       createBookmarkDto.folderId,
       createBookmarkDto.userId,
@@ -86,6 +90,9 @@ export class BookmarkService {
         throw new NotFoundException('북마크를 찾을 수 없습니다.');
       }
       if (updateBookmarkDto.url !== null) {
+        if (validateUrl(updateBookmarkDto.url)) {
+          throw new InternalServerErrorException('유효하지 않은 URL입니다.');
+        }
         const metadata = await this.metadataService.create({
           url: updateBookmarkDto.url,
         });
