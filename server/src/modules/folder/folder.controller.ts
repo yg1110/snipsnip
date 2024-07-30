@@ -1,12 +1,23 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  InternalServerErrorException,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { CreateFolderDto, UpdateFolderDto } from './dto/foler.dto';
 import { FolderService } from './folder.service';
 
 @ApiTags('Folders')
-@Controller('folders')
+@Controller()
 export class FolderController {
   constructor(private readonly folderService: FolderService) {}
 
@@ -24,7 +35,7 @@ export class FolderController {
   })
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
-  @Post()
+  @Post('folders')
   async createFolder(@Body() createFolderDto: CreateFolderDto, @Req() req) {
     const userId = req.user.id;
     return this.folderService.create({ ...createFolderDto, userId });
@@ -48,7 +59,7 @@ export class FolderController {
   })
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
-  @Get()
+  @Get('folders')
   findAll(@Req() req) {
     const userId = req.user.id;
     return this.folderService.findAllRoot(userId);
@@ -71,8 +82,8 @@ export class FolderController {
   })
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
-  @Get(':id')
-  findOne(@Param('id') id: number, @Req() req) {
+  @Get('folders/:id')
+  findSubFolders(@Param('id') id: number, @Req() req) {
     const userId = req.user.id;
     return this.folderService.findSubFolders(id, userId);
   }
@@ -91,7 +102,7 @@ export class FolderController {
   })
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
-  @Patch(':id')
+  @Patch('folders/:id')
   update(@Param('id') id: number, @Body() updateFolderDto: UpdateFolderDto, @Req() req) {
     const userId = req.user.id;
     return this.folderService.update(id, userId, updateFolderDto);
@@ -102,9 +113,35 @@ export class FolderController {
   })
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
-  @Delete(':id')
+  @Delete('folders/:id')
   remove(@Param('id') id: number, @Req() req) {
     const userId = req.user.id;
     return this.folderService.remove(id, userId);
+  }
+
+  @ApiOperation({
+    summary: '폴더 상세 조회하기',
+    description: `
+    {
+      "id": 2,
+      "name": "폴더 이름2",
+      "parentFolderId": 1,
+      "order": 1,
+      "createdAt": "2024-05-30T06:06:52.000Z",
+      "updatedAt": "2024-05-30T06:06:52.000Z",
+      "deletedAt": null
+    }`,
+  })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/folder/:id')
+  @ApiResponse({ type: 'null' })
+  async findOne(@Param('id') id: number, @Req() req) {
+    const userId = req.user.id;
+    const folder = await this.folderService.findOne(id, userId);
+    if (!folder) {
+      throw new InternalServerErrorException('폴더가 존재하지 않습니다.');
+    }
+    return folder;
   }
 }

@@ -58,11 +58,12 @@ export class BookmarkService {
       .getMany();
   }
 
-  async findOne(id: number): Promise<Bookmark> {
+  async findOne(id: number, userId: number): Promise<Bookmark> {
     const bookmark = await this.bookmarkRepository
       .createQueryBuilder('bookmark')
       .leftJoinAndSelect('bookmark.metadata', 'metadata')
       .where('bookmark.id = :id', { id })
+      .andWhere('bookmark.userId = :userId', { userId })
       .andWhere('bookmark.deletedAt IS NULL')
       .orderBy('bookmark.order', 'ASC')
       .getOne();
@@ -108,7 +109,7 @@ export class BookmarkService {
         bookmark.order = updateBookmarkDto.order;
       }
       await this.bookmarkRepository.save(bookmark);
-      return this.findOne(id);
+      return this.findOne(id, userId);
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }
