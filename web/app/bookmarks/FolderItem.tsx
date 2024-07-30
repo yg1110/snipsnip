@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button, Dropdown, Flex, List, MenuProps, Space } from "antd";
-import { FolderOutlined, MoreOutlined, PlusOutlined } from "@ant-design/icons";
+import { FolderOutlined, MoreOutlined } from "@ant-design/icons";
 import { Folder } from "@/app/lib/types/dataTypes";
 import { folderItemStyle } from "@/app/ui/folderPageStyles";
 import EditFolderBtn from "./EditFolderBtn";
 import DeleteFolderBtn from "./DeleteFolderBtn";
 import BookmarkList from "./BookmarkList";
 import ChildFolderList from "./ChildFolderList";
+import AddChildBtnGroup from "./AddChildBtnGroup";
 
 export default function FolderItem({ folder }: { folder: Folder }) {
   const [showChildren, setShowChildren] = useState(false);
@@ -34,7 +35,7 @@ export default function FolderItem({ folder }: { folder: Folder }) {
             {folder.name}
           </Space>
           <Space direction="horizontal">
-            <Button type="text" icon={<PlusOutlined />} size="small" />
+            <AddChildBtnGroup parentFolderId={folder.id} folderAddable />
             <Dropdown
               menu={{ items: folderMenuButtonGroup }}
               trigger={["click"]}

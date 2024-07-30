@@ -2,9 +2,13 @@ import { useState } from "react";
 import { useAddFolder } from "@/app/lib/data/mutation";
 import { Button, Input, Modal, message } from "antd";
 import { FolderAddOutlined, FolderTwoTone } from "@ant-design/icons";
-import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from "@/app/shared/constants";
+import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from "../shared/constants";
 
-export default function AddFolderBtn() {
+export default function AddChildFolderBtn({
+  parentFolderId,
+}: {
+  parentFolderId: number;
+}) {
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
   const [folderName, setFolderName] = useState(DEFAULT_FOLDER_NAME);
   const addFolderMutation = useAddFolder();
@@ -27,7 +31,7 @@ export default function AddFolderBtn() {
       {
         name: folderName,
         order: 10,
-        parentFolderId: null,
+        parentFolderId,
       },
       {
         onSuccess: () => {
@@ -50,12 +54,9 @@ export default function AddFolderBtn() {
 
   return (
     <>
-      <Button
-        type="dashed"
-        size="large"
-        icon={<FolderAddOutlined style={{ fontSize: 22 }} />}
-        onClick={openModal}
-      />
+      <Button size="small" icon={<FolderAddOutlined />} onClick={openModal}>
+        폴더
+      </Button>
       <Modal
         title="새 폴더 추가하기"
         open={addFolderModalOpen}

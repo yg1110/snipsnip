@@ -25,8 +25,10 @@ export const useAddFolder = () => {
     mutationFn: (newFolder: NewFolder) => {
       return addFolder(newFolder);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] });
+      queryClient.invalidateQueries({ queryKey: ["childFolders"] });
+    },
     onError: (error) => {
       const errorMessage = error?.message || "폴더 생성에 실패했습니다.";
       message.error(errorMessage);
@@ -41,8 +43,10 @@ export const useUpdateFolder = () => {
     mutationFn: (modifiedFolder: ModifiedFolder) => {
       return updateFolder(modifiedFolder);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] });
+      queryClient.invalidateQueries({ queryKey: ["childFolders"] });
+    },
     onError: (error) => {
       const errorMessage = error?.message || "폴더 수정에 실패했습니다.";
       message.error(errorMessage);
@@ -57,8 +61,10 @@ export const useDeleteFolder = () => {
     mutationFn: (folderId: number) => {
       return deleteFolder(folderId);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["rootFolders"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rootFolders"] });
+      queryClient.invalidateQueries({ queryKey: ["childFolders"] });
+    },
     onError: (error) => {
       const errorMessage = error?.message || "폴더 삭제에 실패했습니다.";
       message.error(errorMessage);

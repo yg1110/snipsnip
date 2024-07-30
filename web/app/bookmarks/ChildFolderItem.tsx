@@ -5,6 +5,7 @@ import { Folder } from "@/app/lib/types/dataTypes";
 import BookmarkList from "./BookmarkList";
 import EditFolderBtn from "./EditFolderBtn";
 import DeleteFolderBtn from "./DeleteFolderBtn";
+import AddChildBtnGroup from "./AddChildBtnGroup";
 
 export default function ChildFolderItem({ folder }: { folder: Folder }) {
   const [showChildren, setShowChildren] = useState(false);
@@ -30,7 +31,7 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
               {folder.name}
             </Space>
             <Space direction="horizontal">
-              <Button type="text" icon={<PlusOutlined />} size="small" />
+              <AddChildBtnGroup parentFolderId={folder.id} />
               <Dropdown
                 menu={{ items: folderMenuButtonGroup }}
                 trigger={["click"]}
