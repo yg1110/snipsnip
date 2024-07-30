@@ -31,6 +31,12 @@ export const fetchChildFolders = async (parentFolderId: number) => {
   });
 };
 
+export const fetchFolder = async (folderId: number) => {
+  return apiClient<Folder>(`/folder/${folderId}`, {
+    method: "GET",
+  });
+};
+
 export const addFolder = async (newFolder: NewFolder) => {
   return apiClient<Folder>("/folders", {
     method: "POST",
