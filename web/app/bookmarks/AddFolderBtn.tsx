@@ -2,9 +2,7 @@ import { useState } from "react";
 import { useAddFolder } from "@/app/lib/data/mutation";
 import { Button, Input, Modal, message } from "antd";
 import { FolderAddOutlined, FolderTwoTone } from "@ant-design/icons";
-
-const DEFAULT_FOLDER_NAME = "";
-const ENTER_KEYCODE = "Enter";
+import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from "@/app/shared/constants";
 
 export default function AddFolderBtn() {
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
