@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { FolderOutlined, MoreOutlined } from '@ant-design/icons';
+import { FolderOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
 import { Folder } from '@/app/lib/types/dataTypes';
 import BookmarkList from './BookmarkList';
 import EditFolderBtn from './EditFolderBtn';
 import DeleteFolderBtn from './DeleteFolderBtn';
-import AddChildBtnGroup from './AddChildBtnGroup';
+import AddChildBookmarkCBtn from './AddChildBookmarkBtn';
 
 export default function ChildFolderItem({ folder }: { folder: Folder }) {
   const [showChildren, setShowChildren] = useState(false);
@@ -21,6 +21,13 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
     },
   ];
 
+  const folderUnAddableGruop: MenuProps['items'] = [
+    {
+      label: <AddChildBookmarkCBtn parentFolderId={folder.id} />,
+      key: '0',
+    },
+  ];
+
   return (
     <List.Item>
       <List.Item.Meta
@@ -31,7 +38,12 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
               {folder.name}
             </Space>
             <Space direction="horizontal">
-              <AddChildBtnGroup parentFolderId={folder.id} />
+              <Dropdown
+                menu={{ items: folderUnAddableGruop }}
+                trigger={['click']}
+              >
+                <Button type="text" icon={<PlusOutlined />} size="small" />
+              </Dropdown>
               <Dropdown
                 menu={{ items: folderMenuButtonGroup }}
                 trigger={['click']}

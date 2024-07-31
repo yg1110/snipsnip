@@ -27,7 +27,7 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
   return (
     <>
       <Button type="link" danger onClick={openModal}>
-        delete
+        폴더 삭제
       </Button>
       <Modal
         title={

@@ -56,8 +56,8 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
 
   return (
     <>
-      <Button type="link" onClick={openModal}>
-        edit
+      <Button type="link" onClick={openModal} style={{ color: "#faad14" }}>
+        북마크 수정
       </Button>
       <Modal
         title="북마크 정보 수정"

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
-import { BookOutlined } from '@ant-design/icons';
 import { useChildFolders, useFolder } from '@/app/lib/data/query';
 import { useAddBookmark } from '@/app/lib/data/mutation';
 
@@ -61,8 +60,8 @@ export default function AddChildBookmarkCBtn({
 
   return (
     <>
-      <Button size="small" icon={<BookOutlined />} onClick={openModal}>
-        북마크
+      <Button type="link" onClick={openModal}>
+        북마크 추가
       </Button>
       <Modal
         title="새 북마크 추가하기"

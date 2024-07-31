@@ -52,8 +52,8 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
 
   return (
     <>
-      <Button type="link" onClick={openModal}>
-        edit
+      <Button type="link" onClick={openModal} style={{ color: "#f59f00" }}>
+        폴더 수정
       </Button>
       <Modal
         title="폴더명 변경하기"

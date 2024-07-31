@@ -31,7 +31,7 @@ export default function DeleteBookmarkBtn({
   return (
     <>
       <Button type="link" danger onClick={openModal}>
-        delete
+        북마크 삭제
       </Button>
       <Modal
         title={

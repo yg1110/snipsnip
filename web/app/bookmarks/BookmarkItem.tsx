@@ -1,5 +1,5 @@
 import { MoreOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Flex, List, MenuProps, Typography } from 'antd';
+import { Button, Dropdown, Flex, List, MenuProps } from 'antd';
 import { Bookmark } from '@/app/lib/types/dataTypes';
 import EditBookmarkBtn from './EditBookmarkBtn';
 import DeleteBookmarkBtn from './DeleteBookmarkBtn';
@@ -44,7 +44,6 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
                   {bookmark.metadata.description || '-'}
                 </p>
               </Flex>
-              <Typography.Text></Typography.Text>
             </Flex>
             <Dropdown
               menu={{ items: bookmarkMenuButtonGroup }}

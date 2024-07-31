@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAddFolder } from '@/app/lib/data/mutation';
 import { Button, Input, Modal, message } from 'antd';
-import { FolderAddOutlined, FolderTwoTone } from '@ant-design/icons';
+import { FolderTwoTone } from '@ant-design/icons';
 import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from '../shared/constants';
 
 export default function AddChildFolderBtn({
@@ -54,8 +54,8 @@ export default function AddChildFolderBtn({
 
   return (
     <>
-      <Button size="small" icon={<FolderAddOutlined />} onClick={openModal}>
-        폴더
+      <Button type="link" onClick={openModal}>
+        폴더 추가
       </Button>
       <Modal
         title="새 폴더 추가하기"

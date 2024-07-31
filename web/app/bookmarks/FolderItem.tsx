@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
-import { FolderOutlined, MoreOutlined } from '@ant-design/icons';
+import { FolderOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
 import { Folder } from '@/app/lib/types/dataTypes';
 import { folderItemStyle } from '@/app/ui/folderPageStyles';
 import EditFolderBtn from './EditFolderBtn';
 import DeleteFolderBtn from './DeleteFolderBtn';
 import BookmarkList from './BookmarkList';
 import ChildFolderList from './ChildFolderList';
-import AddChildBtnGroup from './AddChildBtnGroup';
+import AddChildBookmarkCBtn from './AddChildBookmarkBtn';
+import AddChildFolderBtn from './AddChildFolderBtn';
 
 export default function FolderItem({ folder }: { folder: Folder }) {
   const [showChildren, setShowChildren] = useState(false);
@@ -19,6 +20,17 @@ export default function FolderItem({ folder }: { folder: Folder }) {
     },
     {
       label: <DeleteFolderBtn folderId={folder.id} />,
+      key: '1',
+    },
+  ];
+
+  const folderAddableGruop: MenuProps['items'] = [
+    {
+      label: <AddChildFolderBtn parentFolderId={folder.id} />,
+      key: '0',
+    },
+    {
+      label: <AddChildBookmarkCBtn parentFolderId={folder.id} />,
       key: '1',
     },
   ];
@@ -35,7 +47,9 @@ export default function FolderItem({ folder }: { folder: Folder }) {
             {folder.name}
           </Space>
           <Space direction="horizontal">
-            <AddChildBtnGroup parentFolderId={folder.id} folderAddable />
+            <Dropdown menu={{ items: folderAddableGruop }} trigger={['click']}>
+              <Button type="text" icon={<PlusOutlined />} size="small" />
+            </Dropdown>
             <Dropdown
               menu={{ items: folderMenuButtonGroup }}
               trigger={['click']}
