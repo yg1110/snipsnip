@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Input, Modal, Select, message } from "antd";
-import { BookOutlined } from "@ant-design/icons";
+import { BookFilled, BookOutlined } from "@ant-design/icons";
 import { useRootFolders } from "@/app/lib/data/query";
 import { useAddBookmark } from "@/app/lib/data/mutation";
 
@@ -50,12 +50,9 @@ export default function AddBookMarkBtn() {
 
   return (
     <>
-      <Button
-        type="dashed"
-        size="large"
-        icon={<BookOutlined style={{ fontSize: 22 }} />}
-        onClick={openModal}
-      />
+      <Button type="primary" icon={<BookFilled />} onClick={openModal}>
+        북마크
+      </Button>
       <Modal
         title="새 북마크 추가하기"
         open={isOpen}

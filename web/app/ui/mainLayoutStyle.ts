@@ -2,8 +2,6 @@ export const layoutStyle: React.CSSProperties = {
   borderRadius: 8,
   overflow: "hidden",
   backgroundColor: "#ffffff",
-  marginLeft: 60,
-  marginRight: 60,
 };
 
 export const headerStyle: React.CSSProperties = {
@@ -11,13 +9,27 @@ export const headerStyle: React.CSSProperties = {
   backgroundColor: "#e0e0e0",
 };
 
-export const folderTreeColumnStyle: React.CSSProperties = {
-  paddingLeft: 36,
-  paddingTop: 20,
-};
-
 export const imageColumnStyle: React.CSSProperties = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+};
+
+export const flexStyle: React.CSSProperties = {
+  alignItems: "center",
+  justifyContent: "center",
+  height: "100vh",
+  width: "60vw",
+  margin: "0 auto",
+};
+
+export const contentStyle: React.CSSProperties = {
+  height: "80vh",
+  overflow: "auto",
+  background: "white",
+};
+
+export const logoStyle: React.CSSProperties = {
+  fontFamily: "ONE-Mobile-POP",
+  marginBottom: 0,
 };
