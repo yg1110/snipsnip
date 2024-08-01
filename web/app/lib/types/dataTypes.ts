@@ -5,6 +5,8 @@ export type Folder = {
   name: string;
   order: number;
   parentFolderId: Nullable<number>;
+  subFolderCount: number;
+  bookmarkCount: number;
   createdAt: Nullable<Date>;
   updatedAt: Nullable<Date>;
   deletedAt: Nullable<Date>;

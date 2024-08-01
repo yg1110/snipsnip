@@ -16,3 +16,8 @@ export const folderButtonStyle: React.CSSProperties = {
 export const folderListStyle: React.CSSProperties = {
   padding: '12px 20px 8px 20px',
 };
+
+export const folderCountStyle: React.CSSProperties = {
+  fontSize: 12,
+  color: '#4263eb',
+};

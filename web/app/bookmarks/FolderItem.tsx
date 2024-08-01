@@ -8,7 +8,7 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { Folder } from '@/app/lib/types/dataTypes';
-import { folderItemStyle } from '@/app/ui/folderPageStyles';
+import { folderCountStyle, folderItemStyle } from '@/app/ui/folderPageStyles';
 import EditFolderBtn from './EditFolderBtn';
 import DeleteFolderBtn from './DeleteFolderBtn';
 import BookmarkList from './BookmarkList';
@@ -46,14 +46,20 @@ export default function FolderItem({ folder }: { folder: Folder }) {
       avatar={
         showChildren ? (
           <Flex gap="4px">
-            <CaretDownOutlined onClick={() => setShowChildren(prev => !prev)} />
+            {folder.subFolderCount + folder.bookmarkCount > 0 && (
+              <CaretDownOutlined
+                onClick={() => setShowChildren(prev => !prev)}
+              />
+            )}
             <FolderOutlined />
           </Flex>
         ) : (
           <Flex gap="4px">
-            <CaretRightOutlined
-              onClick={() => setShowChildren(prev => !prev)}
-            />
+            {folder.subFolderCount + folder.bookmarkCount > 0 && (
+              <CaretRightOutlined
+                onClick={() => setShowChildren(prev => !prev)}
+              />
+            )}
             <FolderOutlined />
           </Flex>
         )
@@ -65,6 +71,9 @@ export default function FolderItem({ folder }: { folder: Folder }) {
             style={folderItemStyle}
           >
             {folder.name}
+            {folder.bookmarkCount > 0 && (
+              <span style={folderCountStyle}>({folder.bookmarkCount})</span>
+            )}
           </Space>
           <Space direction="horizontal">
             <Dropdown menu={{ items: folderAddableGruop }} trigger={['click']}>

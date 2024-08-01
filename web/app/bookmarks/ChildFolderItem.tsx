@@ -12,6 +12,7 @@ import BookmarkList from './BookmarkList';
 import EditFolderBtn from './EditFolderBtn';
 import DeleteFolderBtn from './DeleteFolderBtn';
 import AddChildBookmarkCBtn from './AddChildBookmarkBtn';
+import { folderCountStyle } from '../ui/folderPageStyles';
 
 export default function ChildFolderItem({ folder }: { folder: Folder }) {
   const [showChildren, setShowChildren] = useState(false);
@@ -40,16 +41,20 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
         avatar={
           showChildren ? (
             <Flex gap="4px">
-              <CaretDownOutlined
-                onClick={() => setShowChildren(prev => !prev)}
-              />
+              {folder.subFolderCount + folder.bookmarkCount > 0 && (
+                <CaretDownOutlined
+                  onClick={() => setShowChildren(prev => !prev)}
+                />
+              )}
               <FolderOutlined />
             </Flex>
           ) : (
             <Flex gap="4px">
-              <CaretRightOutlined
-                onClick={() => setShowChildren(prev => !prev)}
-              />
+              {folder.subFolderCount + folder.bookmarkCount > 0 && (
+                <CaretRightOutlined
+                  onClick={() => setShowChildren(prev => !prev)}
+                />
+              )}
               <FolderOutlined />
             </Flex>
           )
@@ -58,6 +63,9 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
           <Flex justify="space-between">
             <Space onClick={() => setShowChildren(prev => !prev)}>
               {folder.name}
+              {folder.bookmarkCount > 0 && (
+                <span style={folderCountStyle}>({folder.bookmarkCount})</span>
+              )}
             </Space>
             <Space direction="horizontal">
               <Dropdown
