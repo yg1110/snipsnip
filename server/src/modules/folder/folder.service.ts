@@ -49,8 +49,18 @@ export class FolderService {
     }
   }
 
-  async findAllRoot(userId: number): Promise<Folder[]> {
+  async findSubFolderCount(userId: number, parentFolderId: number): Promise<number> {
     return this.folderRepository
+      .createQueryBuilder('folder')
+      .select()
+      .where('folder.userId = :userId', { userId })
+      .andWhere('folder.parentFolderId = :parentFolderId', { parentFolderId })
+      .andWhere('folder.deletedAt IS NULL')
+      .getCount();
+  }
+
+  async findAllRoot(userId: number): Promise<Folder[]> {
+    const folders = await this.folderRepository
       .createQueryBuilder('folder')
       .select()
       .where('folder.userId = :userId', { userId })
@@ -58,10 +68,24 @@ export class FolderService {
       .andWhere('folder.deletedAt IS NULL')
       .orderBy('folder.order', 'ASC')
       .getMany();
+
+    const folderWithCount = await Promise.all(
+      folders.map(async (folder) => {
+        const subFolderCount = await this.findSubFolderCount(userId, folder.id);
+        const bookmarkCount = await this.bookmarkService.findBookmarkCount(userId, folder.id);
+        return {
+          ...folder,
+          subFolderCount,
+          bookmarkCount,
+        };
+      }),
+    );
+
+    return folderWithCount;
   }
 
   async findSubFolders(parentFolderId: number, userId: number): Promise<Folder[]> {
-    return this.folderRepository
+    const subFolders = await this.folderRepository
       .createQueryBuilder('folder')
       .select()
       .where('folder.userId = :userId', { userId })
@@ -69,6 +93,19 @@ export class FolderService {
       .andWhere('folder.deletedAt IS NULL')
       .orderBy('folder.order', 'ASC')
       .getMany();
+
+    const subFolderWithCount = await Promise.all(
+      subFolders.map(async (folder) => {
+        const bookmarkCount = await this.bookmarkService.findBookmarkCount(userId, folder.id);
+        return {
+          ...folder,
+          subFolderCount: 0,
+          bookmarkCount,
+        };
+      }),
+    );
+
+    return subFolderWithCount;
   }
 
   async findOne(id: number, userId: number): Promise<Folder> {

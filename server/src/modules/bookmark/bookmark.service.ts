@@ -146,4 +146,14 @@ export class BookmarkService {
       throw new InternalServerErrorException(error.message);
     }
   }
+
+  async findBookmarkCount(userId: number, folderId: number): Promise<number> {
+    return await this.bookmarkRepository
+      .createQueryBuilder('bookmark')
+      .select()
+      .where('bookmark.userId = :userId', { userId })
+      .andWhere('bookmark.folderId = :folderId', { folderId })
+      .andWhere('bookmark.deletedAt IS NULL')
+      .getCount();
+  }
 }
