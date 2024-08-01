@@ -12,7 +12,7 @@ export type FetcherOptions = RequestInit & {
 export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
   const fetcher = async <T>(
     url: string,
-    options: FetcherOptions = {}
+    options: FetcherOptions = {},
   ): Promise<T> => {
     const finalHeaders = { ...headers, ...options.headers };
 
@@ -40,7 +40,7 @@ export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
         }
         throw new ApiError(
           "에러가 발생했습니다. 잠시 후 다시 시도해주세요.",
-          500
+          500,
         );
       }
     }

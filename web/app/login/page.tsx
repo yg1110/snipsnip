@@ -36,19 +36,19 @@ export default function Login() {
         Cookies.set("accessToken", newAccessToken, {
           expires: new Date(
             Date.now() +
-              Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0
+              Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0,
           ),
         });
         Cookies.set("refreshToken", newRefreshToken, {
           expires: new Date(
             Date.now() +
-              Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0
+              Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
           ),
         });
         Cookies.set("id", newId.toString(), {
           expires: new Date(
             Date.now() +
-              Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0
+              Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
           ),
         });
         router.push("/bookmarks");

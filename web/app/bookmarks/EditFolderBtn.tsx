@@ -36,7 +36,7 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
           message.success("폴더명이 수정되었습니다.");
           closeModal();
         },
-      }
+      },
     );
   };
 

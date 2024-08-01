@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Input, Modal, Select, message } from "antd";
-import { BookFilled, BookOutlined } from "@ant-design/icons";
+import { BookFilled } from "@ant-design/icons";
 import { useRootFolders } from "@/app/lib/data/query";
 import { useAddBookmark } from "@/app/lib/data/mutation";
 
@@ -44,7 +44,7 @@ export default function AddBookMarkBtn() {
           message.success("새로운 즐겨찾기가 추가되었습니다.");
           closeModal();
         },
-      }
+      },
     );
   };
 

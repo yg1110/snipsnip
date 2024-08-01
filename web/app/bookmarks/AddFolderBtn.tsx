@@ -38,7 +38,7 @@ export default function AddFolderBtn() {
           message.success("새로운 폴더가 생성되었습니다.");
           closeModal();
         },
-      }
+      },
     );
   };
 
