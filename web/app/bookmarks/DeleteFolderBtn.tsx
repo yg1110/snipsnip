@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Button, Modal, Space, message } from "antd";
-import { useDeleteFolder } from "@/app/lib/data/mutation";
-import { ExclamationCircleFilled } from "@ant-design/icons";
+import { useState } from 'react';
+import { Button, Modal, Space, message } from 'antd';
+import { useDeleteFolder } from '@/app/lib/data/mutation';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 
 export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
   const deleteFolder = () => {
     deleteFolderMutation.mutate(folderId, {
       onSuccess: () => {
-        message.success("폴더가 삭제되었습니다.");
+        message.success('폴더가 삭제되었습니다.');
         closeModal();
       },
     });
@@ -32,7 +32,7 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
       <Modal
         title={
           <Space>
-            <ExclamationCircleFilled style={{ color: "#faad14" }} />
+            <ExclamationCircleFilled style={{ color: '#faad14' }} />
             <p>폴더 삭제하기</p>
           </Space>
         }

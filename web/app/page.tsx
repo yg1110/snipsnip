@@ -1,15 +1,14 @@
-"use client";
+'use client';
 
-import Cookies from "js-cookie";
-
-import { useEffect } from "react";
+import Cookies from 'js-cookie';
+import { useEffect } from 'react';
 
 export default function Home() {
   useEffect(() => {
-    if (Cookies.get("accessToken")) {
-      location.href = "/bookmarks";
+    if (Cookies.get('accessToken')) {
+      location.href = '/bookmarks';
     } else {
-      location.href = "/login";
+      location.href = '/login';
     }
   }, []);
   return <></>;

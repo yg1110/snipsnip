@@ -5,14 +5,14 @@ export const folderItemStyle: React.CSSProperties = {
 };
 
 export const folderButtonStyle: React.CSSProperties = {
-  position: "sticky",
-  background: "white",
-  padding: "20px 20px 0 20px",
+  position: 'sticky',
+  background: 'white',
+  padding: '20px 20px 0 20px',
   zIndex: 1,
   top: 0,
-  alignItems: "right",
+  alignItems: 'right',
 };
 
 export const folderListStyle: React.CSSProperties = {
-  padding: "12px 20px 8px 20px",
+  padding: '12px 20px 8px 20px',
 };

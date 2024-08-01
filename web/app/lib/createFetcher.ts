@@ -1,4 +1,4 @@
-import { ApiError } from "../shared/ApiError";
+import { ApiError } from '../shared/ApiError';
 
 type FetcherProps = {
   baseURL: string;
@@ -19,7 +19,7 @@ export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
     const response = await fetch(`${baseURL}${url}`, {
       ...options,
       headers: finalHeaders,
-      credentials: "include",
+      credentials: 'include',
       signal: AbortSignal.timeout(2000),
     });
 
@@ -30,7 +30,7 @@ export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
         throw new ApiError(error.message, error.statusCode);
       } catch (error) {
         if (response.status === 401) {
-          throw new ApiError("Unauthorized", 401);
+          throw new ApiError('Unauthorized', 401);
         }
         if (error instanceof SyntaxError) {
           throw new ApiError(error.message, 500);
@@ -39,7 +39,7 @@ export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
           throw new ApiError(error.message, error.statusCode);
         }
         throw new ApiError(
-          "에러가 발생했습니다. 잠시 후 다시 시도해주세요.",
+          '에러가 발생했습니다. 잠시 후 다시 시도해주세요.',
           500,
         );
       }

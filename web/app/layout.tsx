@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
-import ReactQueryProvider from "@/app/lib/reactQueryProvider";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import ReactQueryProvider from '@/app/lib/reactQueryProvider';
+import './globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "SnipSnip",
-  description: "Control your all bookmarks easily!",
+  title: 'SnipSnip',
+  description: 'Control your all bookmarks easily!',
 };
 
 export default function RootLayout({

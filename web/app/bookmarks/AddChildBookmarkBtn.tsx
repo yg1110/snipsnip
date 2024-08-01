@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Button, Form, Input, Modal, Select, message } from "antd";
-import { BookOutlined } from "@ant-design/icons";
-import { useChildFolders, useFolder } from "@/app/lib/data/query";
-import { useAddBookmark } from "@/app/lib/data/mutation";
+import { useEffect, useState } from 'react';
+import { Button, Form, Input, Modal, Select, message } from 'antd';
+import { BookOutlined } from '@ant-design/icons';
+import { useChildFolders, useFolder } from '@/app/lib/data/query';
+import { useAddBookmark } from '@/app/lib/data/mutation';
 
 type AddChildBookmarkFormValue = {
   title: string;
@@ -24,7 +24,7 @@ export default function AddChildBookmarkCBtn({
   const [form] = Form.useForm<AddChildBookmarkFormValue>();
 
   useEffect(() => {
-    form.setFieldValue("folderId", currentFolder?.id);
+    form.setFieldValue('folderId', currentFolder?.id);
   }, [form, currentFolder]);
 
   const folders = currentFolder && [currentFolder, ...(childFolders ?? [])];
@@ -52,7 +52,7 @@ export default function AddChildBookmarkCBtn({
       },
       {
         onSuccess: () => {
-          message.success("새로운 즐겨찾기가 추가되었습니다.");
+          message.success('새로운 즐겨찾기가 추가되었습니다.');
           closeModal();
         },
       },
@@ -80,7 +80,7 @@ export default function AddChildBookmarkCBtn({
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="Select a folder">
-              {folders?.map((folder) => (
+              {folders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>
