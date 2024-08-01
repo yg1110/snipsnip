@@ -50,7 +50,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
           closeModal();
           form.resetFields();
         },
-      }
+      },
     );
   };
 

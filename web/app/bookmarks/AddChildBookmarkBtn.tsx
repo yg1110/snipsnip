@@ -55,7 +55,7 @@ export default function AddChildBookmarkCBtn({
           message.success("새로운 즐겨찾기가 추가되었습니다.");
           closeModal();
         },
-      }
+      },
     );
   };
 

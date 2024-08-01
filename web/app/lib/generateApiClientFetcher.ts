@@ -24,19 +24,19 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
       Cookies.set("accessToken", newAccessToken, {
         expires: new Date(
           Date.now() +
-            Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0
+            Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0,
         ),
       });
       Cookies.set("refreshToken", newRefreshToken, {
         expires: new Date(
           Date.now() +
-            Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0
+            Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
         ),
       });
       Cookies.set("id", newId.toString(), {
         expires: new Date(
           Date.now() +
-            Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0
+            Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
         ),
       });
 
@@ -49,7 +49,7 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
 
   const fetchWithInterceptors = async <T>(
     url: string,
-    options: FetcherOptions = {}
+    options: FetcherOptions = {},
   ): Promise<T> => {
     const accessToken = Cookies.get("accessToken");
 

@@ -84,7 +84,7 @@ export default function Page() {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error("비밀번호가 일치하지 않습니다.")
+                      new Error("비밀번호가 일치하지 않습니다."),
                     );
                   },
                 }),
