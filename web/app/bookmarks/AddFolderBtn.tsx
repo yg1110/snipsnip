@@ -63,11 +63,14 @@ export default function AddFolderBtn() {
         onOk={addFolder}
         onCancel={closeModal}
         confirmLoading={addFolderMutation.isPending}
+        okText="추가"
+        cancelText="취소"
+        width={400}
       >
         <Input
           value={folderName}
           onChange={e => setFolderName(e.target.value)}
-          placeholder="type your folder name"
+          placeholder="폴더명을 입력해주세요"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}
         />

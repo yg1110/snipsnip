@@ -69,16 +69,32 @@ export default function AddChildBookmarkCBtn({
         onOk={onSubmit}
         onCancel={closeModal}
         confirmLoading={addBookmarkMutation.isPending}
+        okText="추가"
+        cancelText="취소"
+        width={400}
       >
-        <Form name="add-child-bookmark" form={form}>
+        <Form name="add-child-bookmark" form={form} layout="vertical">
           <Form.Item label="제목" name="title">
-            <Input />
+            <Input placeholder="제목을 입력해주세요" />
           </Form.Item>
-          <Form.Item label="주소" name="url" rules={[{ required: true }]}>
-            <Input />
+          <Form.Item
+            label="주소"
+            name="url"
+            rules={[
+              {
+                required: true,
+                message: '주소를 입력해주세요',
+              },
+              {
+                message: '올바른 주소를 입력해주세요',
+                pattern: /^(http|https):\/\/[^ "]+$/,
+              },
+            ]}
+          >
+            <Input placeholder="https://www.naver.com" />
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
-            <Select placeholder="Select a folder">
+            <Select placeholder="폴더를 선택해주세요">
               {folders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
