@@ -1,9 +1,9 @@
-import { Button, List, Space } from "antd";
-import { useRootFolders } from "@/app/lib/data/query";
-import AddFolderBtn from "./AddFolderBtn";
-import AddBookMarkBtn from "./AddBookMarkBtn";
-import FolderItem from "./FolderItem";
-import { folderButtonStyle, folderListStyle } from "../ui/folderPageStyles";
+import { Button, List, Space } from 'antd';
+import { useRootFolders } from '@/app/lib/data/query';
+import AddFolderBtn from './AddFolderBtn';
+import AddBookMarkBtn from './AddBookMarkBtn';
+import FolderItem from './FolderItem';
+import { folderButtonStyle, folderListStyle } from '../ui/folderPageStyles';
 
 export default function FolderList() {
   const { data: rootFolders, isLoading } = useRootFolders();
@@ -19,7 +19,7 @@ export default function FolderList() {
         itemLayout="horizontal"
         dataSource={rootFolders ?? []}
         loading={isLoading}
-        renderItem={(item) => (
+        renderItem={item => (
           <List.Item>
             <FolderItem folder={item} />
           </List.Item>

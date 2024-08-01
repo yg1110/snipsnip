@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import Cookies from "js-cookie";
-import { Button, Flex, Layout, Typography, Input, Form, message } from "antd";
+import Cookies from 'js-cookie';
+import { Button, Flex, Layout, Typography, Input, Form, message } from 'antd';
 import {
   layoutStyle,
   headerStyle,
   contentStyle,
   flexStyle,
   submitButtonStyle,
-} from "@/app/ui/loginLayoutStyle";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { useLogin } from "../lib/data/mutation";
-import { LoginRequest } from "../lib/types/authTypes";
+} from '@/app/ui/loginLayoutStyle';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useLogin } from '../lib/data/mutation';
+import { LoginRequest } from '../lib/types/authTypes';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -27,31 +27,31 @@ export default function Login() {
 
   const submit = (command: LoginRequest) => {
     loginMutation.mutate(command, {
-      onSuccess: (response) => {
+      onSuccess: response => {
         const {
           accessToken: newAccessToken,
           refreshToken: newRefreshToken,
           id: newId,
         } = response;
-        Cookies.set("accessToken", newAccessToken, {
+        Cookies.set('accessToken', newAccessToken, {
           expires: new Date(
             Date.now() +
               Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0,
           ),
         });
-        Cookies.set("refreshToken", newRefreshToken, {
+        Cookies.set('refreshToken', newRefreshToken, {
           expires: new Date(
             Date.now() +
               Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
           ),
         });
-        Cookies.set("id", newId.toString(), {
+        Cookies.set('id', newId.toString(), {
           expires: new Date(
             Date.now() +
               Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
           ),
         });
-        router.push("/bookmarks");
+        router.push('/bookmarks');
       },
     });
   };
@@ -71,14 +71,14 @@ export default function Login() {
             <Form.Item
               name="email"
               label="이메일"
-              rules={[{ required: true, message: "이메일을 입력해주세요." }]}
+              rules={[{ required: true, message: '이메일을 입력해주세요.' }]}
             >
               <Input size="large" placeholder="이메일" />
             </Form.Item>
             <Form.Item
               name="password"
               label="비밀번호"
-              rules={[{ required: true, message: "비밀번호를 입력해주세요." }]}
+              rules={[{ required: true, message: '비밀번호를 입력해주세요.' }]}
             >
               <Input.Password size="large" placeholder="비밀번호" />
             </Form.Item>

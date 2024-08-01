@@ -1,17 +1,17 @@
-import Cookies from "js-cookie";
-import { FetcherOptions, createFetcher } from "./createFetcher";
-import { AuthTokensResponse } from "./types/authTypes";
-import { ApiError } from "../shared/ApiError";
+import Cookies from 'js-cookie';
+import { FetcherOptions, createFetcher } from './createFetcher';
+import { AuthTokensResponse } from './types/authTypes';
+import { ApiError } from '../shared/ApiError';
 
 const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
   const fetcher = createFetcher({ baseURL, headers });
 
   const refreshAccessToken = async (refreshToken: string): Promise<string> => {
-    const refreshTokenUrl = "/auth/refresh";
+    const refreshTokenUrl = '/auth/refresh';
 
     try {
       const response = await fetcher<AuthTokensResponse>(refreshTokenUrl, {
-        method: "GET",
+        method: 'GET',
         headers: { Authorization: `Bearer ${refreshToken}` },
       });
 
@@ -21,19 +21,19 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
         id: newId,
       } = response;
 
-      Cookies.set("accessToken", newAccessToken, {
+      Cookies.set('accessToken', newAccessToken, {
         expires: new Date(
           Date.now() +
             Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0,
         ),
       });
-      Cookies.set("refreshToken", newRefreshToken, {
+      Cookies.set('refreshToken', newRefreshToken, {
         expires: new Date(
           Date.now() +
             Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
         ),
       });
-      Cookies.set("id", newId.toString(), {
+      Cookies.set('id', newId.toString(), {
         expires: new Date(
           Date.now() +
             Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
@@ -42,7 +42,7 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
 
       return newAccessToken;
     } catch (error) {
-      console.error("Error refreshing access token:", error);
+      console.error('Error refreshing access token:', error);
       throw error;
     }
   };
@@ -51,7 +51,7 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
     url: string,
     options: FetcherOptions = {},
   ): Promise<T> => {
-    const accessToken = Cookies.get("accessToken");
+    const accessToken = Cookies.get('accessToken');
 
     if (accessToken) {
       options.headers = {
@@ -65,7 +65,7 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
     } catch (error) {
       if (error instanceof ApiError) {
         if (error.statusCode === 401) {
-          const refreshToken = Cookies.get("refreshToken");
+          const refreshToken = Cookies.get('refreshToken');
           if (refreshToken) {
             try {
               const newAccessToken = await refreshAccessToken(refreshToken);
@@ -77,10 +77,10 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
 
               return await fetcher<T>(url, options);
             } catch (refreshError) {
-              location.href = "/login";
+              location.href = '/login';
             }
           } else {
-            location.href = "/login";
+            location.href = '/login';
           }
         }
       }

@@ -1,6 +1,6 @@
-import { List } from "antd";
-import { useChildFolders } from "@/app/lib/data/query";
-import ChildFolderItem from "./ChildFolderItem";
+import { List } from 'antd';
+import { useChildFolders } from '@/app/lib/data/query';
+import ChildFolderItem from './ChildFolderItem';
 
 export default function ChildFolderList({
   parentFolderId,
@@ -17,7 +17,7 @@ export default function ChildFolderList({
           itemLayout="horizontal"
           dataSource={childFolders}
           loading={isFoldersLoading}
-          renderItem={(item) => <ChildFolderItem folder={item} />}
+          renderItem={item => <ChildFolderItem folder={item} />}
         />
       ) : null}
     </>

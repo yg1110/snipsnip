@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Button, Form, Input, Modal, Select, message } from "antd";
-import { BookFilled } from "@ant-design/icons";
-import { useRootFolders } from "@/app/lib/data/query";
-import { useAddBookmark } from "@/app/lib/data/mutation";
+import { useState } from 'react';
+import { Button, Form, Input, Modal, Select, message } from 'antd';
+import { BookFilled } from '@ant-design/icons';
+import { useRootFolders } from '@/app/lib/data/query';
+import { useAddBookmark } from '@/app/lib/data/mutation';
 
 type AddBookmarkFormValue = {
   title: string;
@@ -41,7 +41,7 @@ export default function AddBookMarkBtn() {
       },
       {
         onSuccess: () => {
-          message.success("새로운 즐겨찾기가 추가되었습니다.");
+          message.success('새로운 즐겨찾기가 추가되었습니다.');
           closeModal();
         },
       },
@@ -69,7 +69,7 @@ export default function AddBookMarkBtn() {
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="Select a folder">
-              {rootFolders?.map((folder) => (
+              {rootFolders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

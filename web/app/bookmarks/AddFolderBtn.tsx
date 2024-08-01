@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useAddFolder } from "@/app/lib/data/mutation";
-import { Button, Input, Modal, message } from "antd";
+import { useState } from 'react';
+import { useAddFolder } from '@/app/lib/data/mutation';
+import { Button, Input, Modal, message } from 'antd';
 import {
   FolderAddFilled,
   FolderAddOutlined,
   FolderTwoTone,
-} from "@ant-design/icons";
-import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from "@/app/shared/constants";
+} from '@ant-design/icons';
+import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from '@/app/shared/constants';
 
 export default function AddFolderBtn() {
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function AddFolderBtn() {
 
   const closeModal = () => {
     setAddFolderModalOpen(false);
-    setFolderName("");
+    setFolderName('');
   };
 
   const addFolder = () => {
@@ -35,7 +35,7 @@ export default function AddFolderBtn() {
       },
       {
         onSuccess: () => {
-          message.success("새로운 폴더가 생성되었습니다.");
+          message.success('새로운 폴더가 생성되었습니다.');
           closeModal();
         },
       },
@@ -66,7 +66,7 @@ export default function AddFolderBtn() {
       >
         <Input
           value={folderName}
-          onChange={(e) => setFolderName(e.target.value)}
+          onChange={e => setFolderName(e.target.value)}
           placeholder="type your folder name"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}

@@ -1,7 +1,7 @@
-import { PlusOutlined } from "@ant-design/icons";
-import { Button, Space, Tooltip } from "antd";
-import AddChildBookmarkCBtn from "./AddChildBookmarkBtn";
-import AddChildFolderBtn from "./AddChildFolderBtn";
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Space, Tooltip } from 'antd';
+import AddChildBookmarkCBtn from './AddChildBookmarkBtn';
+import AddChildFolderBtn from './AddChildFolderBtn';
 
 export default function AddChildBtnGroup({
   parentFolderId,
@@ -21,7 +21,7 @@ export default function AddChildBtnGroup({
         </Space>
       }
       color="#FFFFFF"
-      trigger={["click"]}
+      trigger={['click']}
     >
       <Button type="text" icon={<PlusOutlined />} size="small" />
     </Tooltip>

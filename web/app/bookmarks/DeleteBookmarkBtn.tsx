@@ -1,7 +1,7 @@
-import { ExclamationCircleFilled } from "@ant-design/icons";
-import { Button, Modal, Space, message } from "antd";
-import { useState } from "react";
-import { useDeleteBookmark } from "@/app/lib/data/mutation";
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Button, Modal, Space, message } from 'antd';
+import { useState } from 'react';
+import { useDeleteBookmark } from '@/app/lib/data/mutation';
 
 export default function DeleteBookmarkBtn({
   bookmarkId,
@@ -22,7 +22,7 @@ export default function DeleteBookmarkBtn({
   const deleteBookmark = () => {
     deleteBookmarkMutation.mutate(bookmarkId, {
       onSuccess: () => {
-        message.success("즐겨찾기가 삭제되었습니다.");
+        message.success('즐겨찾기가 삭제되었습니다.');
         closeModal();
       },
     });
@@ -36,7 +36,7 @@ export default function DeleteBookmarkBtn({
       <Modal
         title={
           <Space>
-            <ExclamationCircleFilled style={{ color: "#faad14" }} />
+            <ExclamationCircleFilled style={{ color: '#faad14' }} />
             <p>즐겨찾기 삭제</p>
           </Space>
         }

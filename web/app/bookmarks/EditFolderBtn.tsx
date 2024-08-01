@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Folder } from "@/app/lib/types/dataTypes";
-import { useUpdateFolder } from "../lib/data/mutation";
-import { Button, Input, Modal, message } from "antd";
-import { FolderTwoTone } from "@ant-design/icons";
-import { ENTER_KEYCODE } from "@/app/shared/constants";
+import { useState } from 'react';
+import { Folder } from '@/app/lib/types/dataTypes';
+import { useUpdateFolder } from '../lib/data/mutation';
+import { Button, Input, Modal, message } from 'antd';
+import { FolderTwoTone } from '@ant-design/icons';
+import { ENTER_KEYCODE } from '@/app/shared/constants';
 
 export default function EditFolderBtn({ folder }: { folder: Folder }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -33,7 +33,7 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
       },
       {
         onSuccess: () => {
-          message.success("폴더명이 수정되었습니다.");
+          message.success('폴더명이 수정되었습니다.');
           closeModal();
         },
       },
@@ -64,7 +64,7 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
       >
         <Input
           value={folderName}
-          onChange={(e) => setFolderName(e.target.value)}
+          onChange={e => setFolderName(e.target.value)}
           placeholder="type your folder name"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}
