@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
-import { FolderOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  CaretDownOutlined,
+  CaretRightOutlined,
+  FolderOutlined,
+  MoreOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import { Folder } from '@/app/lib/types/dataTypes';
 import { folderItemStyle } from '@/app/ui/folderPageStyles';
 import EditFolderBtn from './EditFolderBtn';
@@ -37,7 +43,21 @@ export default function FolderItem({ folder }: { folder: Folder }) {
 
   return (
     <List.Item.Meta
-      avatar={<FolderOutlined />}
+      avatar={
+        showChildren ? (
+          <Flex gap="4px">
+            <CaretDownOutlined onClick={() => setShowChildren(prev => !prev)} />
+            <FolderOutlined />
+          </Flex>
+        ) : (
+          <Flex gap="4px">
+            <CaretRightOutlined
+              onClick={() => setShowChildren(prev => !prev)}
+            />
+            <FolderOutlined />
+          </Flex>
+        )
+      }
       title={
         <Flex justify="space-between">
           <Space

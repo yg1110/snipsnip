@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { FolderOutlined, MoreOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  CaretDownOutlined,
+  CaretRightOutlined,
+  FolderOutlined,
+  MoreOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
 import { Folder } from '@/app/lib/types/dataTypes';
 import BookmarkList from './BookmarkList';
@@ -31,7 +37,23 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
   return (
     <List.Item>
       <List.Item.Meta
-        avatar={<FolderOutlined />}
+        avatar={
+          showChildren ? (
+            <Flex gap="4px">
+              <CaretDownOutlined
+                onClick={() => setShowChildren(prev => !prev)}
+              />
+              <FolderOutlined />
+            </Flex>
+          ) : (
+            <Flex gap="4px">
+              <CaretRightOutlined
+                onClick={() => setShowChildren(prev => !prev)}
+              />
+              <FolderOutlined />
+            </Flex>
+          )
+        }
         title={
           <Flex justify="space-between">
             <Space onClick={() => setShowChildren(prev => !prev)}>
