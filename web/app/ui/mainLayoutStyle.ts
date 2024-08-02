@@ -33,3 +33,10 @@ export const logoStyle: React.CSSProperties = {
   fontFamily: 'ONE-Mobile-POP',
   marginBottom: 0,
 };
+
+export const notFoundContentStyle: React.CSSProperties = {
+  height: '80vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+};
