@@ -8,7 +8,11 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { Folder } from '@/app/lib/types/dataTypes';
-import { folderCountStyle, folderItemStyle } from '@/app/ui/folderPageStyles';
+import {
+  folderCountStyle,
+  folderIconStyle,
+  folderItemStyle,
+} from '@/app/ui/folderPageStyles';
 import EditFolderBtn from './EditFolderBtn';
 import DeleteFolderBtn from './DeleteFolderBtn';
 import BookmarkList from './BookmarkList';
@@ -41,33 +45,38 @@ export default function FolderItem({ folder }: { folder: Folder }) {
     },
   ];
 
+  const hasChildren = folder.subFolderCount + folder.bookmarkCount > 0;
   return (
     <List.Item.Meta
       avatar={
         showChildren ? (
-          <Flex gap="4px">
-            {folder.subFolderCount + folder.bookmarkCount > 0 && (
+          <>
+            {hasChildren && (
               <CaretDownOutlined
+                style={folderIconStyle}
                 onClick={() => setShowChildren(prev => !prev)}
               />
             )}
             <FolderOutlined />
-          </Flex>
+          </>
         ) : (
-          <Flex gap="4px">
-            {folder.subFolderCount + folder.bookmarkCount > 0 && (
+          <>
+            {hasChildren && (
               <CaretRightOutlined
+                style={folderIconStyle}
                 onClick={() => setShowChildren(prev => !prev)}
               />
             )}
             <FolderOutlined />
-          </Flex>
+          </>
         )
       }
       title={
         <Flex justify="space-between">
           <Space
-            onClick={() => setShowChildren(prev => !prev)}
+            onClick={() =>
+              hasChildren ? setShowChildren(prev => !prev) : null
+            }
             style={folderItemStyle}
           >
             {folder.name}

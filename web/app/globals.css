@@ -103,3 +103,7 @@ a {
   font-weight: normal;
   font-style: normal;
 }
+
+.ant-list-item-meta-avatar {
+  margin-top: 1px;
+}

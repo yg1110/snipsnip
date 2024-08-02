@@ -21,3 +21,7 @@ export const folderCountStyle: React.CSSProperties = {
   fontSize: 12,
   color: '#4263eb',
 };
+
+export const folderIconStyle: React.CSSProperties = {
+  marginRight: 4,
+};

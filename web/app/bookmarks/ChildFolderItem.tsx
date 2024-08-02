@@ -12,7 +12,7 @@ import BookmarkList from './BookmarkList';
 import EditFolderBtn from './EditFolderBtn';
 import DeleteFolderBtn from './DeleteFolderBtn';
 import AddChildBookmarkCBtn from './AddChildBookmarkBtn';
-import { folderCountStyle } from '../ui/folderPageStyles';
+import { folderCountStyle, folderIconStyle } from '../ui/folderPageStyles';
 
 export default function ChildFolderItem({ folder }: { folder: Folder }) {
   const [showChildren, setShowChildren] = useState(false);
@@ -35,33 +35,40 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
     },
   ];
 
+  const hasChildren = folder.subFolderCount + folder.bookmarkCount > 0;
   return (
     <List.Item>
       <List.Item.Meta
         avatar={
           showChildren ? (
-            <Flex gap="4px">
-              {folder.subFolderCount + folder.bookmarkCount > 0 && (
+            <>
+              {hasChildren && (
                 <CaretDownOutlined
+                  style={folderIconStyle}
                   onClick={() => setShowChildren(prev => !prev)}
                 />
               )}
               <FolderOutlined />
-            </Flex>
+            </>
           ) : (
-            <Flex gap="4px">
-              {folder.subFolderCount + folder.bookmarkCount > 0 && (
+            <>
+              {hasChildren && (
                 <CaretRightOutlined
+                  style={folderIconStyle}
                   onClick={() => setShowChildren(prev => !prev)}
                 />
               )}
               <FolderOutlined />
-            </Flex>
+            </>
           )
         }
         title={
           <Flex justify="space-between">
-            <Space onClick={() => setShowChildren(prev => !prev)}>
+            <Space
+              onClick={() =>
+                hasChildren ? setShowChildren(prev => !prev) : null
+              }
+            >
               {folder.name}
               {folder.bookmarkCount > 0 && (
                 <span style={folderCountStyle}>({folder.bookmarkCount})</span>
