@@ -3,12 +3,14 @@ import { useAddFolder } from '@/app/lib/data/mutation';
 import { Button, Input, Modal, message } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
 import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from '../shared/constants';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function AddChildFolderBtn({
   parentFolderId,
 }: {
   parentFolderId: number;
 }) {
+  const queryClient = useQueryClient();
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
   const [folderName, setFolderName] = useState(DEFAULT_FOLDER_NAME);
   const addFolderMutation = useAddFolder();
@@ -35,6 +37,8 @@ export default function AddChildFolderBtn({
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
+          queryClient.invalidateQueries({ queryKey: ['childFolders'] });
           message.success('새로운 폴더가 생성되었습니다.');
           closeModal();
         },

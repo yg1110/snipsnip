@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { useChildFolders, useFolder } from '@/app/lib/data/query';
 import { useAddBookmark } from '@/app/lib/data/mutation';
+import { useQueryClient } from '@tanstack/react-query';
 
 type AddChildBookmarkFormValue = {
   title: string;
@@ -14,6 +15,7 @@ export default function AddChildBookmarkCBtn({
 }: {
   parentFolderId: number;
 }) {
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: currentFolder } = useFolder(parentFolderId);
@@ -51,6 +53,8 @@ export default function AddChildBookmarkCBtn({
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
+          queryClient.invalidateQueries({ queryKey: ['childFolders'] });
           message.success('새로운 즐겨찾기가 추가되었습니다.');
           closeModal();
         },

@@ -3,6 +3,7 @@ import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { BookFilled } from '@ant-design/icons';
 import { useRootFolders } from '@/app/lib/data/query';
 import { useAddBookmark } from '@/app/lib/data/mutation';
+import { useQueryClient } from '@tanstack/react-query';
 
 type AddBookmarkFormValue = {
   title: string;
@@ -11,6 +12,7 @@ type AddBookmarkFormValue = {
 };
 
 export default function AddBookMarkBtn() {
+  const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
   const { data: rootFolders } = useRootFolders();
@@ -41,6 +43,8 @@ export default function AddBookMarkBtn() {
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
+          queryClient.invalidateQueries({ queryKey: ['childFolders'] });
           message.success('새로운 즐겨찾기가 추가되었습니다.');
           closeModal();
         },

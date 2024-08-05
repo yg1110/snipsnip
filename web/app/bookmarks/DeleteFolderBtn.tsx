@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Button, Modal, Space, message } from 'antd';
 import { useDeleteFolder } from '@/app/lib/data/mutation';
 import { ExclamationCircleFilled } from '@ant-design/icons';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
   const [isOpen, setIsOpen] = useState(false);
   const deleteFolderMutation = useDeleteFolder();
+  const queryClient = useQueryClient();
 
   const openModal = () => {
     setIsOpen(true);
@@ -18,6 +20,8 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
   const deleteFolder = () => {
     deleteFolderMutation.mutate(folderId, {
       onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
+        queryClient.invalidateQueries({ queryKey: ['childFolders'] });
         message.success('폴더가 삭제되었습니다.');
         closeModal();
       },

@@ -2,12 +2,14 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Modal, Space, message } from 'antd';
 import { useState } from 'react';
 import { useDeleteBookmark } from '@/app/lib/data/mutation';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function DeleteBookmarkBtn({
   bookmarkId,
 }: {
   bookmarkId: number;
 }) {
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const deleteBookmarkMutation = useDeleteBookmark();
 
@@ -22,6 +24,8 @@ export default function DeleteBookmarkBtn({
   const deleteBookmark = () => {
     deleteBookmarkMutation.mutate(bookmarkId, {
       onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
+        queryClient.invalidateQueries({ queryKey: ['childFolders'] });
         message.success('즐겨찾기가 삭제되었습니다.');
         closeModal();
       },
