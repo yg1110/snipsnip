@@ -19,7 +19,7 @@ export const flexStyle: React.CSSProperties = {
   alignItems: 'center',
   justifyContent: 'center',
   height: '100vh',
-  width: '60vw',
+  width: '80vw',
   margin: '0 auto',
 };
 

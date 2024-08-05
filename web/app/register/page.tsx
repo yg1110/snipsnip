@@ -7,11 +7,13 @@ import {
   contentStyle,
   flexStyle,
   submitButtonStyle,
+  logoStyle,
 } from '@/app/ui/loginLayoutStyle';
 import Link from 'next/link';
 import { RegisterRequest } from '../lib/types/authTypes';
 import { useRegister } from '../lib/data/mutation';
 import { useRouter } from 'next/navigation';
+import '../ui/mobile.css';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -37,10 +39,10 @@ export default function Page() {
   };
 
   return (
-    <Flex style={flexStyle}>
+    <Flex style={flexStyle} className="container">
       <Layout style={layoutStyle}>
         <Header style={headerStyle}>
-          <Title>Enter to SnipSnip!</Title>
+          <Title style={logoStyle}>Enter to SnipSnip!</Title>
         </Header>
         <Content style={contentStyle}>
           <Form<RegisterFormValue>

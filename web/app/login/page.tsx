@@ -1,18 +1,21 @@
 'use client';
 
 import Cookies from 'js-cookie';
-import { Button, Flex, Layout, Typography, Input, Form, message } from 'antd';
+import { Button, Flex, Layout, Typography, Input, Form } from 'antd';
 import {
   layoutStyle,
   headerStyle,
   contentStyle,
   flexStyle,
   submitButtonStyle,
+  logoStyle,
 } from '@/app/ui/loginLayoutStyle';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useLogin } from '../lib/data/mutation';
 import { LoginRequest } from '../lib/types/authTypes';
+
+import '../ui/mobile.css';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -57,10 +60,10 @@ export default function Login() {
   };
 
   return (
-    <Flex style={flexStyle}>
+    <Flex style={flexStyle} className="container">
       <Layout style={layoutStyle}>
         <Header style={headerStyle}>
-          <Title>SnipSnip</Title>
+          <Title style={logoStyle}>SnipSnip</Title>
         </Header>
         <Content style={contentStyle}>
           <Form<LoginFormValue>

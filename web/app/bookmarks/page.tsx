@@ -11,6 +11,7 @@ import {
 } from '@/app/ui/mainLayoutStyle';
 import FolderList from './FolderList';
 import { useRouter } from 'next/navigation';
+import '../ui/mobile.css';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -25,7 +26,7 @@ export default function Page() {
     router.replace('/login');
   };
   return (
-    <Flex style={flexStyle}>
+    <Flex style={flexStyle} className="container">
       <Layout style={layoutStyle}>
         <Header style={headerStyle}>
           <Flex justify="space-between">
