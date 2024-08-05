@@ -98,7 +98,7 @@ export default function Login() {
             </Form.Item>
           </Form>
           <Flex justify="right" gap="8px">
-            <Link href="/">비밀번호 찾기</Link>
+            {/* <Link href="/">비밀번호 찾기</Link> */}
             <Link href="/register">회원가입</Link>
           </Flex>
         </Content>

@@ -18,3 +18,8 @@ export const bookmarkDescriptionStyle: React.CSSProperties = {
   color: '#adb5bd',
   ...lineClamp(1),
 };
+
+export const bookmarkItemStyle: React.CSSProperties = {
+  cursor: 'pointer',
+  width: '100%',
+};

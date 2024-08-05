@@ -5,6 +5,7 @@ import EditBookmarkBtn from './EditBookmarkBtn';
 import DeleteBookmarkBtn from './DeleteBookmarkBtn';
 import {
   bookmarkDescriptionStyle,
+  bookmarkItemStyle,
   bookmarkThumbnailStyle,
   bookmarkTitleStyle,
 } from '../ui/bookmarkStyles';
@@ -23,12 +24,21 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
     },
   ];
 
+  const goToBookmarkPage = () => {
+    window.open(bookmark.metadata.url, '_blank');
+  };
+
   return (
     <List.Item>
       <List.Item.Meta
         title={
           <Flex justify="space-between" align="center">
-            <Flex gap="8px" align="center">
+            <Flex
+              gap="8px"
+              align="center"
+              onClick={goToBookmarkPage}
+              style={bookmarkItemStyle}
+            >
               <img
                 width={50}
                 height={50}
