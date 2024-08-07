@@ -97,3 +97,12 @@ export const deleteBookmark = async (bookmarkId: number) => {
     method: 'DELETE',
   });
 };
+
+export const getHtml = async (url: string) => {
+  return apiClient<{ data: string }>(
+    `/crawler/html?url=${encodeURIComponent(url)}`,
+    {
+      method: 'GET',
+    },
+  );
+};

@@ -4,6 +4,7 @@ import {
   fetchChildFolders,
   fetchFolder,
   fetchRootFolders,
+  getHtml,
 } from '@/app/lib/data/fetchingData';
 import { Bookmark, Folder } from '@/app/lib/types/dataTypes';
 import { message } from 'antd';
@@ -65,6 +66,22 @@ export const useBookmarks = (parentFolderId: number) => {
       if (error instanceof ApiError) {
         const errorMessage =
           error?.message || '북마크 목록을 불러오는데 실패했습니다.';
+        message.error(errorMessage);
+        return false;
+      }
+      return failureCount < 3;
+    },
+  });
+};
+
+export const useHtml = (url: string) => {
+  return useQuery<{ data: string }>({
+    queryKey: ['html'],
+    queryFn: () => getHtml(url),
+    retry(failureCount, error) {
+      if (error instanceof ApiError) {
+        const errorMessage =
+          error?.message || '크롤링 목록을 불러오는데 실패했습니다.';
         message.error(errorMessage);
         return false;
       }

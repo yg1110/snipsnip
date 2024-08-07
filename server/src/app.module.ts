@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { BookmarkModule } from './modules/bookmark/bookmark.module';
+import { CrawlerModule } from './modules/crawler/crawler.module';
 import { FolderModule } from './modules/folder/folder.module';
 import { MetaDataModule } from './modules/metadata/metadata.module';
 import { UserModule } from './modules/user/user.module';
@@ -28,6 +29,7 @@ import { UserModule } from './modules/user/user.module';
     MetaDataModule,
     AuthModule,
     UserModule,
+    CrawlerModule,
   ],
 })
 export class AppModule {}
