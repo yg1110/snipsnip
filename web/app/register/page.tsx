@@ -106,8 +106,8 @@ export default function Page() {
               </Button>
             </Form.Item>
           </Form>
-          <Flex justify="right" gap="8px">
-            <Link href="/login">로그인하러가기</Link>
+          <Flex justify="center" gap="16px" vertical>
+            <Link href="/login">로그인 하러가기</Link>
           </Flex>
         </Content>
       </Layout>

@@ -59,6 +59,13 @@ export default function Login() {
     });
   };
 
+  const goTourPage = () => {
+    submit({
+      email: 'tour',
+      password: 'tour',
+    });
+  };
+
   return (
     <Flex style={flexStyle} className="container">
       <Layout style={layoutStyle}>
@@ -97,9 +104,11 @@ export default function Login() {
               </Button>
             </Form.Item>
           </Form>
-          <Flex justify="right" gap="8px">
-            {/* <Link href="/">비밀번호 찾기</Link> */}
-            <Link href="/register">회원가입</Link>
+          <Flex justify="center" gap="16px" vertical>
+            <Link href="/register">회원가입 하러가기</Link>
+            <Link href="" onClick={goTourPage}>
+              로그인 하지 않고 둘러보기
+            </Link>
           </Flex>
         </Content>
       </Layout>
