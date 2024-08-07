@@ -16,7 +16,7 @@ export class Metadata {
   @Column({ nullable: true })
   thumbnail: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'text' })
   description: string;
 
   @OneToMany(() => Bookmark, (bookmark) => bookmark.metadata)
