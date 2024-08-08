@@ -47,4 +47,12 @@ export class MetadataController {
   findOneByUrl(@Param('url') url: string) {
     return this.metadataService.findOneByUrl(url);
   }
+
+  @ApiOperation({
+    summary: '생성된 전체 메타데이터 업데이트하기',
+  })
+  @Post('update/all')
+  updateDescription() {
+    return this.metadataService.updateAllMetadata();
+  }
 }

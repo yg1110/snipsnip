@@ -43,15 +43,26 @@ export class MetadataService {
     }
   }
 
-  findAll(): Promise<Metadata[]> {
-    return this.metadataRepository.createQueryBuilder('metadata').select().getMany();
+  async findAll(): Promise<Metadata[]> {
+    return await this.metadataRepository.createQueryBuilder('metadata').select().getMany();
   }
 
-  findOne(id: number): Promise<Metadata> {
-    return this.metadataRepository.findOne({ where: { id } });
+  async findOne(id: number): Promise<Metadata> {
+    return await this.metadataRepository.findOne({ where: { id } });
   }
 
-  findOneByUrl(url: string): Promise<Metadata> {
-    return this.metadataRepository.findOneBy({ url });
+  async findOneByUrl(url: string): Promise<Metadata> {
+    return await this.metadataRepository.findOneBy({ url });
+  }
+
+  async updateAllMetadata(): Promise<Metadata[]> {
+    const metadataList = await this.findAll();
+    const urlList = metadataList.map((metadata) => metadata.url);
+    const promise = urlList.map(async (url) => {
+      const metadata = await this.fetchMetadata(url);
+      return this.metadataRepository.update({ url }, metadata);
+    });
+    await Promise.all(promise);
+    return metadataList;
   }
 }
