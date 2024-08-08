@@ -12,3 +12,7 @@ export const lineClamp = (
   overflow: 'hidden',
   textOverflow: 'ellipsis',
 });
+
+export const fullWidthStyle: React.CSSProperties = {
+  width: '100%',
+};
