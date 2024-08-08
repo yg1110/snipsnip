@@ -103,11 +103,21 @@ const FolderItem: ForwardRefRenderFunction<
 
   const folderAddableGruop: MenuProps['items'] = [
     {
-      label: <AddChildFolderBtn parentFolderId={folder.id} />,
+      label: (
+        <AddChildFolderBtn
+          parentFolderId={folder.id}
+          setShowChildren={setShowChildren}
+        />
+      ),
       key: '0',
     },
     {
-      label: <AddChildBookmarkCBtn parentFolderId={folder.id} />,
+      label: (
+        <AddChildBookmarkCBtn
+          parentFolderId={folder.id}
+          setShowChildren={setShowChildren}
+        />
+      ),
       key: '1',
     },
   ];

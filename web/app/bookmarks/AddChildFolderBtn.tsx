@@ -7,8 +7,10 @@ import { useQueryClient } from '@tanstack/react-query';
 
 export default function AddChildFolderBtn({
   parentFolderId,
+  setShowChildren,
 }: {
   parentFolderId: number;
+  setShowChildren: (value: boolean) => void;
 }) {
   const queryClient = useQueryClient();
   const [addFolderModalOpen, setAddFolderModalOpen] = useState(false);
@@ -41,6 +43,7 @@ export default function AddChildFolderBtn({
           queryClient.invalidateQueries({ queryKey: ['childFolders'] });
           message.success('새로운 폴더가 생성되었습니다.');
           closeModal();
+          setShowChildren(true);
         },
       },
     );

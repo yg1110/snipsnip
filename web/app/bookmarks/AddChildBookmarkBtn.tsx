@@ -12,8 +12,10 @@ type AddChildBookmarkFormValue = {
 
 export default function AddChildBookmarkCBtn({
   parentFolderId,
+  setShowChildren,
 }: {
   parentFolderId: number;
+  setShowChildren: (value: boolean) => void;
 }) {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
@@ -57,6 +59,7 @@ export default function AddChildBookmarkCBtn({
           queryClient.invalidateQueries({ queryKey: ['childFolders'] });
           message.success('새로운 즐겨찾기가 추가되었습니다.');
           closeModal();
+          setShowChildren(true);
         },
       },
     );
