@@ -1,4 +1,11 @@
-import { useContext, useMemo, useState } from 'react';
+import {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useContext,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
 import {
   CaretDownOutlined,
   CaretRightOutlined,
@@ -41,7 +48,14 @@ const DragHandle: React.FC = () => {
   );
 };
 
-export default function ChildFolderItem({ folder }: { folder: Folder }) {
+export type ChildFolderItemRef = {
+  setShowChildren: (value: boolean) => void;
+};
+
+const ChildFolderItem: ForwardRefRenderFunction<
+  ChildFolderItemRef,
+  { folder: Folder }
+> = ({ folder }, ref): JSX.Element => {
   const [showChildren, setShowChildren] = useState(false);
 
   const {
@@ -84,6 +98,14 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
       key: '0',
     },
   ];
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      setShowChildren: setShowChildren,
+    }),
+    [showChildren],
+  );
 
   const hasChildren = folder.subFolderCount + folder.bookmarkCount > 0;
   return (
@@ -149,4 +171,6 @@ export default function ChildFolderItem({ folder }: { folder: Folder }) {
       </RowContext.Provider>
     </List.Item>
   );
-}
+};
+
+export default forwardRef(ChildFolderItem);

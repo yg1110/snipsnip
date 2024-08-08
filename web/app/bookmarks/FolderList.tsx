@@ -2,7 +2,7 @@ import { List, Space } from 'antd';
 import { useRootFolders } from '@/app/lib/data/query';
 import AddFolderBtn from './AddFolderBtn';
 import AddBookMarkBtn from './AddBookMarkBtn';
-import FolderItem from './FolderItem';
+import FolderItem, { FolderItemRef } from './FolderItem';
 import { folderButtonStyle, folderListStyle } from '../ui/folderPageStyles';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import {
@@ -10,12 +10,13 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useUpdateRootFoldersOrder } from '../lib/data/mutation';
 import { Folder } from '../lib/types/dataTypes';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 export default function FolderList() {
+  const folderItemRef = useRef<FolderItemRef>(null);
   const [rootFolderList, setRootFolderList] = useState<Folder[]>([]);
 
   const { data: rootFolders, isLoading } = useRootFolders();
@@ -33,6 +34,10 @@ export default function FolderList() {
       setRootFolderList(updatedList);
       updateRootFoldersOrder(updatedList);
     }
+  };
+
+  const onDragStart = () => {
+    folderItemRef.current?.setShowChildren(false);
   };
 
   const updateRootFoldersOrder = (folderList: Folder[]) => {
@@ -54,7 +59,11 @@ export default function FolderList() {
         <AddBookMarkBtn />
       </Space>
 
-      <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+      <DndContext
+        modifiers={[restrictToVerticalAxis]}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+      >
         <SortableContext
           items={rootFolderList.map(i => i.id.toString())}
           strategy={verticalListSortingStrategy}
@@ -66,7 +75,7 @@ export default function FolderList() {
             loading={isLoading}
             renderItem={item => (
               <List.Item>
-                <FolderItem folder={item} />
+                <FolderItem ref={folderItemRef} folder={item} />
               </List.Item>
             )}
           />
