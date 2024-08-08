@@ -123,3 +123,12 @@ export const updateSubFoldersOrder = async (
     }),
   });
 };
+
+export const updateRootFoldersOrder = async (folderList: Folder[]) => {
+  return apiClient<void>('/root-folders/order', {
+    method: 'POST',
+    body: JSON.stringify({
+      folderList,
+    }),
+  });
+};

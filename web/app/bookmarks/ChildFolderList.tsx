@@ -18,6 +18,9 @@ export default function ChildFolderList({
   parentFolderId: number;
 }) {
   const [childFolderList, setChildFolderList] = useState<Folder[]>([]);
+
+  const { data: childFolders, isLoading: isFoldersLoading } =
+    useChildFolders(parentFolderId);
   const updateSubFoldersOrderMutation = useUpdateSubFoldersOrder();
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
@@ -40,9 +43,6 @@ export default function ChildFolderList({
       folderList: folderList,
     });
   };
-
-  const { data: childFolders, isLoading: isFoldersLoading } =
-    useChildFolders(parentFolderId);
 
   useEffect(() => {
     if (childFolders) {

@@ -13,7 +13,12 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { CreateFolderDto, UpdateFolderDto, UpdateSubFoldersOrderDto } from './dto/foler.dto';
+import {
+  CreateFolderDto,
+  UpdateFolderDto,
+  UpdateRootFoldersOrderDto,
+  UpdateSubFoldersOrderDto,
+} from './dto/foler.dto';
 import { FolderService } from './folder.service';
 
 @ApiTags('Folders')
@@ -191,5 +196,48 @@ export class FolderController {
       updateSubFoldersOrderDto.parentFolderId,
       updateSubFoldersOrderDto.folderList,
     );
+  }
+
+  @ApiOperation({
+    summary: '루트 폴더 순서 변경하기',
+  })
+  @ApiBody({
+    schema: {
+      example: {
+        folderList: [
+          {
+            id: 1,
+            name: '루트1',
+            userId: 1,
+            parentFolderId: null,
+            order: 1,
+            createdAt: '2024-08-07T05:39:36.000Z',
+            updatedAt: '2024-08-08T06:49:23.000Z',
+            deletedAt: null,
+            subFolderCount: 0,
+            bookmarkCount: 0,
+          },
+          {
+            id: 1,
+            name: '루트2',
+            userId: 1,
+            parentFolderId: null,
+            order: 2,
+            createdAt: '2024-08-08T05:31:32.000Z',
+            updatedAt: '2024-08-08T06:49:23.000Z',
+            deletedAt: null,
+            subFolderCount: 0,
+            bookmarkCount: 0,
+          },
+        ],
+      },
+    },
+  })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/root-folders/order')
+  updateRootFoldersOrder(@Body() updateRootFoldersOrderDto: UpdateRootFoldersOrderDto, @Req() req) {
+    const userId = req.user.id;
+    return this.folderService.updateRootFoldersOrder(userId, updateRootFoldersOrderDto.folderList);
   }
 }

@@ -16,3 +16,7 @@ export class UpdateSubFoldersOrderDto {
   parentFolderId: number;
   folderList: Folder[];
 }
+
+export class UpdateRootFoldersOrderDto {
+  folderList: Folder[];
+}

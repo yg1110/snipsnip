@@ -9,6 +9,7 @@ import {
   updateBookmark,
   updateBookmarksOrder,
   updateFolder,
+  updateRootFoldersOrder,
   updateSubFoldersOrder,
 } from '@/app/lib/data/fetchingData';
 import {
@@ -18,6 +19,7 @@ import {
   NewBookmark,
   NewFolder,
   UpdateBookmarksOrderCommand,
+  UpdateRootFoldersOrderCommand,
   UpdateSubFoldersOrderCommand,
 } from '@/app/lib/types/dataTypes';
 import { LoginRequest, RegisterRequest } from '../types/authTypes';
@@ -170,6 +172,22 @@ export const useUpdateSubFoldersOrder = () => {
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: ['childFolders'] }),
+    onError: error => {
+      const errorMessage = error?.message || '폴더 순서 변경에 실패했습니다.';
+      message.error(errorMessage);
+    },
+  });
+};
+
+export const useUpdateRootFoldersOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (command: UpdateRootFoldersOrderCommand) => {
+      return updateRootFoldersOrder(command.folderList);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['rootFolders'] }),
     onError: error => {
       const errorMessage = error?.message || '폴더 순서 변경에 실패했습니다.';
       message.error(errorMessage);

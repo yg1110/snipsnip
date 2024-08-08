@@ -173,11 +173,37 @@ export class FolderService {
     folderList: Folder[],
   ): Promise<Folder[]> {
     try {
-      const parentFolder = await this.folderRepository.findOne({
-        where: { id: parentFolderId, userId },
-      });
+      const parentFolder = await this.folderRepository
+        .createQueryBuilder('folder')
+        .select()
+        .where('folder.userId = :userId', { userId })
+        .andWhere('folder.parentFolderId = :parentFolderId', { parentFolderId })
+        .andWhere('folder.deletedAt IS NULL')
+        .getOne();
       if (!parentFolder) {
         throw new NotFoundException('부모 폴더를 찾을 수 없습니다.');
+      }
+      const promises = folderList.map(async (folder, index) => {
+        await this.folderRepository.update(folder.id, { order: index + 1 });
+      });
+      await Promise.all(promises);
+      return folderList;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
+  async updateRootFoldersOrder(userId: number, folderList: Folder[]): Promise<Folder[]> {
+    try {
+      const rootFolders = await this.folderRepository
+        .createQueryBuilder('folder')
+        .select()
+        .where('folder.userId = :userId', { userId })
+        .andWhere('folder.parentFolderId IS NULL')
+        .andWhere('folder.deletedAt IS NULL')
+        .getOne();
+      if (!rootFolders) {
+        throw new NotFoundException('폴더를 찾을 수 없습니다.');
       }
       const promises = folderList.map(async (folder, index) => {
         await this.folderRepository.update(folder.id, { order: index + 1 });

@@ -51,3 +51,7 @@ export type UpdateSubFoldersOrderCommand = {
   parentFolderId: number;
   folderList: Folder[];
 };
+
+export type UpdateRootFoldersOrderCommand = {
+  folderList: Folder[];
+};
