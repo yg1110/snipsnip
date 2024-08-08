@@ -156,4 +156,20 @@ export class BookmarkService {
       .andWhere('bookmark.deletedAt IS NULL')
       .getCount();
   }
+
+  async updateBookmarkOrder(userId: number, folderId: number, bookmarkList: Bookmark[]) {
+    try {
+      const bookmarkCount = await this.findBookmarkCount(userId, folderId);
+      if (bookmarkCount !== bookmarkList.length) {
+        throw new InternalServerErrorException('북마크 수가 일치하지 않습니다.');
+      }
+      const promises = bookmarkList.map(async (bookmark) => {
+        await this.bookmarkRepository.update(bookmark.id, { order: bookmark.order });
+      });
+      await Promise.all(promises);
+      return bookmarkList;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
 }

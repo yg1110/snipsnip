@@ -7,13 +7,16 @@ import {
   login,
   register,
   updateBookmark,
+  updateBookmarkOrder,
   updateFolder,
 } from '@/app/lib/data/fetchingData';
 import {
+  Bookmark,
   ModifiedBookmark,
   ModifiedFolder,
   NewBookmark,
   NewFolder,
+  UpdateBookmarkOrderCommand,
 } from '@/app/lib/types/dataTypes';
 import { LoginRequest, RegisterRequest } from '../types/authTypes';
 import { message } from 'antd';
@@ -136,6 +139,21 @@ export const useDeleteBookmark = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
     onError: error => {
       const errorMessage = error?.message || '북마크 삭제에 실패했습니다.';
+      message.error(errorMessage);
+    },
+  });
+};
+
+export const useUpdateBookmarkOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (command: UpdateBookmarkOrderCommand) => {
+      return updateBookmarkOrder(command.folderId, command.bookmarkList);
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
+    onError: error => {
+      const errorMessage = error?.message || '북마크 순서 변경에 실패했습니다.';
       message.error(errorMessage);
     },
   });

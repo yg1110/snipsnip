@@ -10,4 +10,7 @@
     height: 100% !important;
     border-radius: 0 !important;
   }
+  .drag-handle {
+    display: none !important;
+  }
 }

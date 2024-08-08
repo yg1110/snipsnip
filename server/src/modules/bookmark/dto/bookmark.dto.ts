@@ -1,3 +1,5 @@
+import { Bookmark } from '../entities/bookmark.entity';
+
 export class CreateBookmarkDto {
   title: string | null;
   url: string;
@@ -10,4 +12,9 @@ export class UpdateBookmarkDto {
   url: string | null;
   folderId: number | null;
   order: number | null;
+}
+
+export class UpdateBookmarkOrderDto {
+  folderId: number;
+  bookmarkList: Bookmark[];
 }

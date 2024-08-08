@@ -28,6 +28,7 @@ const DragHandle: React.FC = () => {
   const { setActivatorNodeRef, listeners } = useContext(RowContext);
   return (
     <Button
+      className="drag-handle"
       type="text"
       size="small"
       icon={<HolderOutlined />}
@@ -71,6 +72,7 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
     transform: CSS.Translate.toString(transform),
     ...(isDragging ? { zIndex: 9999 } : {}),
     background: '#fff',
+    width: '100%',
   };
 
   const contextValue = useMemo<RowContextProps>(

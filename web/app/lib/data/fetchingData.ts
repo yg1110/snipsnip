@@ -97,3 +97,16 @@ export const deleteBookmark = async (bookmarkId: number) => {
     method: 'DELETE',
   });
 };
+
+export const updateBookmarkOrder = async (
+  folderId: number,
+  bookmarkList: Bookmark[],
+) => {
+  return apiClient<void>('/bookmarks/order', {
+    method: 'POST',
+    body: JSON.stringify({
+      folderId,
+      bookmarkList,
+    }),
+  });
+};

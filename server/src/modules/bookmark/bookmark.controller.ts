@@ -14,7 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { BookmarkService } from './bookmark.service';
-import { CreateBookmarkDto, UpdateBookmarkDto } from './dto/bookmark.dto';
+import { CreateBookmarkDto, UpdateBookmarkDto, UpdateBookmarkOrderDto } from './dto/bookmark.dto';
 
 @ApiTags('Bookmarks')
 @Controller()
@@ -136,5 +136,67 @@ export class BookmarkController {
       throw new InternalServerErrorException('북마크가 존재하지 않습니다.');
     }
     return bookmark;
+  }
+
+  @ApiOperation({
+    summary: '북마크 순서 변경하기',
+  })
+  @ApiBody({
+    schema: {
+      example: {
+        folderId: 1,
+        bookmarkList: [
+          {
+            id: 1,
+            folderId: 1,
+            metadataId: 1,
+            title: '타이틀1',
+            order: 1,
+            userId: 1,
+            createdAt: '2024-08-07T15:24:03.000Z',
+            updatedAt: '2024-08-08T03:46:36.000Z',
+            deletedAt: null,
+            metadata: {
+              id: 1,
+              url: 'https://www.naver.com',
+              title: '네이버',
+              thumbnail:
+                'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
+              description: null,
+            },
+          },
+          {
+            id: 1,
+            folderId: 1,
+            metadataId: 1,
+            title: '타이틀2',
+            order: 2,
+            userId: 1,
+            createdAt: '2024-08-07T15:24:03.000Z',
+            updatedAt: '2024-08-08T03:46:36.000Z',
+            deletedAt: null,
+            metadata: {
+              id: 1,
+              url: 'https://www.naver.com',
+              title: '네이버',
+              thumbnail:
+                'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
+              description: null,
+            },
+          },
+        ],
+      },
+    },
+  })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/bookmarks/order')
+  updateBookmarkOrder(@Body() updateBookmarkOrderDto: UpdateBookmarkOrderDto, @Req() req) {
+    const userId = req.user.id;
+    return this.bookmarkService.updateBookmarkOrder(
+      userId,
+      updateBookmarkOrderDto.folderId,
+      updateBookmarkOrderDto.bookmarkList,
+    );
   }
 }
