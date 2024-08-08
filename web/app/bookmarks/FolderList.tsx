@@ -1,4 +1,4 @@
-import { List, Space } from 'antd';
+import { Button, Flex, List, Space } from 'antd';
 import { useRootFolders } from '@/app/lib/data/query';
 import AddFolderBtn from './AddFolderBtn';
 import AddBookMarkBtn from './AddBookMarkBtn';
@@ -14,10 +14,14 @@ import { useState, useEffect, useRef } from 'react';
 import { useUpdateRootFoldersOrder } from '../lib/data/mutation';
 import { Folder } from '../lib/types/dataTypes';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { BsChevronContract } from 'react-icons/bs';
+import { BsChevronExpand } from 'react-icons/bs';
+import { useStore } from '../store/useStore';
 
 export default function FolderList() {
-  const folderItemRef = useRef<FolderItemRef>(null);
+  const folderItemRef = useRef<(FolderItemRef | null)[]>([]);
   const [rootFolderList, setRootFolderList] = useState<Folder[]>([]);
+  const { expanded, collapsed } = useStore();
 
   const { data: rootFolders, isLoading } = useRootFolders();
   const updateRootFoldersOrderMutation = useUpdateRootFoldersOrder();
@@ -30,19 +34,46 @@ export default function FolderList() {
       const overIndex = rootFolderList.findIndex(
         record => record.id === +(over?.id || 0),
       );
+      const activeFolderItem = folderItemRef.current[activeIndex];
+      const overFolderItem = folderItemRef.current[overIndex];
+      if (activeFolderItem) {
+        activeFolderItem.setShowChildren(false);
+      }
+      if (overFolderItem) {
+        overFolderItem.setShowChildren(false);
+      }
       const updatedList = arrayMove(rootFolderList, activeIndex, overIndex);
       setRootFolderList(updatedList);
       updateRootFoldersOrder(updatedList);
     }
   };
 
-  const onDragStart = () => {
-    folderItemRef.current?.setShowChildren(false);
+  const onDragStart = (event: DragEndEvent) => {
+    const index = event.active.data.current?.sortable.index;
+    if (index === undefined) return;
+    const folderItem = folderItemRef.current[index];
+    if (folderItem) {
+      folderItem.setShowChildren(false);
+    }
   };
 
   const updateRootFoldersOrder = (folderList: Folder[]) => {
     updateRootFoldersOrderMutation.mutate({
       folderList: folderList,
+    });
+  };
+
+  const allExpandedFolder = () => {
+    expanded();
+    folderItemRef.current.forEach(folderItemRef => {
+      folderItemRef?.setShowChildren(true);
+    });
+  };
+
+  const allCollapsedFolder = () => {
+    collapsed();
+    folderItemRef.current.forEach(folderItemRef => {
+      folderItemRef?.setShowChildren(false);
     });
   };
 
@@ -54,10 +85,28 @@ export default function FolderList() {
 
   return (
     <>
-      <Space style={folderButtonStyle}>
-        <AddFolderBtn />
-        <AddBookMarkBtn />
-      </Space>
+      <Flex style={folderButtonStyle} justify="space-between">
+        <Space>
+          <AddFolderBtn />
+          <AddBookMarkBtn />
+        </Space>
+        <Space>
+          <Button
+            type="default"
+            icon={<BsChevronExpand />}
+            onClick={allExpandedFolder}
+          >
+            모두 펼치기
+          </Button>
+          <Button
+            type="default"
+            icon={<BsChevronContract />}
+            onClick={allCollapsedFolder}
+          >
+            모두 접기
+          </Button>
+        </Space>
+      </Flex>
 
       <DndContext
         modifiers={[restrictToVerticalAxis]}
@@ -73,9 +122,14 @@ export default function FolderList() {
             itemLayout="horizontal"
             dataSource={rootFolderList}
             loading={isLoading}
-            renderItem={item => (
+            renderItem={(item, index) => (
               <List.Item>
-                <FolderItem ref={folderItemRef} folder={item} />
+                <FolderItem
+                  ref={el => {
+                    folderItemRef.current[index] = el;
+                  }}
+                  folder={item}
+                />
               </List.Item>
             )}
           />

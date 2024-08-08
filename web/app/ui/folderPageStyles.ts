@@ -10,7 +10,6 @@ export const folderButtonStyle: React.CSSProperties = {
   padding: '20px 20px 0 20px',
   zIndex: 1,
   top: 0,
-  alignItems: 'right',
 };
 
 export const folderListStyle: React.CSSProperties = {

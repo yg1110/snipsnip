@@ -2,6 +2,7 @@ import {
   forwardRef,
   ForwardRefRenderFunction,
   useContext,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useState,
@@ -31,6 +32,7 @@ import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
+import { useStore } from '../store/useStore';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;
@@ -62,6 +64,7 @@ const FolderItem: ForwardRefRenderFunction<
   FolderItemRef,
   { folder: Folder }
 > = ({ folder }, ref): JSX.Element => {
+  const { isAllExpanded } = useStore();
   const [showChildren, setShowChildren] = useState(false);
 
   const {
@@ -116,6 +119,10 @@ const FolderItem: ForwardRefRenderFunction<
     }),
     [showChildren],
   );
+
+  useEffect(() => {
+    isAllExpanded ? setShowChildren(true) : setShowChildren(false);
+  }, [isAllExpanded]);
 
   const hasChildren = folder.subFolderCount + folder.bookmarkCount > 0;
   return (
