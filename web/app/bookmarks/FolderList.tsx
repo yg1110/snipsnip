@@ -85,7 +85,11 @@ export default function FolderList() {
 
   return (
     <>
-      <Flex style={folderButtonStyle} justify="space-between">
+      <Flex
+        className="button-wrapper"
+        style={folderButtonStyle}
+        justify="space-between"
+      >
         <Space>
           <AddFolderBtn />
           <AddBookMarkBtn />

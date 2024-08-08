@@ -13,4 +13,8 @@
   .drag-handle {
     display: none !important;
   }
+  .button-wrapper {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
 }
