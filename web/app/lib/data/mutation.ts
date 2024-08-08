@@ -7,8 +7,9 @@ import {
   login,
   register,
   updateBookmark,
-  updateBookmarkOrder,
+  updateBookmarksOrder,
   updateFolder,
+  updateSubFoldersOrder,
 } from '@/app/lib/data/fetchingData';
 import {
   Bookmark,
@@ -16,7 +17,8 @@ import {
   ModifiedFolder,
   NewBookmark,
   NewFolder,
-  UpdateBookmarkOrderCommand,
+  UpdateBookmarksOrderCommand,
+  UpdateSubFoldersOrderCommand,
 } from '@/app/lib/types/dataTypes';
 import { LoginRequest, RegisterRequest } from '../types/authTypes';
 import { message } from 'antd';
@@ -144,16 +146,32 @@ export const useDeleteBookmark = () => {
   });
 };
 
-export const useUpdateBookmarkOrder = () => {
+export const useUpdateBookmarksOrder = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (command: UpdateBookmarkOrderCommand) => {
-      return updateBookmarkOrder(command.folderId, command.bookmarkList);
+    mutationFn: (command: UpdateBookmarksOrderCommand) => {
+      return updateBookmarksOrder(command.folderId, command.bookmarkList);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
     onError: error => {
       const errorMessage = error?.message || '북마크 순서 변경에 실패했습니다.';
+      message.error(errorMessage);
+    },
+  });
+};
+
+export const useUpdateSubFoldersOrder = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (command: UpdateSubFoldersOrderCommand) => {
+      return updateSubFoldersOrder(command.parentFolderId, command.folderList);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ['childFolders'] }),
+    onError: error => {
+      const errorMessage = error?.message || '폴더 순서 변경에 실패했습니다.';
       message.error(errorMessage);
     },
   });

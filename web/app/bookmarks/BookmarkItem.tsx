@@ -84,53 +84,51 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
     <List.Item>
       <List.Item.Meta
         title={
-          <Flex gap={16}>
-            <RowContext.Provider value={contextValue}>
+          <RowContext.Provider value={contextValue}>
+            <Flex
+              gap={8}
+              align="center"
+              ref={setNodeRef}
+              style={style}
+              {...attributes}
+            >
+              <DragHandle />
               <Flex
-                gap={8}
+                justify="space-between"
                 align="center"
-                ref={setNodeRef}
-                style={style}
-                {...attributes}
+                style={fullWidthStyle}
               >
-                <DragHandle />
                 <Flex
-                  justify="space-between"
+                  gap="8px"
                   align="center"
-                  style={fullWidthStyle}
+                  onClick={goToBookmarkPage}
+                  style={bookmarkItemStyle}
                 >
-                  <Flex
-                    gap="8px"
-                    align="center"
-                    onClick={goToBookmarkPage}
-                    style={bookmarkItemStyle}
-                  >
-                    <img
-                      width={50}
-                      height={50}
-                      src={imagePath}
-                      alt="metadata-thumbnail"
-                      style={bookmarkThumbnailStyle}
-                    />
-                    <Flex vertical>
-                      <h1 style={bookmarkTitleStyle}>
-                        {bookmark.title || bookmark.metadata.description}
-                      </h1>
-                      <p style={bookmarkDescriptionStyle}>
-                        {bookmark.metadata.description || '-'}
-                      </p>
-                    </Flex>
+                  <img
+                    width={50}
+                    height={50}
+                    src={imagePath}
+                    alt="metadata-thumbnail"
+                    style={bookmarkThumbnailStyle}
+                  />
+                  <Flex vertical>
+                    <h1 style={bookmarkTitleStyle}>
+                      {bookmark.title || bookmark.metadata.description}
+                    </h1>
+                    <p style={bookmarkDescriptionStyle}>
+                      {bookmark.metadata.description || '-'}
+                    </p>
                   </Flex>
-                  <Dropdown
-                    menu={{ items: bookmarkMenuButtonGroup }}
-                    trigger={['click']}
-                  >
-                    <Button type="text" icon={<MoreOutlined />} size="small" />
-                  </Dropdown>
                 </Flex>
+                <Dropdown
+                  menu={{ items: bookmarkMenuButtonGroup }}
+                  trigger={['click']}
+                >
+                  <Button type="text" icon={<MoreOutlined />} size="small" />
+                </Dropdown>
               </Flex>
-            </RowContext.Provider>
-          </Flex>
+            </Flex>
+          </RowContext.Provider>
         }
       />
     </List.Item>

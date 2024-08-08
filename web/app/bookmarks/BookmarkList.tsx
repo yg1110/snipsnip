@@ -10,13 +10,13 @@ import {
 } from '@dnd-kit/sortable';
 import { useEffect, useState } from 'react';
 import { Bookmark } from '../lib/types/dataTypes';
-import { useUpdateBookmarkOrder } from '../lib/data/mutation';
+import { useUpdateBookmarksOrder } from '../lib/data/mutation';
 
 export default function BookmarkList({ folderId }: { folderId: number }) {
   const [bookmarkList, setBookmarkList] = useState<Bookmark[]>([]);
   const { data: bookmarks, isLoading: isBookmarksLoading } =
     useBookmarks(folderId);
-  const updateBookmarkOrderMutation = useUpdateBookmarkOrder();
+  const updateBookmarksOrderMutation = useUpdateBookmarksOrder();
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
@@ -27,19 +27,15 @@ export default function BookmarkList({ folderId }: { folderId: number }) {
         record => record.id === +(over?.id || 0),
       );
       const updatedList = arrayMove(bookmarkList, activeIndex, overIndex);
-      const orderByBookmarkList = updatedList.map((item, index) => ({
-        ...item,
-        order: index + 1,
-      }));
-      setBookmarkList(orderByBookmarkList);
-      updateBookmarkOrder(orderByBookmarkList);
+      setBookmarkList(updatedList);
+      updateBookmarksOrder(updatedList);
     }
   };
 
-  const updateBookmarkOrder = (orderByBookmarkList: Bookmark[]) => {
-    updateBookmarkOrderMutation.mutate({
+  const updateBookmarksOrder = (bookmarkList: Bookmark[]) => {
+    updateBookmarksOrderMutation.mutate({
       folderId,
-      bookmarkList: orderByBookmarkList,
+      bookmarkList: bookmarkList,
     });
   };
 

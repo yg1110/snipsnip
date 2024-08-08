@@ -98,7 +98,7 @@ export const deleteBookmark = async (bookmarkId: number) => {
   });
 };
 
-export const updateBookmarkOrder = async (
+export const updateBookmarksOrder = async (
   folderId: number,
   bookmarkList: Bookmark[],
 ) => {
@@ -107,6 +107,19 @@ export const updateBookmarkOrder = async (
     body: JSON.stringify({
       folderId,
       bookmarkList,
+    }),
+  });
+};
+
+export const updateSubFoldersOrder = async (
+  parentFolderId: number,
+  folderList: Folder[],
+) => {
+  return apiClient<void>('/sub-folders/order', {
+    method: 'POST',
+    body: JSON.stringify({
+      parentFolderId,
+      folderList,
     }),
   });
 };

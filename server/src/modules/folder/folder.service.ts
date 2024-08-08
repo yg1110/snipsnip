@@ -166,4 +166,26 @@ export class FolderService {
       throw new InternalServerErrorException(error.message);
     }
   }
+
+  async updateSubFoldersOrder(
+    userId: number,
+    parentFolderId: number,
+    folderList: Folder[],
+  ): Promise<Folder[]> {
+    try {
+      const parentFolder = await this.folderRepository.findOne({
+        where: { id: parentFolderId, userId },
+      });
+      if (!parentFolder) {
+        throw new NotFoundException('부모 폴더를 찾을 수 없습니다.');
+      }
+      const promises = folderList.map(async (folder, index) => {
+        await this.folderRepository.update(folder.id, { order: index + 1 });
+      });
+      await Promise.all(promises);
+      return folderList;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
 }

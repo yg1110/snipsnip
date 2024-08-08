@@ -14,7 +14,7 @@ export class UpdateBookmarkDto {
   order: number | null;
 }
 
-export class UpdateBookmarkOrderDto {
+export class UpdateBookmarksOrderDto {
   folderId: number;
   bookmarkList: Bookmark[];
 }

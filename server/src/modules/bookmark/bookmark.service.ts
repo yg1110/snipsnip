@@ -157,14 +157,18 @@ export class BookmarkService {
       .getCount();
   }
 
-  async updateBookmarkOrder(userId: number, folderId: number, bookmarkList: Bookmark[]) {
+  async updateBookmarksOrder(
+    userId: number,
+    folderId: number,
+    bookmarkList: Bookmark[],
+  ): Promise<Bookmark[]> {
     try {
       const bookmarkCount = await this.findBookmarkCount(userId, folderId);
       if (bookmarkCount !== bookmarkList.length) {
         throw new InternalServerErrorException('북마크 수가 일치하지 않습니다.');
       }
-      const promises = bookmarkList.map(async (bookmark) => {
-        await this.bookmarkRepository.update(bookmark.id, { order: bookmark.order });
+      const promises = bookmarkList.map(async (bookmark, index) => {
+        await this.bookmarkRepository.update(bookmark.id, { order: index + 1 });
       });
       await Promise.all(promises);
       return bookmarkList;

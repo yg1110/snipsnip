@@ -1,3 +1,5 @@
+import { Folder } from '../entities/folder.entity';
+
 export class CreateFolderDto {
   name: string;
   parentFolderId: number | null;
@@ -8,4 +10,9 @@ export class UpdateFolderDto {
   name: string | null;
   parentFolderId: number | null;
   order: number | null;
+}
+
+export class UpdateSubFoldersOrderDto {
+  parentFolderId: number;
+  folderList: Folder[];
 }

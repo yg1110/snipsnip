@@ -14,7 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { BookmarkService } from './bookmark.service';
-import { CreateBookmarkDto, UpdateBookmarkDto, UpdateBookmarkOrderDto } from './dto/bookmark.dto';
+import { CreateBookmarkDto, UpdateBookmarkDto, UpdateBookmarksOrderDto } from './dto/bookmark.dto';
 
 @ApiTags('Bookmarks')
 @Controller()
@@ -191,12 +191,12 @@ export class BookmarkController {
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
   @Post('/bookmarks/order')
-  updateBookmarkOrder(@Body() updateBookmarkOrderDto: UpdateBookmarkOrderDto, @Req() req) {
+  updateBookmarksOrder(@Body() updateBookmarksOrderDto: UpdateBookmarksOrderDto, @Req() req) {
     const userId = req.user.id;
-    return this.bookmarkService.updateBookmarkOrder(
+    return this.bookmarkService.updateBookmarksOrder(
       userId,
-      updateBookmarkOrderDto.folderId,
-      updateBookmarkOrderDto.bookmarkList,
+      updateBookmarksOrderDto.folderId,
+      updateBookmarksOrderDto.bookmarkList,
     );
   }
 }

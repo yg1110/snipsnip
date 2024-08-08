@@ -42,7 +42,12 @@ export type NewBookmark = Pick<Bookmark, 'title' | 'folderId' | 'order'> & {
 
 export type ModifiedBookmark = Partial<Bookmark>;
 
-export type UpdateBookmarkOrderCommand = {
+export type UpdateBookmarksOrderCommand = {
   folderId: number;
   bookmarkList: Bookmark[];
+};
+
+export type UpdateSubFoldersOrderCommand = {
+  parentFolderId: number;
+  folderList: Folder[];
 };

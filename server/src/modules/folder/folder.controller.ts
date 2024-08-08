@@ -13,7 +13,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-import { CreateFolderDto, UpdateFolderDto } from './dto/foler.dto';
+import { CreateFolderDto, UpdateFolderDto, UpdateSubFoldersOrderDto } from './dto/foler.dto';
 import { FolderService } from './folder.service';
 
 @ApiTags('Folders')
@@ -143,5 +143,53 @@ export class FolderController {
       throw new InternalServerErrorException('폴더가 존재하지 않습니다.');
     }
     return folder;
+  }
+
+  @ApiOperation({
+    summary: '서브 폴더 순서 변경하기',
+  })
+  @ApiBody({
+    schema: {
+      example: {
+        parentFolderId: 1,
+        folderList: [
+          {
+            id: 1,
+            name: '서브1',
+            userId: 1,
+            parentFolderId: 1,
+            order: 1,
+            createdAt: '2024-08-08T05:32:03.000Z',
+            updatedAt: '2024-08-08T06:28:53.000Z',
+            deletedAt: null,
+            subFolderCount: 0,
+            bookmarkCount: 0,
+          },
+          {
+            id: 2,
+            name: '서브2',
+            userId: 1,
+            parentFolderId: 1,
+            order: 2,
+            createdAt: '2024-08-07T15:10:29.000Z',
+            updatedAt: '2024-08-08T06:28:53.000Z',
+            deletedAt: null,
+            subFolderCount: 0,
+            bookmarkCount: 1,
+          },
+        ],
+      },
+    },
+  })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/sub-folders/order')
+  updateSubFoldersOrder(@Body() updateSubFoldersOrderDto: UpdateSubFoldersOrderDto, @Req() req) {
+    const userId = req.user.id;
+    return this.folderService.updateSubFoldersOrder(
+      userId,
+      updateSubFoldersOrderDto.parentFolderId,
+      updateSubFoldersOrderDto.folderList,
+    );
   }
 }
