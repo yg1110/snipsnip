@@ -8,25 +8,21 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import {
-  MutableRefObject,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Folder } from '../lib/types/dataTypes';
 import { useUpdateSubFoldersOrder } from '../lib/data/mutation';
 import { useStore } from '../store/useStore';
 
 export default function ChildFolderList({
   parentFolderId,
+  showChildFolderId,
 }: {
   parentFolderId: number;
+  showChildFolderId: number;
 }) {
-  const { expanded, collapsed, isAllExpanded } = useStore();
-  const childFolderItemRef = useRef<(ChildFolderItemRef | null)[]>([]);
+  const { isAllExpanded } = useStore();
   const [childFolderList, setChildFolderList] = useState<Folder[]>([]);
+  const childFolderItemRef = useRef<(ChildFolderItemRef | null)[]>([]);
 
   const { data: childFolders, isLoading: isFoldersLoading } =
     useChildFolders(parentFolderId);
@@ -87,6 +83,20 @@ export default function ChildFolderList({
       });
     }
   }, [isAllExpanded]);
+
+  useEffect(() => {
+    if (showChildFolderId) {
+      const index = childFolderList.findIndex(
+        folder => folder.id === showChildFolderId,
+      );
+      if (index !== -1) {
+        const childFolderItem = childFolderItemRef.current[index];
+        if (childFolderItem) {
+          childFolderItem.setShowChildren(true);
+        }
+      }
+    }
+  }, [showChildFolderId, childFolderList]);
 
   return (
     <>

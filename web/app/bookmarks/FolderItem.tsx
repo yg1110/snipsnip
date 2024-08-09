@@ -66,6 +66,7 @@ const FolderItem: ForwardRefRenderFunction<
 > = ({ folder }, ref): JSX.Element => {
   const { isAllExpanded } = useStore();
   const [showChildren, setShowChildren] = useState(false);
+  const [showChildFolderId, setShowChildFolderId] = useState(0);
 
   const {
     attributes,
@@ -116,6 +117,7 @@ const FolderItem: ForwardRefRenderFunction<
         <AddChildBookmarkCBtn
           parentFolderId={folder.id}
           setShowChildren={setShowChildren}
+          setShowChildFolderId={setShowChildFolderId}
         />
       ),
       key: '1',
@@ -197,7 +199,10 @@ const FolderItem: ForwardRefRenderFunction<
           description={
             showChildren && (
               <>
-                <ChildFolderList parentFolderId={folder.id} />
+                <ChildFolderList
+                  parentFolderId={folder.id}
+                  showChildFolderId={showChildFolderId}
+                />
                 <BookmarkList folderId={folder.id} />
               </>
             )
