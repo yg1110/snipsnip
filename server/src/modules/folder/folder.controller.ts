@@ -65,9 +65,33 @@ export class FolderController {
   @ApiBearerAuth('access-token')
   @UseGuards(AuthGuard('jwt'))
   @Get('folders')
-  findAll(@Req() req) {
+  findAllRoot(@Req() req) {
     const userId = req.user.id;
     return this.folderService.findAllRoot(userId);
+  }
+
+  @ApiOperation({
+    summary: '모든 폴더 조회하기',
+    description: `
+    [
+      {
+        "id": 1,
+        "name": "폴더 이름",
+        "parentFolderId": null,
+        "order": 1,
+        "userId": 1,
+        "createdAt": "2024-05-30T05:58:10.000Z",
+        "updatedAt": "2024-05-30T05:58:10.000Z",
+        "deletedAt": null
+      }
+    ]`,
+  })
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard('jwt'))
+  @Get('folders/all')
+  findAll(@Req() req) {
+    const userId = req.user.id;
+    return this.folderService.findAll(userId);
   }
 
   @ApiOperation({

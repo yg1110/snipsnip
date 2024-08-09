@@ -25,6 +25,12 @@ export const fetchRootFolders = async () => {
   });
 };
 
+export const fetchAllFolders = async () => {
+  return apiClient<Folder[]>('/folders/all', {
+    method: 'GET',
+  });
+};
+
 export const fetchChildFolders = async (parentFolderId: number) => {
   return apiClient<Folder[]>(`/folders/${parentFolderId}`, {
     method: 'GET',

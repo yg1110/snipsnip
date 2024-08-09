@@ -118,6 +118,23 @@ export class FolderService {
       .getOne();
   }
 
+  async findAll(userId: number): Promise<Folder[]> {
+    try {
+      const folders = await this.folderRepository
+        .createQueryBuilder('folder')
+        .select()
+        .where('folder.userId = :userId', { userId })
+        .andWhere('folder.deletedAt IS NULL')
+        .getMany();
+      if (!folders) {
+        throw new NotFoundException('폴더를 찾을 수 없습니다.');
+      }
+      return folders;
+    } catch (error) {
+      throw new InternalServerErrorException(error.message);
+    }
+  }
+
   async update(id: number, userId: number, updateFolderDto: UpdateFolderDto): Promise<Folder> {
     try {
       const folder = await this.folderRepository

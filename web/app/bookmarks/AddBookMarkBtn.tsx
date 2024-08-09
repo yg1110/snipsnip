@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { BookFilled } from '@ant-design/icons';
-import { useRootFolders } from '@/app/lib/data/query';
+import { useAllFolders, useRootFolders } from '@/app/lib/data/query';
 import { useAddBookmark } from '@/app/lib/data/mutation';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -15,7 +15,7 @@ export default function AddBookMarkBtn() {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data: rootFolders } = useRootFolders();
+  const { data: allFolders } = useAllFolders();
   const addBookmarkMutation = useAddBookmark();
 
   const [form] = Form.useForm<AddBookmarkFormValue>();
@@ -89,7 +89,7 @@ export default function AddBookMarkBtn() {
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {rootFolders?.map(folder => (
+              {allFolders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

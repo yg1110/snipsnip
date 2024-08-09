@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import {
+  fetchAllFolders,
   fetchBookmarks,
   fetchChildFolders,
   fetchFolder,
@@ -13,6 +14,22 @@ export const useRootFolders = () => {
   return useQuery<Folder[]>({
     queryKey: ['rootFolders'],
     queryFn: fetchRootFolders,
+    retry(failureCount, error) {
+      if (error instanceof ApiError) {
+        const errorMessage =
+          error?.message || '폴더 목록을 불러오는데 실패했습니다.';
+        message.error(errorMessage);
+        return false;
+      }
+      return failureCount < 3;
+    },
+  });
+};
+
+export const useAllFolders = () => {
+  return useQuery<Folder[]>({
+    queryKey: ['allFolders'],
+    queryFn: fetchAllFolders,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
         const errorMessage =

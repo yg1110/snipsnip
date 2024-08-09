@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import { useRootFolders } from '@/app/lib/data/query';
+import { useAllFolders, useRootFolders } from '@/app/lib/data/query';
 import { Bookmark } from '@/app/lib/types/dataTypes';
 import { useUpdateBookmark } from '@/app/lib/data/mutation';
 
@@ -14,7 +14,7 @@ type EditBookmarkFormValue = {
 export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const { data: rootFolders } = useRootFolders();
+  const { data: allFolders } = useAllFolders();
   const updateBookmarkMutation = useUpdateBookmark();
   const [form] = useForm<EditBookmarkFormValue>();
 
@@ -56,7 +56,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
 
   return (
     <>
-      <Button type="link" onClick={openModal} style={{ color: "#faad14" }}>
+      <Button type="link" onClick={openModal} style={{ color: '#faad14' }}>
         북마크 수정
       </Button>
       <Modal
@@ -74,7 +74,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="Select a folder">
-              {rootFolders?.map(folder => (
+              {allFolders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>
