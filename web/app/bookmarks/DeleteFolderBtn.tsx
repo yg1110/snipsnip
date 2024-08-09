@@ -34,9 +34,12 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
         폴더 삭제
       </Button>
       <Modal
+        okText="삭제"
+        cancelText="취소"
+        width={400}
         title={
           <Space>
-            <ExclamationCircleFilled style={{ color: '#faad14' }} />
+            <ExclamationCircleFilled style={{ color: '#f03e3e' }} />
             <p>폴더 삭제하기</p>
           </Space>
         }
@@ -45,7 +48,7 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
         onCancel={closeModal}
         confirmLoading={deleteFolderMutation.isPending}
       >
-        <p>폴더를 삭제하면 포함된 즐겨찾기가 모두 제거됩니다.</p>
+        <p>폴더를 삭제하면 포함된 북마크가 모두 제거됩니다.</p>
         <p>정말로 삭제하시겠습니까?</p>
       </Modal>
     </>

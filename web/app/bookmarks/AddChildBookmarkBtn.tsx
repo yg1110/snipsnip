@@ -58,7 +58,7 @@ export default function AddChildBookmarkCBtn({
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
           queryClient.invalidateQueries({ queryKey: ['childFolders'] });
-          message.success('새로운 즐겨찾기가 추가되었습니다.');
+          message.success('새로운 북마크가 추가되었습니다.');
           closeModal();
           setShowChildren(true);
           if (newBookmark.folderId !== currentFolder?.id) {

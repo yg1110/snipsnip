@@ -26,7 +26,7 @@ export default function DeleteBookmarkBtn({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
         queryClient.invalidateQueries({ queryKey: ['childFolders'] });
-        message.success('즐겨찾기가 삭제되었습니다.');
+        message.success('북마크가 삭제되었습니다.');
         closeModal();
       },
     });
@@ -38,10 +38,13 @@ export default function DeleteBookmarkBtn({
         북마크 삭제
       </Button>
       <Modal
+        okText="삭제"
+        cancelText="취소"
+        width={400}
         title={
           <Space>
-            <ExclamationCircleFilled style={{ color: '#faad14' }} />
-            <p>즐겨찾기 삭제</p>
+            <ExclamationCircleFilled style={{ color: '#f03e3e' }} />
+            <p>북마크 삭제</p>
           </Space>
         }
         open={isModalOpen}
@@ -49,7 +52,7 @@ export default function DeleteBookmarkBtn({
         onCancel={closeModal}
         confirmLoading={deleteBookmarkMutation.isPending}
       >
-        <p>정말로 즐겨찾기를 삭제하시겠습니까?</p>
+        <p>정말로 북마크를 삭제하시겠습니까?</p>
       </Modal>
     </>
   );

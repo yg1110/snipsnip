@@ -52,7 +52,7 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
 
   return (
     <>
-      <Button type="link" onClick={openModal} style={{ color: "#f59f00" }}>
+      <Button type="link" onClick={openModal} style={{ color: '#f59f00' }}>
         폴더 수정
       </Button>
       <Modal
@@ -60,6 +60,9 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
         open={editModalOpen}
         onOk={editFolder}
         onCancel={closeModal}
+        okText="변경"
+        cancelText="취소"
+        width={400}
         confirmLoading={editFolderMutation.isPending}
       >
         <Input
