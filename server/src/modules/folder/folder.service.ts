@@ -43,7 +43,11 @@ export class FolderService {
       if (folder) {
         throw new InternalServerErrorException('이미 존재하는 폴더입니다.');
       }
-      return this.folderRepository.save(createFolderDto);
+
+      return this.folderRepository.save({
+        ...createFolderDto,
+        order: 9999,
+      });
     } catch (error) {
       throw new InternalServerErrorException(error.message);
     }

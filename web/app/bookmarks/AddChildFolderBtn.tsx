@@ -34,7 +34,6 @@ export default function AddChildFolderBtn({
     addFolderMutation.mutate(
       {
         name: folderName,
-        order: 10,
         parentFolderId,
       },
       {

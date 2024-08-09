@@ -30,7 +30,6 @@ export class BookmarkController {
         title: '북마크 이름',
         url: 'https://www.naver.com',
         folderId: 1,
-        order: 1,
       },
     },
   })

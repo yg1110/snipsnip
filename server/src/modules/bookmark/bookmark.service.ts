@@ -41,6 +41,7 @@ export class BookmarkService {
       return this.bookmarkRepository.save({
         ...createBookmarkDto,
         metadata,
+        order: 9999,
       });
     } catch (error) {
       throw new InternalServerErrorException(error.message);

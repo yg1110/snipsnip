@@ -53,7 +53,6 @@ export default function AddChildBookmarkCBtn({
     addBookmarkMutation.mutate(
       {
         ...newBookmark,
-        order: 1,
       },
       {
         onSuccess: () => {

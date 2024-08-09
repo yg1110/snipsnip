@@ -34,7 +34,6 @@ export class FolderController {
       example: {
         name: '폴더 이름',
         parentFolderId: null,
-        order: 1,
       },
     },
   })

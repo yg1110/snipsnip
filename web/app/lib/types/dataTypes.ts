@@ -12,7 +12,7 @@ export type Folder = {
   deletedAt: Nullable<Date>;
 };
 
-export type NewFolder = Pick<Folder, 'name' | 'order' | 'parentFolderId'>;
+export type NewFolder = Pick<Folder, 'name' | 'parentFolderId'>;
 
 export type ModifiedFolder = Partial<Folder>;
 
@@ -36,7 +36,7 @@ export type Bookmark = {
   metadata: Metadata;
 };
 
-export type NewBookmark = Pick<Bookmark, 'title' | 'folderId' | 'order'> & {
+export type NewBookmark = Pick<Bookmark, 'title' | 'folderId'> & {
   url: string;
 };
 

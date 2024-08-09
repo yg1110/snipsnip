@@ -28,7 +28,6 @@ export default function AddFolderBtn() {
     addFolderMutation.mutate(
       {
         name: folderName,
-        order: 10,
         parentFolderId: null,
       },
       {

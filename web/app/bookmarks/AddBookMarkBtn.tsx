@@ -39,7 +39,6 @@ export default function AddBookMarkBtn() {
     addBookmarkMutation.mutate(
       {
         ...newBookmark,
-        order: 1,
       },
       {
         onSuccess: () => {
