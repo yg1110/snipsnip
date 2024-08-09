@@ -62,7 +62,7 @@ export default function Page() {
             </Form.Item>
             <Form.Item
               name="password"
-              label="패스워드"
+              label="비밀번호"
               rules={[
                 { required: true, message: '비밀번호를 입력해주세요.' },
                 {
@@ -73,7 +73,7 @@ export default function Page() {
                 },
               ]}
             >
-              <Input size="large" placeholder="패스워드" />
+              <Input.Password size="large" placeholder="비밀번호" />
             </Form.Item>
             <Form.Item
               name="passwordConfirm"
@@ -92,7 +92,7 @@ export default function Page() {
                 }),
               ]}
             >
-              <Input size="large" placeholder="패스워드 확인" />
+              <Input.Password size="large" placeholder="패스워드 확인" />
             </Form.Item>
             <Form.Item>
               <Button
