@@ -7,7 +7,7 @@ interface ExpandedState {
 }
 
 export const useStore = create<ExpandedState>(set => ({
-  isAllExpanded: false,
+  isAllExpanded: true,
   expanded: () => set(state => ({ isAllExpanded: true })),
   collapsed: () => set(state => ({ isAllExpanded: false })),
 }));

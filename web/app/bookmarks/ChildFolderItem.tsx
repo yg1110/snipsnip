@@ -59,7 +59,7 @@ const ChildFolderItem: ForwardRefRenderFunction<
   { folder: Folder }
 > = ({ folder }, ref): JSX.Element => {
   const { isAllExpanded } = useStore();
-  const [showChildren, setShowChildren] = useState(false);
+  const [showChildren, setShowChildren] = useState(true);
 
   const {
     attributes,
