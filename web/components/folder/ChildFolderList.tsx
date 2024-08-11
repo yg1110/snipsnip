@@ -11,7 +11,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Folder } from '../../app/lib/types/dataTypes';
 import { useUpdateSubFoldersOrder } from '../../app/lib/data/mutation';
-import { useStore } from '../../app/store/useStore';
+import { useStore } from '@/stores/useStore';
 
 export default function ChildFolderList({
   parentFolderId,

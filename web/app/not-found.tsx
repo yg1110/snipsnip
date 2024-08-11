@@ -7,10 +7,10 @@ import {
   flexStyle,
   logoStyle,
   notFoundContentStyle,
-} from '@/app/ui/mainLayoutStyle';
+} from '@/styles/mainLayoutStyle';
 import { useRouter } from 'next/navigation';
 import NotFound from './404/404';
-import './ui/mobile.css';
+import '@/styles/mobile.css';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;

@@ -18,18 +18,15 @@ import {
 import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
 import { Folder } from '@/app/lib/types/dataTypes';
 import BookmarkList from '../bookmark/BookmarkList';
-import {
-  folderCountStyle,
-  folderIconStyle,
-} from '../../app/ui/folderPageStyles';
+import { folderCountStyle, folderIconStyle } from '@/styles/folderPageStyles';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { useSortable } from '@dnd-kit/sortable';
-import { useStore } from '../../app/store/useStore';
 import AddChildBookmarkCBtn from '@/components/buttons/AddChildBookmarkBtn';
 import DeleteFolderBtn from '@/components/buttons/DeleteFolderBtn';
 import EditFolderBtn from '@/components/buttons/EditFolderBtn';
+import { useStore } from '@/stores/useStore';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;

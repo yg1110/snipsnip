@@ -1,4 +1,4 @@
-import { ApiError } from '../shared/ApiError';
+import { ApiError } from '@/shared/ApiError';
 
 type FetcherProps = {
   baseURL: string;

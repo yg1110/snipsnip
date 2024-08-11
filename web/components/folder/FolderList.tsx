@@ -1,9 +1,6 @@
 import { Button, Flex, List, Space } from 'antd';
 import { useRootFolders } from '@/app/lib/data/query';
-import {
-  folderButtonStyle,
-  folderListStyle,
-} from '../../app/ui/folderPageStyles';
+import { folderButtonStyle, folderListStyle } from '@/styles/folderPageStyles';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -16,10 +13,10 @@ import { Folder } from '../../app/lib/types/dataTypes';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { BsChevronContract } from 'react-icons/bs';
 import { BsChevronExpand } from 'react-icons/bs';
-import { useStore } from '../../app/store/useStore';
 import AddFolderBtn from '@/components/buttons/AddFolderBtn';
 import AddBookMarkBtn from '@/components/buttons/AddBookMarkBtn';
 import FolderItem, { FolderItemRef } from './FolderItem';
+import { useStore } from '@/stores/useStore';
 
 export default function FolderList() {
   const folderItemRef = useRef<(FolderItemRef | null)[]>([]);

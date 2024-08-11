@@ -8,9 +8,9 @@ import {
   flexStyle,
   contentStyle,
   logoStyle,
-} from '@/app/ui/mainLayoutStyle';
+} from '@/styles/mainLayoutStyle';
 import { useRouter } from 'next/navigation';
-import '../ui/mobile.css';
+import '@/styles/mobile.css';
 import FolderList from '@/components/folder/FolderList';
 
 const { Header, Content } = Layout;

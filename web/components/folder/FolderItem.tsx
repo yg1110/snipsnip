@@ -21,18 +21,18 @@ import {
   folderCountStyle,
   folderIconStyle,
   folderItemStyle,
-} from '@/app/ui/folderPageStyles';
+} from '@/styles/folderPageStyles';
 import BookmarkList from '../bookmark/BookmarkList';
 import ChildFolderList from './ChildFolderList';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
-import { useStore } from '../../app/store/useStore';
 import AddChildBookmarkCBtn from '@/components/buttons/AddChildBookmarkBtn';
 import AddChildFolderBtn from '@/components/buttons/AddChildFolderBtn';
 import DeleteFolderBtn from '@/components/buttons/DeleteFolderBtn';
 import EditFolderBtn from '@/components/buttons/EditFolderBtn';
+import { useStore } from '@/stores/useStore';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;

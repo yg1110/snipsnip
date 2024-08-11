@@ -8,7 +8,7 @@ import {
 } from '@/app/lib/data/fetchingData';
 import { Bookmark, Folder } from '@/app/lib/types/dataTypes';
 import { message } from 'antd';
-import { ApiError } from '@/app/shared/ApiError';
+import { ApiError } from '@/shared/ApiError';
 
 export const useRootFolders = () => {
   return useQuery<Folder[]>({

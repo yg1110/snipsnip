@@ -6,13 +6,13 @@ import {
   bookmarkItemStyle,
   bookmarkThumbnailStyle,
   bookmarkTitleStyle,
-} from '../../app/ui/bookmarkStyles';
+} from '@/styles/bookmarkStyles';
 import { useContext, useMemo } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import React from 'react';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-import { fullWidthStyle } from '../../app/ui/commonStyles';
+import { fullWidthStyle } from '@/styles/commonStyles';
 import DeleteBookmarkBtn from '@/components/buttons/DeleteBookmarkBtn';
 import EditBookmarkBtn from '@/components/buttons/EditBookmarkBtn';
 

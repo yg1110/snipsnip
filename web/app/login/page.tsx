@@ -9,13 +9,13 @@ import {
   flexStyle,
   submitButtonStyle,
   logoStyle,
-} from '@/app/ui/loginLayoutStyle';
+} from '@/styles/loginLayoutStyle';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useLogin } from '../lib/data/mutation';
 import { LoginRequest } from '../lib/types/authTypes';
 
-import '../ui/mobile.css';
+import '@/styles/mobile.css';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;

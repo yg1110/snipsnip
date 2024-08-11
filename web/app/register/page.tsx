@@ -8,12 +8,12 @@ import {
   flexStyle,
   submitButtonStyle,
   logoStyle,
-} from '@/app/ui/loginLayoutStyle';
+} from '@/styles/loginLayoutStyle';
 import Link from 'next/link';
 import { RegisterRequest } from '../lib/types/authTypes';
 import { useRegister } from '../lib/data/mutation';
 import { useRouter } from 'next/navigation';
-import '../ui/mobile.css';
+import '@/styles/mobile.css';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
