@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button, Modal, Space, message } from 'antd';
-import { useDeleteFolder } from '@/app/lib/data/mutation';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useQueryClient } from '@tanstack/react-query';
+import { useDeleteFolder } from '@/state/mutations/folderMutation';
 
 export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
   const [isOpen, setIsOpen] = useState(false);

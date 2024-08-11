@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
-import { useChildFolders, useFolder } from '@/app/lib/data/query';
-import { useAddBookmark } from '@/app/lib/data/mutation';
 import { useQueryClient } from '@tanstack/react-query';
+import { useChildFolders, useFolder } from '@/state/queries/folderQuery';
+import { useAddBookmark } from '@/state/mutations/bookmarkMutation';
 
 type AddChildBookmarkFormValue = {
   title: string;

@@ -3,7 +3,7 @@ import { Folder } from '@/app/lib/types/dataTypes';
 import { Button, Input, Modal, message } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
 import { ENTER_KEYCODE } from '@/shared/constants';
-import { useUpdateFolder } from '@/app/lib/data/mutation';
+import { useUpdateFolder } from '@/state/mutations/folderMutation';
 
 export default function EditFolderBtn({ folder }: { folder: Folder }) {
   const [editModalOpen, setEditModalOpen] = useState(false);

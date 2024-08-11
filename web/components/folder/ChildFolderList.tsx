@@ -1,5 +1,4 @@
 import { List } from 'antd';
-import { useChildFolders } from '@/app/lib/data/query';
 import ChildFolderItem, { ChildFolderItemRef } from './ChildFolderItem';
 import { DragEndEvent, DndContext } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
@@ -10,8 +9,9 @@ import {
 } from '@dnd-kit/sortable';
 import { useEffect, useRef, useState } from 'react';
 import { Folder } from '../../app/lib/types/dataTypes';
-import { useUpdateSubFoldersOrder } from '../../app/lib/data/mutation';
+import { useUpdateSubFoldersOrder } from '../../state/mutations/folderMutation';
 import { useStore } from '@/stores/useStore';
+import { useChildFolders } from '@/state/queries/folderQuery';
 
 export default function ChildFolderList({
   parentFolderId,

@@ -1,5 +1,4 @@
 import { List } from 'antd';
-import { useBookmarks } from '@/app/lib/data/query';
 import BookmarkItem from './BookmarkItem';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
@@ -10,7 +9,8 @@ import {
 } from '@dnd-kit/sortable';
 import { useEffect, useState } from 'react';
 import { Bookmark } from '../../app/lib/types/dataTypes';
-import { useUpdateBookmarksOrder } from '../../app/lib/data/mutation';
+import { useBookmarks } from '@/state/queries/bookmarkQuery';
+import { useUpdateBookmarksOrder } from '@/state/mutations/bookmarkMutation';
 
 export default function BookmarkList({ folderId }: { folderId: number }) {
   const [bookmarkList, setBookmarkList] = useState<Bookmark[]>([]);

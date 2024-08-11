@@ -1,18 +1,5 @@
-import {
-  Bookmark,
-  Folder,
-  ModifiedBookmark,
-  ModifiedFolder,
-  NewBookmark,
-  NewFolder,
-} from '@/app/lib/types/dataTypes';
-import generateApiClientFetcher from '../generateApiClientFetcher';
-import {
-  AuthTokensResponse,
-  LoginRequest,
-  RegisterRequest,
-  User,
-} from '../types/authTypes';
+import { Folder, ModifiedFolder, NewFolder } from '@/app/lib/types/dataTypes';
+import generateApiClientFetcher from '@/services/generateApiClientFetcher';
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   'Content-Type': 'application/json',
@@ -62,61 +49,6 @@ export const deleteFolder = async (folderId: number) => {
     method: 'DELETE',
   });
 };
-
-export const fetchBookmarks = async (folderId: number) => {
-  return apiClient<Bookmark[]>(`/bookmarks/${folderId}`, {
-    method: 'GET',
-  });
-};
-
-export const login = async (command: LoginRequest) => {
-  return apiClient<AuthTokensResponse>('/auth/login', {
-    method: 'POST',
-    body: JSON.stringify(command),
-  });
-};
-
-export const register = async (command: RegisterRequest) => {
-  const { passwordConfirm, ...rest } = command;
-  return apiClient<User>('/users/register', {
-    method: 'POST',
-    body: JSON.stringify(rest),
-  });
-};
-
-export const addBookmark = async (newBookmark: NewBookmark) => {
-  return apiClient<Bookmark>('/bookmarks', {
-    method: 'POST',
-    body: JSON.stringify(newBookmark),
-  });
-};
-
-export const updateBookmark = async (modifiedBookmark: ModifiedBookmark) => {
-  return apiClient<Bookmark>(`/bookmarks/${modifiedBookmark.id}`, {
-    method: 'PATCH',
-    body: JSON.stringify(modifiedBookmark),
-  });
-};
-
-export const deleteBookmark = async (bookmarkId: number) => {
-  return apiClient<void>(`/bookmarks/${bookmarkId}`, {
-    method: 'DELETE',
-  });
-};
-
-export const updateBookmarksOrder = async (
-  folderId: number,
-  bookmarkList: Bookmark[],
-) => {
-  return apiClient<void>('/bookmarks/order', {
-    method: 'POST',
-    body: JSON.stringify({
-      folderId,
-      bookmarkList,
-    }),
-  });
-};
-
 export const updateSubFoldersOrder = async (
   parentFolderId: number,
   folderList: Folder[],

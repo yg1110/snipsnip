@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useAddFolder } from '@/app/lib/data/mutation';
 import { Button, Input, Modal, message } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from '@/shared/constants';
+import { useAddFolder } from '@/state/mutations/folderMutation';
 
 export default function AddChildFolderBtn({
   parentFolderId,

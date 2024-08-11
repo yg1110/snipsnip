@@ -1,8 +1,8 @@
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Modal, Space, message } from 'antd';
 import { useState } from 'react';
-import { useDeleteBookmark } from '@/app/lib/data/mutation';
 import { useQueryClient } from '@tanstack/react-query';
+import { useDeleteBookmark } from '@/state/mutations/bookmarkMutation';
 
 export default function DeleteBookmarkBtn({
   bookmarkId,

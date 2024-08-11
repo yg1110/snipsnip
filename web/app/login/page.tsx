@@ -12,10 +12,10 @@ import {
 } from '@/styles/loginLayoutStyle';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useLogin } from '../lib/data/mutation';
 import { LoginRequest } from '../lib/types/authTypes';
 
 import '@/styles/mobile.css';
+import { useLogin } from '@/state/mutations/authMution';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
