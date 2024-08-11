@@ -1,20 +1,20 @@
 import { HolderOutlined, MoreOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Flex, List, MenuProps } from 'antd';
 import { Bookmark } from '@/app/lib/types/dataTypes';
-import EditBookmarkBtn from './EditBookmarkBtn';
-import DeleteBookmarkBtn from './DeleteBookmarkBtn';
 import {
   bookmarkDescriptionStyle,
   bookmarkItemStyle,
   bookmarkThumbnailStyle,
   bookmarkTitleStyle,
-} from '../ui/bookmarkStyles';
+} from '../../app/ui/bookmarkStyles';
 import { useContext, useMemo } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import React from 'react';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-import { fullWidthStyle } from '../ui/commonStyles';
+import { fullWidthStyle } from '../../app/ui/commonStyles';
+import DeleteBookmarkBtn from '@/components/buttons/DeleteBookmarkBtn';
+import EditBookmarkBtn from '@/components/buttons/EditBookmarkBtn';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;

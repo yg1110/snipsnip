@@ -9,9 +9,9 @@ import {
   contentStyle,
   logoStyle,
 } from '@/app/ui/mainLayoutStyle';
-import FolderList from './FolderList';
 import { useRouter } from 'next/navigation';
 import '../ui/mobile.css';
+import FolderList from '@/components/folder/FolderList';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;

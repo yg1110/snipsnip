@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Folder } from '@/app/lib/types/dataTypes';
-import { useUpdateFolder } from '../lib/data/mutation';
 import { Button, Input, Modal, message } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
 import { ENTER_KEYCODE } from '@/app/shared/constants';
+import { useUpdateFolder } from '@/app/lib/data/mutation';
 
 export default function EditFolderBtn({ folder }: { folder: Folder }) {
   const [editModalOpen, setEditModalOpen] = useState(false);

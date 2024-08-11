@@ -9,8 +9,8 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useEffect, useState } from 'react';
-import { Bookmark } from '../lib/types/dataTypes';
-import { useUpdateBookmarksOrder } from '../lib/data/mutation';
+import { Bookmark } from '../../app/lib/types/dataTypes';
+import { useUpdateBookmarksOrder } from '../../app/lib/data/mutation';
 
 export default function BookmarkList({ folderId }: { folderId: number }) {
   const [bookmarkList, setBookmarkList] = useState<Bookmark[]>([]);

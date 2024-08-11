@@ -17,16 +17,19 @@ import {
 } from '@ant-design/icons';
 import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
 import { Folder } from '@/app/lib/types/dataTypes';
-import BookmarkList from './BookmarkList';
-import EditFolderBtn from './EditFolderBtn';
-import DeleteFolderBtn from './DeleteFolderBtn';
-import AddChildBookmarkCBtn from './AddChildBookmarkBtn';
-import { folderCountStyle, folderIconStyle } from '../ui/folderPageStyles';
+import BookmarkList from '../bookmark/BookmarkList';
+import {
+  folderCountStyle,
+  folderIconStyle,
+} from '../../app/ui/folderPageStyles';
 import React from 'react';
 import { CSS } from '@dnd-kit/utilities';
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { useSortable } from '@dnd-kit/sortable';
-import { useStore } from '../store/useStore';
+import { useStore } from '../../app/store/useStore';
+import AddChildBookmarkCBtn from '@/components/buttons/AddChildBookmarkBtn';
+import DeleteFolderBtn from '@/components/buttons/DeleteFolderBtn';
+import EditFolderBtn from '@/components/buttons/EditFolderBtn';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;

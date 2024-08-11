@@ -9,9 +9,9 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useEffect, useRef, useState } from 'react';
-import { Folder } from '../lib/types/dataTypes';
-import { useUpdateSubFoldersOrder } from '../lib/data/mutation';
-import { useStore } from '../store/useStore';
+import { Folder } from '../../app/lib/types/dataTypes';
+import { useUpdateSubFoldersOrder } from '../../app/lib/data/mutation';
+import { useStore } from '../../app/store/useStore';
 
 export default function ChildFolderList({
   parentFolderId,

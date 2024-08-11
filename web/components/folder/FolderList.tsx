@@ -1,9 +1,9 @@
 import { Button, Flex, List, Space } from 'antd';
 import { useRootFolders } from '@/app/lib/data/query';
-import AddFolderBtn from './AddFolderBtn';
-import AddBookMarkBtn from './AddBookMarkBtn';
-import FolderItem, { FolderItemRef } from './FolderItem';
-import { folderButtonStyle, folderListStyle } from '../ui/folderPageStyles';
+import {
+  folderButtonStyle,
+  folderListStyle,
+} from '../../app/ui/folderPageStyles';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -11,12 +11,15 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useState, useEffect, useRef } from 'react';
-import { useUpdateRootFoldersOrder } from '../lib/data/mutation';
-import { Folder } from '../lib/types/dataTypes';
+import { useUpdateRootFoldersOrder } from '../../app/lib/data/mutation';
+import { Folder } from '../../app/lib/types/dataTypes';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { BsChevronContract } from 'react-icons/bs';
 import { BsChevronExpand } from 'react-icons/bs';
-import { useStore } from '../store/useStore';
+import { useStore } from '../../app/store/useStore';
+import AddFolderBtn from '@/components/buttons/AddFolderBtn';
+import AddBookMarkBtn from '@/components/buttons/AddBookMarkBtn';
+import FolderItem, { FolderItemRef } from './FolderItem';
 
 export default function FolderList() {
   const folderItemRef = useRef<(FolderItemRef | null)[]>([]);
