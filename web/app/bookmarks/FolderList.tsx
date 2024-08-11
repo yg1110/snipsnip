@@ -26,6 +26,22 @@ export default function FolderList() {
   const { data: rootFolders, isLoading } = useRootFolders();
   const updateRootFoldersOrderMutation = useUpdateRootFoldersOrder();
 
+  const allExpanded = () => {
+    folderItemRef.current.forEach(folderItem => {
+      if (folderItem) {
+        folderItem.setShowChildren(true);
+      }
+    });
+  };
+
+  const allCollapsed = () => {
+    folderItemRef.current.forEach(folderItem => {
+      if (folderItem) {
+        folderItem.setShowChildren(false);
+      }
+    });
+  };
+
   const onDragEnd = ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
       const activeIndex = rootFolderList.findIndex(
@@ -45,16 +61,12 @@ export default function FolderList() {
       const updatedList = arrayMove(rootFolderList, activeIndex, overIndex);
       setRootFolderList(updatedList);
       updateRootFoldersOrder(updatedList);
+      allExpanded();
     }
   };
 
   const onDragStart = (event: DragEndEvent) => {
-    const index = event.active.data.current?.sortable.index;
-    if (index === undefined) return;
-    const folderItem = folderItemRef.current[index];
-    if (folderItem) {
-      folderItem.setShowChildren(false);
-    }
+    allCollapsed();
   };
 
   const updateRootFoldersOrder = (folderList: Folder[]) => {
