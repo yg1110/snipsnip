@@ -1,5 +1,5 @@
-import { Bookmark, ModifiedBookmark, NewBookmark } from '@/types/bookmarkTypes';
 import generateApiClientFetcher from '@/services/generateApiClientFetcher';
+import { Bookmark, ModifiedBookmark, NewBookmark } from '@/types/bookmarkTypes';
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   'Content-Type': 'application/json',
   credentials: 'include',
@@ -31,10 +31,7 @@ export const deleteBookmark = async (bookmarkId: number) => {
   });
 };
 
-export const updateBookmarksOrder = async (
-  folderId: number,
-  bookmarkList: Bookmark[],
-) => {
+export const updateBookmarksOrder = async (folderId: number, bookmarkList: Bookmark[]) => {
   return apiClient<void>('/bookmarks/order', {
     method: 'POST',
     body: JSON.stringify({

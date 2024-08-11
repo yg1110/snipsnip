@@ -1,14 +1,11 @@
 import { ExclamationCircleFilled } from '@ant-design/icons';
-import { Button, Modal, Space, message } from 'antd';
-import { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { Button, message, Modal, Space } from 'antd';
+import { useState } from 'react';
+
 import { useDeleteBookmark } from '@/state/mutations/bookmarkMutation';
 
-export default function DeleteBookmarkBtn({
-  bookmarkId,
-}: {
-  bookmarkId: number;
-}) {
+export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: number }) {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const deleteBookmarkMutation = useDeleteBookmark();

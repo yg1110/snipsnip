@@ -1,17 +1,13 @@
 'use client';
 
-import Cookies from 'js-cookie';
-import { Button, Flex, Layout, Space, Typography } from 'antd';
-import {
-  headerStyle,
-  layoutStyle,
-  flexStyle,
-  contentStyle,
-  logoStyle,
-} from '@/styles/mainLayoutStyle';
-import { useRouter } from 'next/navigation';
 import '@/styles/mobile.css';
+
+import { Button, Flex, Layout, Space, Typography } from 'antd';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+
 import FolderList from '@/components/folder/FolderList';
+import { contentStyle, flexStyle, headerStyle, layoutStyle, logoStyle } from '@/styles/mainLayoutStyle';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;

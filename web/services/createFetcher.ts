@@ -10,10 +10,7 @@ export type FetcherOptions = RequestInit & {
 };
 
 export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
-  const fetcher = async <T>(
-    url: string,
-    options: FetcherOptions = {},
-  ): Promise<T> => {
+  const fetcher = async <T>(url: string, options: FetcherOptions = {}): Promise<T> => {
     const finalHeaders = { ...headers, ...options.headers };
 
     const response = await fetch(`${baseURL}${url}`, {
@@ -38,10 +35,7 @@ export const createFetcher = ({ baseURL, headers = {} }: FetcherProps) => {
         if (error instanceof ApiError) {
           throw new ApiError(error.message, error.statusCode);
         }
-        throw new ApiError(
-          '에러가 발생했습니다. 잠시 후 다시 시도해주세요.',
-          500,
-        );
+        throw new ApiError('에러가 발생했습니다. 잠시 후 다시 시도해주세요.', 500);
       }
     }
 

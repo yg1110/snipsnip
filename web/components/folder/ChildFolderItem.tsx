@@ -1,4 +1,16 @@
 import {
+  CaretDownOutlined,
+  CaretRightOutlined,
+  FolderOutlined,
+  HolderOutlined,
+  MoreOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
+import {
   forwardRef,
   ForwardRefRenderFunction,
   useContext,
@@ -7,26 +19,16 @@ import {
   useMemo,
   useState,
 } from 'react';
-import {
-  CaretDownOutlined,
-  CaretRightOutlined,
-  FolderOutlined,
-  HolderOutlined,
-  MoreOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
-import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
-import { Folder } from '@/types/folderTypes';
-import BookmarkList from '../bookmark/BookmarkList';
-import { folderCountStyle, folderIconStyle } from '@/styles/folderPageStyles';
 import React from 'react';
-import { CSS } from '@dnd-kit/utilities';
-import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-import { useSortable } from '@dnd-kit/sortable';
+
 import AddChildBookmarkCBtn from '@/components/buttons/AddChildBookmarkBtn';
 import DeleteFolderBtn from '@/components/buttons/DeleteFolderBtn';
 import EditFolderBtn from '@/components/buttons/EditFolderBtn';
 import { useStore } from '@/stores/useStore';
+import { folderCountStyle, folderIconStyle } from '@/styles/folderPageStyles';
+import { Folder } from '@/types/folderTypes';
+
+import BookmarkList from '../bookmark/BookmarkList';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;
@@ -54,21 +56,14 @@ export type ChildFolderItemRef = {
   setShowChildren: (value: boolean) => void;
 };
 
-const ChildFolderItem: ForwardRefRenderFunction<
-  ChildFolderItemRef,
-  { folder: Folder }
-> = ({ folder }, ref): JSX.Element => {
+const ChildFolderItem: ForwardRefRenderFunction<ChildFolderItemRef, { folder: Folder }> = (
+  { folder },
+  ref,
+): JSX.Element => {
   const { isAllExpanded } = useStore();
   const [showChildren, setShowChildren] = useState(true);
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    setActivatorNodeRef,
-    transform,
-    isDragging,
-  } = useSortable({
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, isDragging } = useSortable({
     id: folder.id.toString(),
   });
 
@@ -97,12 +92,7 @@ const ChildFolderItem: ForwardRefRenderFunction<
 
   const folderUnAddableGruop: MenuProps['items'] = [
     {
-      label: (
-        <AddChildBookmarkCBtn
-          parentFolderId={folder.id}
-          setShowChildren={setShowChildren}
-        />
-      ),
+      label: <AddChildBookmarkCBtn parentFolderId={folder.id} setShowChildren={setShowChildren} />,
       key: '0',
     },
   ];
@@ -130,20 +120,14 @@ const ChildFolderItem: ForwardRefRenderFunction<
               {showChildren ? (
                 <>
                   {hasChildren && (
-                    <CaretDownOutlined
-                      style={folderIconStyle}
-                      onClick={() => setShowChildren(prev => !prev)}
-                    />
+                    <CaretDownOutlined style={folderIconStyle} onClick={() => setShowChildren((prev) => !prev)} />
                   )}
                   <FolderOutlined />
                 </>
               ) : (
                 <>
                   {hasChildren && (
-                    <CaretRightOutlined
-                      style={folderIconStyle}
-                      onClick={() => setShowChildren(prev => !prev)}
-                    />
+                    <CaretRightOutlined style={folderIconStyle} onClick={() => setShowChildren((prev) => !prev)} />
                   )}
                   <FolderOutlined />
                 </>
@@ -152,27 +136,15 @@ const ChildFolderItem: ForwardRefRenderFunction<
           }
           title={
             <Flex justify="space-between">
-              <Space
-                onClick={() =>
-                  hasChildren ? setShowChildren(prev => !prev) : null
-                }
-              >
+              <Space onClick={() => (hasChildren ? setShowChildren((prev) => !prev) : null)}>
                 {folder.name}
-                {folder.bookmarkCount > 0 && (
-                  <span style={folderCountStyle}>({folder.bookmarkCount})</span>
-                )}
+                {folder.bookmarkCount > 0 && <span style={folderCountStyle}>({folder.bookmarkCount})</span>}
               </Space>
               <Space direction="horizontal">
-                <Dropdown
-                  menu={{ items: folderUnAddableGruop }}
-                  trigger={['click']}
-                >
+                <Dropdown menu={{ items: folderUnAddableGruop }} trigger={['click']}>
                   <Button type="text" icon={<PlusOutlined />} size="small" />
                 </Dropdown>
-                <Dropdown
-                  menu={{ items: folderMenuButtonGroup }}
-                  trigger={['click']}
-                >
+                <Dropdown menu={{ items: folderMenuButtonGroup }} trigger={['click']}>
                   <Button type="text" icon={<MoreOutlined />} size="small" />
                 </Dropdown>
               </Space>

@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { BookFilled } from '@ant-design/icons';
 import { useQueryClient } from '@tanstack/react-query';
-import { useAllFolders } from '@/state/queries/folderQuery';
+import { Button, Form, Input, message, Modal, Select } from 'antd';
+import { useState } from 'react';
+
 import { useAddBookmark } from '@/state/mutations/bookmarkMutation';
+import { useAllFolders } from '@/state/queries/folderQuery';
 
 type AddBookmarkFormValue = {
   title: string;
@@ -88,7 +89,7 @@ export default function AddBookMarkBtn() {
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {allFolders?.map(folder => (
+              {allFolders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

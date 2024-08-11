@@ -1,20 +1,21 @@
 import { HolderOutlined, MoreOutlined } from '@ant-design/icons';
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { Button, Dropdown, Flex, List, MenuProps } from 'antd';
-import { Bookmark } from '@/types/bookmarkTypes';
+import { useContext, useMemo } from 'react';
+import React from 'react';
+
+import DeleteBookmarkBtn from '@/components/buttons/DeleteBookmarkBtn';
+import EditBookmarkBtn from '@/components/buttons/EditBookmarkBtn';
 import {
   bookmarkDescriptionStyle,
   bookmarkItemStyle,
   bookmarkThumbnailStyle,
   bookmarkTitleStyle,
 } from '@/styles/bookmarkStyles';
-import { useContext, useMemo } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import React from 'react';
-import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { fullWidthStyle } from '@/styles/commonStyles';
-import DeleteBookmarkBtn from '@/components/buttons/DeleteBookmarkBtn';
-import EditBookmarkBtn from '@/components/buttons/EditBookmarkBtn';
+import { Bookmark } from '@/types/bookmarkTypes';
 
 interface RowContextProps {
   setActivatorNodeRef?: (element: HTMLElement | null) => void;
@@ -40,8 +41,7 @@ const DragHandle: React.FC = () => {
 };
 
 export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
-  const imagePath =
-    bookmark?.metadata?.thumbnail || 'image/default-thumbnail.png';
+  const imagePath = bookmark?.metadata?.thumbnail || 'image/default-thumbnail.png';
   const bookmarkMenuButtonGroup: MenuProps['items'] = [
     {
       label: <EditBookmarkBtn bookmark={bookmark} />,
@@ -57,14 +57,7 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
     window.open(bookmark.metadata.url, '_blank');
   };
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    setActivatorNodeRef,
-    transform,
-    isDragging,
-  } = useSortable({
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, isDragging } = useSortable({
     id: bookmark.id.toString(),
   });
 
@@ -85,45 +78,17 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
       <List.Item.Meta
         title={
           <RowContext.Provider value={contextValue}>
-            <Flex
-              gap={8}
-              align="center"
-              ref={setNodeRef}
-              style={style}
-              {...attributes}
-            >
+            <Flex gap={8} align="center" ref={setNodeRef} style={style} {...attributes}>
               <DragHandle />
-              <Flex
-                justify="space-between"
-                align="center"
-                style={fullWidthStyle}
-              >
-                <Flex
-                  gap="8px"
-                  align="center"
-                  onClick={goToBookmarkPage}
-                  style={bookmarkItemStyle}
-                >
-                  <img
-                    width={50}
-                    height={50}
-                    src={imagePath}
-                    alt="metadata-thumbnail"
-                    style={bookmarkThumbnailStyle}
-                  />
+              <Flex justify="space-between" align="center" style={fullWidthStyle}>
+                <Flex gap="8px" align="center" onClick={goToBookmarkPage} style={bookmarkItemStyle}>
+                  <img width={50} height={50} src={imagePath} alt="metadata-thumbnail" style={bookmarkThumbnailStyle} />
                   <Flex vertical>
-                    <h1 style={bookmarkTitleStyle}>
-                      {bookmark.title || bookmark.metadata.description}
-                    </h1>
-                    <p style={bookmarkDescriptionStyle}>
-                      {bookmark.metadata.description || '-'}
-                    </p>
+                    <h1 style={bookmarkTitleStyle}>{bookmark.title || bookmark.metadata.description}</h1>
+                    <p style={bookmarkDescriptionStyle}>{bookmark.metadata.description || '-'}</p>
                   </Flex>
                 </Flex>
-                <Dropdown
-                  menu={{ items: bookmarkMenuButtonGroup }}
-                  trigger={['click']}
-                >
+                <Dropdown menu={{ items: bookmarkMenuButtonGroup }} trigger={['click']}>
                   <Button type="text" icon={<MoreOutlined />} size="small" />
                 </Dropdown>
               </Flex>

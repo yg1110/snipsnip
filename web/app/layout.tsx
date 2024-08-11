@@ -1,9 +1,10 @@
-import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
-import { AntdRegistry } from '@ant-design/nextjs-registry';
-import ReactQueryProvider from '@/state/reactQueryProvider';
 import './globals.css';
 
+import { AntdRegistry } from '@ant-design/nextjs-registry';
+import type { Metadata, Viewport } from 'next';
+import { Inter } from 'next/font/google';
+
+import ReactQueryProvider from '@/state/reactQueryProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -12,15 +13,13 @@ export const metadata: Metadata = {
     default: 'SnipSnip - 순간을 기록하는 북마크 플랫폼',
     template: '%s | SnipSnip - 순간을 기록하는 북마크 플랫폼',
   },
-  description:
-    '북마크를 빠르고 쉽게 필요한 부분만 따로 관리하고 싶다면 SnipSnip에서 시작하세요!',
+  description: '북마크를 빠르고 쉽게 필요한 부분만 따로 관리하고 싶다면 SnipSnip에서 시작하세요!',
   keywords: ['북마크', 'SnipSnip', '순간', '기록'],
   openGraph: {
     type: 'website',
     url: 'https://www.snipsnip.site',
     title: 'SnipSnip - 순간을 기록하는 북마크 플랫폼',
-    description:
-      '북마크를 빠르고 쉽게 필요한 부분만 따로 관리하고 싶다면 SnipSnip에서 시작하세요!',
+    description: '북마크를 빠르고 쉽게 필요한 부분만 따로 관리하고 싶다면 SnipSnip에서 시작하세요!',
     siteName: 'SnipSnip - 순간을 기록하는 북마크 플랫폼',
   },
 };

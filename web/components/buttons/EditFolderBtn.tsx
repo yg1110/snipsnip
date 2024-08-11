@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Folder } from '@/types/folderTypes';
-import { Button, Input, Modal, message } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
+import { Button, Input, message, Modal } from 'antd';
+import { useState } from 'react';
+
 import { ENTER_KEYCODE } from '@/shared/constants';
 import { useUpdateFolder } from '@/state/mutations/folderMutation';
+import { Folder } from '@/types/folderTypes';
 
 export default function EditFolderBtn({ folder }: { folder: Folder }) {
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -67,7 +68,7 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
       >
         <Input
           value={folderName}
-          onChange={e => setFolderName(e.target.value)}
+          onChange={(e) => setFolderName(e.target.value)}
           placeholder="type your folder name"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}

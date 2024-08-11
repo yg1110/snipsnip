@@ -1,12 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import {
-  ModifiedFolder,
-  NewFolder,
-  UpdateRootFoldersOrderCommand,
-  UpdateSubFoldersOrderCommand,
-} from '@/types/folderTypes';
 import { message } from 'antd';
+
 import {
   addFolder,
   deleteFolder,
@@ -14,6 +8,12 @@ import {
   updateRootFoldersOrder,
   updateSubFoldersOrder,
 } from '@/services/folders/folderApi';
+import {
+  ModifiedFolder,
+  NewFolder,
+  UpdateRootFoldersOrderCommand,
+  UpdateSubFoldersOrderCommand,
+} from '@/types/folderTypes';
 
 export const useAddFolder = () => {
   const queryClient = useQueryClient();
@@ -26,7 +26,7 @@ export const useAddFolder = () => {
       queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
       queryClient.invalidateQueries({ queryKey: ['childFolders'] });
     },
-    onError: error => {
+    onError: (error) => {
       const errorMessage = error?.message || '폴더 생성에 실패했습니다.';
       message.error(errorMessage);
     },
@@ -44,7 +44,7 @@ export const useUpdateFolder = () => {
       queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
       queryClient.invalidateQueries({ queryKey: ['childFolders'] });
     },
-    onError: error => {
+    onError: (error) => {
       const errorMessage = error?.message || '폴더 수정에 실패했습니다.';
       message.error(errorMessage);
     },
@@ -62,7 +62,7 @@ export const useDeleteFolder = () => {
       queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
       queryClient.invalidateQueries({ queryKey: ['childFolders'] });
     },
-    onError: error => {
+    onError: (error) => {
       const errorMessage = error?.message || '폴더 삭제에 실패했습니다.';
       message.error(errorMessage);
     },
@@ -76,9 +76,8 @@ export const useUpdateSubFoldersOrder = () => {
     mutationFn: (command: UpdateSubFoldersOrderCommand) => {
       return updateSubFoldersOrder(command.parentFolderId, command.folderList);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['childFolders'] }),
-    onError: error => {
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['childFolders'] }),
+    onError: (error) => {
       const errorMessage = error?.message || '폴더 순서 변경에 실패했습니다.';
       message.error(errorMessage);
     },
@@ -92,9 +91,8 @@ export const useUpdateRootFoldersOrder = () => {
     mutationFn: (command: UpdateRootFoldersOrderCommand) => {
       return updateRootFoldersOrder(command.folderList);
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ['rootFolders'] }),
-    onError: error => {
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['rootFolders'] }),
+    onError: (error) => {
       const errorMessage = error?.message || '폴더 순서 변경에 실패했습니다.';
       message.error(errorMessage);
     },

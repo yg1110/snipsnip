@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Button, Input, Modal, message } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
 import { useQueryClient } from '@tanstack/react-query';
+import { Button, Input, message, Modal } from 'antd';
+import { useState } from 'react';
+
 import { DEFAULT_FOLDER_NAME, ENTER_KEYCODE } from '@/shared/constants';
 import { useAddFolder } from '@/state/mutations/folderMutation';
 
@@ -75,7 +76,7 @@ export default function AddChildFolderBtn({
       >
         <Input
           value={folderName}
-          onChange={e => setFolderName(e.target.value)}
+          onChange={(e) => setFolderName(e.target.value)}
           placeholder="폴더명을 입력해주세요"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}

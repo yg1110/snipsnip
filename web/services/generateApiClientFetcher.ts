@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie';
-import { FetcherOptions, createFetcher } from './createFetcher';
-import { AuthTokensResponse } from '../types/authTypes';
+
 import { ApiError } from '@/shared/ApiError';
+
+import { AuthTokensResponse } from '../types/authTypes';
+import { createFetcher, FetcherOptions } from './createFetcher';
 
 const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
   const fetcher = createFetcher({ baseURL, headers });
@@ -15,29 +17,16 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
         headers: { Authorization: `Bearer ${refreshToken}` },
       });
 
-      const {
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken,
-        id: newId,
-      } = response;
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken, id: newId } = response;
 
       Cookies.set('accessToken', newAccessToken, {
-        expires: new Date(
-          Date.now() +
-            Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0,
-        ),
+        expires: new Date(Date.now() + Number(process.env.NEXT_PUBLIC_ACCESS_TOKEN_EXPIRES_IN) || 0),
       });
       Cookies.set('refreshToken', newRefreshToken, {
-        expires: new Date(
-          Date.now() +
-            Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
-        ),
+        expires: new Date(Date.now() + Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0),
       });
       Cookies.set('id', newId.toString(), {
-        expires: new Date(
-          Date.now() +
-            Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0,
-        ),
+        expires: new Date(Date.now() + Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0),
       });
 
       return newAccessToken;
@@ -47,10 +36,7 @@ const generateApiClientFetcher = (baseURL: string, headers?: HeadersInit) => {
     }
   };
 
-  const fetchWithInterceptors = async <T>(
-    url: string,
-    options: FetcherOptions = {},
-  ): Promise<T> => {
+  const fetchWithInterceptors = async <T>(url: string, options: FetcherOptions = {}): Promise<T> => {
     const accessToken = Cookies.get('accessToken');
 
     if (accessToken) {

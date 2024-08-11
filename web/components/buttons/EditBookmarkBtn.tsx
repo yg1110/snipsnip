@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Select, message } from 'antd';
+import { Button, Form, Input, message, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import { Bookmark } from '@/types/bookmarkTypes';
-import { useAllFolders } from '@/state/queries/folderQuery';
+import { useEffect, useState } from 'react';
+
 import { useUpdateBookmark } from '@/state/mutations/bookmarkMutation';
+import { useAllFolders } from '@/state/queries/folderQuery';
+import { Bookmark } from '@/types/bookmarkTypes';
 
 type EditBookmarkFormValue = {
   title: string;
@@ -90,7 +91,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {allFolders?.map(folder => (
+              {allFolders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

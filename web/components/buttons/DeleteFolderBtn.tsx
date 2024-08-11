@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Button, Modal, Space, message } from 'antd';
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useQueryClient } from '@tanstack/react-query';
+import { Button, message, Modal, Space } from 'antd';
+import { useState } from 'react';
+
 import { useDeleteFolder } from '@/state/mutations/folderMutation';
 
 export default function DeleteFolderBtn({ folderId }: { folderId: number }) {

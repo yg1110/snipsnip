@@ -6,8 +6,8 @@ interface ExpandedState {
   collapsed: () => void;
 }
 
-export const useStore = create<ExpandedState>(set => ({
+export const useStore = create<ExpandedState>((set) => ({
   isAllExpanded: true,
-  expanded: () => set(state => ({ isAllExpanded: true })),
-  collapsed: () => set(state => ({ isAllExpanded: false })),
+  expanded: () => set((state) => ({ isAllExpanded: true })),
+  collapsed: () => set((state) => ({ isAllExpanded: false })),
 }));

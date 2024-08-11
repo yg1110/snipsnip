@@ -1,12 +1,10 @@
 {
-  "extends": ["next/core-web-vitals", "airbnb", "plugin:prettier/recommended"],
+  "extends": "next/core-web-vitals",
+  "plugins": ["react", "simple-import-sort"],
   "rules": {
-    "prettier/prettier": ["error"],
-    "rules": {
-      "react/jsx-filename-extension": [
-        1,
-        { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
-      ]
-    }
+    "no-unused-vars": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   }
 }

@@ -1,5 +1,5 @@
-import { Folder, ModifiedFolder, NewFolder } from '@/types/folderTypes';
 import generateApiClientFetcher from '@/services/generateApiClientFetcher';
+import { Folder, ModifiedFolder, NewFolder } from '@/types/folderTypes';
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   'Content-Type': 'application/json',
@@ -49,10 +49,7 @@ export const deleteFolder = async (folderId: number) => {
     method: 'DELETE',
   });
 };
-export const updateSubFoldersOrder = async (
-  parentFolderId: number,
-  folderList: Folder[],
-) => {
+export const updateSubFoldersOrder = async (parentFolderId: number, folderList: Folder[]) => {
   return apiClient<void>('/sub-folders/order', {
     method: 'POST',
     body: JSON.stringify({

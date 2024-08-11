@@ -1,22 +1,20 @@
-import { Button, Flex, List, Space } from 'antd';
-import { folderButtonStyle, folderListStyle } from '@/styles/folderPageStyles';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
-import {
-  SortableContext,
-  arrayMove,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { useState, useEffect, useRef } from 'react';
-import { useUpdateRootFoldersOrder } from '../../state/mutations/folderMutation';
-import { Folder } from '../../types/folderTypes';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { Button, Flex, List, Space } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import { BsChevronContract } from 'react-icons/bs';
 import { BsChevronExpand } from 'react-icons/bs';
-import AddFolderBtn from '@/components/buttons/AddFolderBtn';
+
 import AddBookMarkBtn from '@/components/buttons/AddBookMarkBtn';
-import FolderItem, { FolderItemRef } from './FolderItem';
-import { useStore } from '@/stores/useStore';
+import AddFolderBtn from '@/components/buttons/AddFolderBtn';
 import { useRootFolders } from '@/state/queries/folderQuery';
+import { useStore } from '@/stores/useStore';
+import { folderButtonStyle, folderListStyle } from '@/styles/folderPageStyles';
+
+import { useUpdateRootFoldersOrder } from '../../state/mutations/folderMutation';
+import { Folder } from '../../types/folderTypes';
+import FolderItem, { FolderItemRef } from './FolderItem';
 
 export default function FolderList() {
   const folderItemRef = useRef<(FolderItemRef | null)[]>([]);
@@ -27,7 +25,7 @@ export default function FolderList() {
   const updateRootFoldersOrderMutation = useUpdateRootFoldersOrder();
 
   const allExpanded = () => {
-    folderItemRef.current.forEach(folderItem => {
+    folderItemRef.current.forEach((folderItem) => {
       if (folderItem) {
         folderItem.setShowChildren(true);
       }
@@ -35,7 +33,7 @@ export default function FolderList() {
   };
 
   const allCollapsed = () => {
-    folderItemRef.current.forEach(folderItem => {
+    folderItemRef.current.forEach((folderItem) => {
       if (folderItem) {
         folderItem.setShowChildren(false);
       }
@@ -44,12 +42,8 @@ export default function FolderList() {
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
-      const activeIndex = rootFolderList.findIndex(
-        record => record.id === +active.id,
-      );
-      const overIndex = rootFolderList.findIndex(
-        record => record.id === +(over?.id || 0),
-      );
+      const activeIndex = rootFolderList.findIndex((record) => record.id === +active.id);
+      const overIndex = rootFolderList.findIndex((record) => record.id === +(over?.id || 0));
       const activeFolderItem = folderItemRef.current[activeIndex];
       const overFolderItem = folderItemRef.current[overIndex];
       if (activeFolderItem) {
@@ -77,14 +71,14 @@ export default function FolderList() {
 
   const allExpandedFolder = () => {
     expanded();
-    folderItemRef.current.forEach(folderItemRef => {
+    folderItemRef.current.forEach((folderItemRef) => {
       folderItemRef?.setShowChildren(true);
     });
   };
 
   const allCollapsedFolder = () => {
     collapsed();
-    folderItemRef.current.forEach(folderItemRef => {
+    folderItemRef.current.forEach((folderItemRef) => {
       folderItemRef?.setShowChildren(false);
     });
   };
@@ -97,42 +91,23 @@ export default function FolderList() {
 
   return (
     <>
-      <Flex
-        className="button-wrapper"
-        style={folderButtonStyle}
-        justify="space-between"
-      >
+      <Flex className="button-wrapper" style={folderButtonStyle} justify="space-between">
         <Space>
           <AddFolderBtn />
           <AddBookMarkBtn />
         </Space>
         <Space>
-          <Button
-            type="default"
-            icon={<BsChevronExpand />}
-            onClick={allExpandedFolder}
-          >
+          <Button type="default" icon={<BsChevronExpand />} onClick={allExpandedFolder}>
             모두 펼치기
           </Button>
-          <Button
-            type="default"
-            icon={<BsChevronContract />}
-            onClick={allCollapsedFolder}
-          >
+          <Button type="default" icon={<BsChevronContract />} onClick={allCollapsedFolder}>
             모두 접기
           </Button>
         </Space>
       </Flex>
 
-      <DndContext
-        modifiers={[restrictToVerticalAxis]}
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
-      >
-        <SortableContext
-          items={rootFolderList.map(i => i.id.toString())}
-          strategy={verticalListSortingStrategy}
-        >
+      <DndContext modifiers={[restrictToVerticalAxis]} onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <SortableContext items={rootFolderList.map((i) => i.id.toString())} strategy={verticalListSortingStrategy}>
           <List
             style={folderListStyle}
             itemLayout="horizontal"
@@ -141,7 +116,7 @@ export default function FolderList() {
             renderItem={(item, index) => (
               <List.Item>
                 <FolderItem
-                  ref={el => {
+                  ref={(el) => {
                     folderItemRef.current[index] = el;
                   }}
                   folder={item}

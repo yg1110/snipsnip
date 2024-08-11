@@ -1,13 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { Folder } from '@/types/folderTypes';
 import { message } from 'antd';
+
+import { fetchAllFolders, fetchChildFolders, fetchFolder, fetchRootFolders } from '@/services/folders/folderApi';
 import { ApiError } from '@/shared/ApiError';
-import {
-  fetchRootFolders,
-  fetchAllFolders,
-  fetchChildFolders,
-  fetchFolder,
-} from '@/services/folders/folderApi';
+import { Folder } from '@/types/folderTypes';
 
 export const useRootFolders = () => {
   return useQuery<Folder[]>({
@@ -16,8 +12,7 @@ export const useRootFolders = () => {
     refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
-        const errorMessage =
-          error?.message || '폴더 목록을 불러오는데 실패했습니다.';
+        const errorMessage = error?.message || '폴더 목록을 불러오는데 실패했습니다.';
         message.error(errorMessage);
         return false;
       }
@@ -33,8 +28,7 @@ export const useAllFolders = () => {
     refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
-        const errorMessage =
-          error?.message || '폴더 목록을 불러오는데 실패했습니다.';
+        const errorMessage = error?.message || '폴더 목록을 불러오는데 실패했습니다.';
         message.error(errorMessage);
         return false;
       }
@@ -50,8 +44,7 @@ export const useChildFolders = (parentFolderId: number) => {
     refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
-        const errorMessage =
-          error?.message || '하위 폴더 목록을 불러오는데 실패했습니다.';
+        const errorMessage = error?.message || '하위 폴더 목록을 불러오는데 실패했습니다.';
         message.error(errorMessage);
         return false;
       }
@@ -67,8 +60,7 @@ export const useFolder = (folderId: number) => {
     refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
-        const errorMessage =
-          error?.message || '폴더 정보를 불러오는데 실패했습니다.';
+        const errorMessage = error?.message || '폴더 정보를 불러오는데 실패했습니다.';
         message.error(errorMessage);
         return false;
       }

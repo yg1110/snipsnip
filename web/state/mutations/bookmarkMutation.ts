@@ -1,17 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import {
-  ModifiedBookmark,
-  NewBookmark,
-  UpdateBookmarksOrderCommand,
-} from '@/types/bookmarkTypes';
 import { message } from 'antd';
-import {
-  addBookmark,
-  updateBookmark,
-  deleteBookmark,
-  updateBookmarksOrder,
-} from '@/services/folders/bookmarkApi';
+
+import { addBookmark, deleteBookmark, updateBookmark, updateBookmarksOrder } from '@/services/folders/bookmarkApi';
+import { ModifiedBookmark, NewBookmark, UpdateBookmarksOrderCommand } from '@/types/bookmarkTypes';
 
 export const useAddBookmark = () => {
   const queryClient = useQueryClient();
@@ -21,7 +12,7 @@ export const useAddBookmark = () => {
       return addBookmark(newBookmark);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
-    onError: error => {
+    onError: (error) => {
       const errorMessage = error?.message || '북마크 생성에 실패했습니다.';
       message.error(errorMessage);
     },
@@ -36,7 +27,7 @@ export const useUpdateBookmark = () => {
       return updateBookmark(modifiedBookmark);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
-    onError: error => {
+    onError: (error) => {
       const errorMessage = error?.message || '북마크 수정에 실패했습니다.';
       message.error(errorMessage);
     },
@@ -51,7 +42,7 @@ export const useDeleteBookmark = () => {
       return deleteBookmark(bookmarkId);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
-    onError: error => {
+    onError: (error) => {
       const errorMessage = error?.message || '북마크 삭제에 실패했습니다.';
       message.error(errorMessage);
     },
@@ -66,7 +57,7 @@ export const useUpdateBookmarksOrder = () => {
       return updateBookmarksOrder(command.folderId, command.bookmarkList);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
-    onError: error => {
+    onError: (error) => {
       const errorMessage = error?.message || '북마크 순서 변경에 실패했습니다.';
       message.error(errorMessage);
     },

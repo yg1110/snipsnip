@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { useQueryClient } from '@tanstack/react-query';
-import { useChildFolders, useFolder } from '@/state/queries/folderQuery';
+import { Button, Form, Input, message, Modal, Select } from 'antd';
+import { useEffect, useState } from 'react';
+
 import { useAddBookmark } from '@/state/mutations/bookmarkMutation';
+import { useChildFolders, useFolder } from '@/state/queries/folderQuery';
 
 type AddChildBookmarkFormValue = {
   title: string;
@@ -106,7 +107,7 @@ export default function AddChildBookmarkCBtn({
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {folders?.map(folder => (
+              {folders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

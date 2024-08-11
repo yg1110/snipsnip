@@ -1,17 +1,15 @@
-import { List } from 'antd';
-import ChildFolderItem, { ChildFolderItemRef } from './ChildFolderItem';
-import { DragEndEvent, DndContext } from '@dnd-kit/core';
+import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { List } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import { Folder } from '@/types/folderTypes';
-import { useUpdateSubFoldersOrder } from '../../state/mutations/folderMutation';
-import { useStore } from '@/stores/useStore';
+
 import { useChildFolders } from '@/state/queries/folderQuery';
+import { useStore } from '@/stores/useStore';
+import { Folder } from '@/types/folderTypes';
+
+import { useUpdateSubFoldersOrder } from '../../state/mutations/folderMutation';
+import ChildFolderItem, { ChildFolderItemRef } from './ChildFolderItem';
 
 export default function ChildFolderList({
   parentFolderId,
@@ -24,12 +22,11 @@ export default function ChildFolderList({
   const [childFolderList, setChildFolderList] = useState<Folder[]>([]);
   const childFolderItemRef = useRef<(ChildFolderItemRef | null)[]>([]);
 
-  const { data: childFolders, isLoading: isFoldersLoading } =
-    useChildFolders(parentFolderId);
+  const { data: childFolders, isLoading: isFoldersLoading } = useChildFolders(parentFolderId);
   const updateSubFoldersOrderMutation = useUpdateSubFoldersOrder();
 
   const allExpanded = () => {
-    childFolderItemRef.current.forEach(childFolderItem => {
+    childFolderItemRef.current.forEach((childFolderItem) => {
       if (childFolderItem) {
         childFolderItem.setShowChildren(true);
       }
@@ -37,7 +34,7 @@ export default function ChildFolderList({
   };
 
   const allCollapsed = () => {
-    childFolderItemRef.current.forEach(childFolderItem => {
+    childFolderItemRef.current.forEach((childFolderItem) => {
       if (childFolderItem) {
         childFolderItem.setShowChildren(false);
       }
@@ -46,12 +43,8 @@ export default function ChildFolderList({
 
   const onDragEnd = ({ active, over }: DragEndEvent) => {
     if (active.id !== over?.id) {
-      const activeIndex = childFolderList.findIndex(
-        record => record.id === +active.id,
-      );
-      const overIndex = childFolderList.findIndex(
-        record => record.id === +(over?.id || 0),
-      );
+      const activeIndex = childFolderList.findIndex((record) => record.id === +active.id);
+      const overIndex = childFolderList.findIndex((record) => record.id === +(over?.id || 0));
       const activeChildFolderItem = childFolderItemRef.current[activeIndex];
       const overChildFolderItem = childFolderItemRef.current[overIndex];
       if (activeChildFolderItem) {
@@ -86,11 +79,11 @@ export default function ChildFolderList({
 
   useEffect(() => {
     if (isAllExpanded) {
-      childFolderItemRef.current.forEach(childFolderItem => {
+      childFolderItemRef.current.forEach((childFolderItem) => {
         childFolderItem?.setShowChildren(true);
       });
     } else {
-      childFolderItemRef.current.forEach(childFolderItem => {
+      childFolderItemRef.current.forEach((childFolderItem) => {
         childFolderItem?.setShowChildren(false);
       });
     }
@@ -98,9 +91,7 @@ export default function ChildFolderList({
 
   useEffect(() => {
     if (showChildFolderId) {
-      const index = childFolderList.findIndex(
-        folder => folder.id === showChildFolderId,
-      );
+      const index = childFolderList.findIndex((folder) => folder.id === showChildFolderId);
       if (index !== -1) {
         const childFolderItem = childFolderItemRef.current[index];
         if (childFolderItem) {
@@ -113,22 +104,15 @@ export default function ChildFolderList({
   return (
     <>
       {childFolders?.length ? (
-        <DndContext
-          modifiers={[restrictToVerticalAxis]}
-          onDragEnd={onDragEnd}
-          onDragStart={onDragStart}
-        >
-          <SortableContext
-            items={childFolderList.map(i => i.id.toString())}
-            strategy={verticalListSortingStrategy}
-          >
+        <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd} onDragStart={onDragStart}>
+          <SortableContext items={childFolderList.map((i) => i.id.toString())} strategy={verticalListSortingStrategy}>
             <List
               itemLayout="horizontal"
               dataSource={childFolderList}
               loading={isFoldersLoading}
               renderItem={(item, index) => (
                 <ChildFolderItem
-                  ref={el => {
+                  ref={(el) => {
                     childFolderItemRef.current[index] = el;
                   }}
                   folder={item}

@@ -18,55 +18,22 @@ const NotFound = () => {
           />
         </defs>
         <g fill="none" fill-rule="evenodd">
-          <path
-            fill="#FFF"
-            d="M0 0H1366V800H0z"
-            transform="translate(-448 -157)"
-          />
+          <path fill="#FFF" d="M0 0H1366V800H0z" transform="translate(-448 -157)" />
           <g transform="translate(-448 -157) translate(448 157)">
             <mask id="prefix__b" fill="#fff">
               <use xlinkHref="#prefix__a" />
             </mask>
             <use fill="#F6F6F7" xlinkHref="#prefix__a" />
-            <path
-              fill="#EDEDF0"
-              fill-rule="nonzero"
-              d="M-14.199 211.2H481.36V301.2H-14.199z"
-              mask="url(#prefix__b)"
-            />
-            <g
-              fill-rule="nonzero"
-              stroke="#979797"
-              stroke-linecap="round"
-              stroke-width="1.8"
-              className="left-sparks"
-            >
+            <path fill="#EDEDF0" fill-rule="nonzero" d="M-14.199 211.2H481.36V301.2H-14.199z" mask="url(#prefix__b)" />
+            <g fill-rule="nonzero" stroke="#979797" stroke-linecap="round" stroke-width="1.8" className="left-sparks">
               <path d="M23.684 5.789L30 1.158" transform="rotate(-90 157 13)" />
-              <path
-                d="M0 5.789L6.316 1.158"
-                transform="rotate(-90 157 13) matrix(-1 0 0 1 6.316 0)"
-              />
+              <path d="M0 5.789L6.316 1.158" transform="rotate(-90 157 13) matrix(-1 0 0 1 6.316 0)" />
               <path d="M15.789 4.632L15.789 0" transform="rotate(-90 157 13)" />
             </g>
-            <g
-              fill-rule="nonzero"
-              stroke="#979797"
-              stroke-linecap="round"
-              stroke-width="1.8"
-              className="right-sparks"
-            >
-              <path
-                d="M23.684 5.789L30 1.158"
-                transform="matrix(0 -1 -1 0 318 170)"
-              />
-              <path
-                d="M0 5.789L6.316 1.158"
-                transform="matrix(0 -1 -1 0 318 170) matrix(-1 0 0 1 6.316 0)"
-              />
-              <path
-                d="M15.789 4.632L15.789 0"
-                transform="matrix(0 -1 -1 0 318 170)"
-              />
+            <g fill-rule="nonzero" stroke="#979797" stroke-linecap="round" stroke-width="1.8" className="right-sparks">
+              <path d="M23.684 5.789L30 1.158" transform="matrix(0 -1 -1 0 318 170)" />
+              <path d="M0 5.789L6.316 1.158" transform="matrix(0 -1 -1 0 318 170) matrix(-1 0 0 1 6.316 0)" />
+              <path d="M15.789 4.632L15.789 0" transform="matrix(0 -1 -1 0 318 170)" />
             </g>
             <path
               fill="#4B4B62"

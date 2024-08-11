@@ -1,17 +1,12 @@
 'use client';
 
-import { Button, Flex, Layout, Space, Typography } from 'antd';
-import {
-  headerStyle,
-  layoutStyle,
-  flexStyle,
-  logoStyle,
-  notFoundContentStyle,
-} from '@/styles/mainLayoutStyle';
-import { useRouter } from 'next/navigation';
 import '@/styles/mobile.css';
-import NotFound from '@/components/404/NotFound';
 
+import { Button, Flex, Layout, Space, Typography } from 'antd';
+import { useRouter } from 'next/navigation';
+
+import NotFound from '@/components/404/NotFound';
+import { flexStyle, headerStyle, layoutStyle, logoStyle, notFoundContentStyle } from '@/styles/mainLayoutStyle';
 const { Header, Content } = Layout;
 const { Title } = Typography;
 

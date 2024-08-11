@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { Bookmark } from '@/types/bookmarkTypes';
 import { message } from 'antd';
-import { ApiError } from '@/shared/ApiError';
+
 import { fetchBookmarks } from '@/services/folders/bookmarkApi';
+import { ApiError } from '@/shared/ApiError';
+import { Bookmark } from '@/types/bookmarkTypes';
 
 export const useBookmarks = (parentFolderId: number) => {
   return useQuery<Bookmark[]>({
@@ -11,8 +12,7 @@ export const useBookmarks = (parentFolderId: number) => {
     refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
-        const errorMessage =
-          error?.message || '북마크 목록을 불러오는데 실패했습니다.';
+        const errorMessage = error?.message || '북마크 목록을 불러오는데 실패했습니다.';
         message.error(errorMessage);
         return false;
       }
