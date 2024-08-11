@@ -8,7 +8,7 @@ import {
 } from '@dnd-kit/sortable';
 import { useState, useEffect, useRef } from 'react';
 import { useUpdateRootFoldersOrder } from '../../state/mutations/folderMutation';
-import { Folder } from '../../app/lib/types/dataTypes';
+import { Folder } from '../../types/folderTypes';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { BsChevronContract } from 'react-icons/bs';
 import { BsChevronExpand } from 'react-icons/bs';

@@ -16,7 +16,7 @@ import {
   MoreOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
-import { Folder } from '@/app/lib/types/dataTypes';
+import { Folder } from '@/types/folderTypes';
 import {
   folderCountStyle,
   folderIconStyle,

@@ -4,7 +4,7 @@ import {
   LoginRequest,
   RegisterRequest,
   User,
-} from '../../app/lib/types/authTypes';
+} from '../../types/authTypes';
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   'Content-Type': 'application/json',

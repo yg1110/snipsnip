@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Folder } from '@/app/lib/types/dataTypes';
+import { Folder } from '@/types/folderTypes';
 import { message } from 'antd';
 import { ApiError } from '@/shared/ApiError';
 import {

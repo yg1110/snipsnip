@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Folder } from '@/app/lib/types/dataTypes';
+import { Folder } from '@/types/folderTypes';
 import { Button, Input, Modal, message } from 'antd';
 import { FolderTwoTone } from '@ant-design/icons';
 import { ENTER_KEYCODE } from '@/shared/constants';

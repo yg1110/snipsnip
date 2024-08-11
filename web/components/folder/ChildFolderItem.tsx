@@ -16,7 +16,7 @@ import {
   PlusOutlined,
 } from '@ant-design/icons';
 import { Button, Dropdown, Flex, List, MenuProps, Space } from 'antd';
-import { Folder } from '@/app/lib/types/dataTypes';
+import { Folder } from '@/types/folderTypes';
 import BookmarkList from '../bookmark/BookmarkList';
 import { folderCountStyle, folderIconStyle } from '@/styles/folderPageStyles';
 import React from 'react';

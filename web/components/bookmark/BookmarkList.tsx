@@ -8,7 +8,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useEffect, useState } from 'react';
-import { Bookmark } from '../../app/lib/types/dataTypes';
+import { Bookmark } from '@/types/bookmarkTypes';
 import { useBookmarks } from '@/state/queries/bookmarkQuery';
 import { useUpdateBookmarksOrder } from '@/state/mutations/bookmarkMutation';
 

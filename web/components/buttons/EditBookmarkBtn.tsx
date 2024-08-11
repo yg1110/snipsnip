@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import { Bookmark } from '@/app/lib/types/dataTypes';
+import { Bookmark } from '@/types/bookmarkTypes';
 import { useAllFolders } from '@/state/queries/folderQuery';
 import { useUpdateBookmark } from '@/state/mutations/bookmarkMutation';
 

@@ -4,7 +4,7 @@ import {
   ModifiedBookmark,
   NewBookmark,
   UpdateBookmarksOrderCommand,
-} from '@/app/lib/types/dataTypes';
+} from '@/types/bookmarkTypes';
 import { message } from 'antd';
 import {
   addBookmark,

@@ -1,4 +1,4 @@
-import { Folder, ModifiedFolder, NewFolder } from '@/app/lib/types/dataTypes';
+import { Folder, ModifiedFolder, NewFolder } from '@/types/folderTypes';
 import generateApiClientFetcher from '@/services/generateApiClientFetcher';
 
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {

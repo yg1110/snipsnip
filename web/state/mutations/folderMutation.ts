@@ -5,7 +5,7 @@ import {
   NewFolder,
   UpdateRootFoldersOrderCommand,
   UpdateSubFoldersOrderCommand,
-} from '@/app/lib/types/dataTypes';
+} from '@/types/folderTypes';
 import { message } from 'antd';
 import {
   addFolder,

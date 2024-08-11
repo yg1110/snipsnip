@@ -8,7 +8,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useEffect, useRef, useState } from 'react';
-import { Folder } from '../../app/lib/types/dataTypes';
+import { Folder } from '@/types/folderTypes';
 import { useUpdateSubFoldersOrder } from '../../state/mutations/folderMutation';
 import { useStore } from '@/stores/useStore';
 import { useChildFolders } from '@/state/queries/folderQuery';

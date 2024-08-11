@@ -9,8 +9,8 @@ import {
   notFoundContentStyle,
 } from '@/styles/mainLayoutStyle';
 import { useRouter } from 'next/navigation';
-import NotFound from './404/404';
 import '@/styles/mobile.css';
+import NotFound from '@/components/404/NotFound';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;

@@ -1,6 +1,6 @@
 import { HolderOutlined, MoreOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Flex, List, MenuProps } from 'antd';
-import { Bookmark } from '@/app/lib/types/dataTypes';
+import { Bookmark } from '@/types/bookmarkTypes';
 import {
   bookmarkDescriptionStyle,
   bookmarkItemStyle,

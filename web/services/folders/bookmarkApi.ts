@@ -1,8 +1,4 @@
-import {
-  Bookmark,
-  ModifiedBookmark,
-  NewBookmark,
-} from '@/app/lib/types/dataTypes';
+import { Bookmark, ModifiedBookmark, NewBookmark } from '@/types/bookmarkTypes';
 import generateApiClientFetcher from '@/services/generateApiClientFetcher';
 const apiClient = generateApiClientFetcher(process.env.NEXT_PUBLIC_BASE_API, {
   'Content-Type': 'application/json',

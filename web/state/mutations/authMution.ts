@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { LoginRequest, RegisterRequest } from '../../app/lib/types/authTypes';
+import { LoginRequest, RegisterRequest } from '../../types/authTypes';
 import { message } from 'antd';
 import { login, register } from '@/services/folders/authApi';
 

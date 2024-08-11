@@ -10,7 +10,7 @@ import {
   logoStyle,
 } from '@/styles/loginLayoutStyle';
 import Link from 'next/link';
-import { RegisterRequest } from '../lib/types/authTypes';
+import { RegisterRequest } from '@/types/authTypes';
 import { useRouter } from 'next/navigation';
 import '@/styles/mobile.css';
 import { useRegister } from '@/state/mutations/authMution';
