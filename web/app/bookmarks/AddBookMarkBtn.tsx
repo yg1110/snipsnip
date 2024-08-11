@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Form, Input, Modal, Select, message } from 'antd';
 import { BookFilled } from '@ant-design/icons';
-import { useAllFolders, useRootFolders } from '@/app/lib/data/query';
+import { useAllFolders } from '@/app/lib/data/query';
 import { useAddBookmark } from '@/app/lib/data/mutation';
 import { useQueryClient } from '@tanstack/react-query';
 

@@ -14,6 +14,7 @@ export const useRootFolders = () => {
   return useQuery<Folder[]>({
     queryKey: ['rootFolders'],
     queryFn: fetchRootFolders,
+    refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
         const errorMessage =
@@ -30,6 +31,7 @@ export const useAllFolders = () => {
   return useQuery<Folder[]>({
     queryKey: ['allFolders'],
     queryFn: fetchAllFolders,
+    refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
         const errorMessage =
@@ -46,6 +48,7 @@ export const useChildFolders = (parentFolderId: number) => {
   return useQuery<Folder[]>({
     queryKey: ['childFolders', parentFolderId],
     queryFn: () => fetchChildFolders(parentFolderId),
+    refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
         const errorMessage =
@@ -62,6 +65,7 @@ export const useFolder = (folderId: number) => {
   return useQuery<Folder>({
     queryKey: ['folder', folderId],
     queryFn: () => fetchFolder(folderId),
+    refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
         const errorMessage =
@@ -78,6 +82,7 @@ export const useBookmarks = (parentFolderId: number) => {
   return useQuery<Bookmark[]>({
     queryKey: ['bookmarks', parentFolderId],
     queryFn: () => fetchBookmarks(parentFolderId),
+    refetchOnWindowFocus: false,
     retry(failureCount, error) {
       if (error instanceof ApiError) {
         const errorMessage =
