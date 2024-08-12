@@ -109,6 +109,9 @@ export class BookmarkService {
       if (updateBookmarkDto.order !== null) {
         bookmark.order = updateBookmarkDto.order;
       }
+      if (updateBookmarkDto.contents !== null) {
+        bookmark.contents = updateBookmarkDto.contents;
+      }
       await this.bookmarkRepository.save(bookmark);
       return this.findOne(id, userId);
     } catch (error) {

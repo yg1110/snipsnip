@@ -29,6 +29,10 @@ export class BookmarkController {
       example: {
         title: '북마크 이름',
         url: 'https://www.naver.com',
+        contents: `<div>
+            <h1>네이버</h1>
+            <p>네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요</p>
+          </div`,
         folderId: 1,
       },
     },
@@ -54,6 +58,10 @@ export class BookmarkController {
         "createdAt": "2024-05-31T03:06:14.000Z",
         "updatedAt": "2024-05-31T03:06:14.000Z",
         "deletedAt": null,
+        "contents": <div>
+            <h1>네이버</h1>
+            <p>네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요</p>
+          </div>,
         "metadata": {
           "url": "https://www.naver.com",
           "title": "네이버",
@@ -80,6 +88,12 @@ export class BookmarkController {
       example: {
         title: '수정된 북마크 이름',
         url: 'https://www.naver.com',
+        contents: `
+          <div>
+            <h1>변경된 네이버</h1>
+            <p>네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요</p>
+          </div>
+        `,
         folderId: 1,
         order: 1,
       },
@@ -116,6 +130,11 @@ export class BookmarkController {
       "createdAt": "2024-05-31T03:06:14.000Z",
       "updatedAt": "2024-05-31T03:06:14.000Z",
       "deletedAt": null,
+      "contents": 
+          <div>
+            <h1>변경된 네이버</h1>
+            <p>네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요</p>
+          </div>,
       "metadata": {
         "url": "https://www.naver.com",
         "title": "네이버",

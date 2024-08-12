@@ -17,6 +17,9 @@ export class Bookmark {
   @Column()
   title: string;
 
+  @Column({ type: 'text' })
+  contents: string;
+
   @Column()
   order: number;
 
