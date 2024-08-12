@@ -1,15 +1,21 @@
 import { BookFilled } from '@ant-design/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button, Form, Input, message, Modal, Select } from 'antd';
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 import { useAddBookmark } from '@/state/mutations/bookmarkMutation';
 import { useAllFolders } from '@/state/queries/folderQuery';
+import { bookmarkUrlInputStyle } from '@/styles/bookmarkStyles';
+import { modalMarginStyle } from '@/styles/commonStyles';
+
+const BookmarkEditor = dynamic(() => import('../bookmark/BookmarkEditor'), { ssr: false });
 
 type AddBookmarkFormValue = {
   title: string;
   url: string;
   folderId: number;
+  content: string;
 };
 
 export default function AddBookMarkBtn() {
@@ -58,6 +64,7 @@ export default function AddBookMarkBtn() {
         북마크
       </Button>
       <Modal
+        style={modalMarginStyle}
         title="새 북마크 추가하기"
         open={isOpen}
         onOk={onSubmit}
@@ -65,13 +72,15 @@ export default function AddBookMarkBtn() {
         confirmLoading={addBookmarkMutation.isPending}
         okText="추가"
         cancelText="취소"
-        width={400}
+        width={'70%'}
+        centered
       >
         <Form name="add-bookmark" form={form} layout="vertical">
           <Form.Item label="제목" name="title">
             <Input placeholder="제목을 입력해주세요" />
           </Form.Item>
           <Form.Item
+            style={bookmarkUrlInputStyle}
             label="주소"
             name="url"
             rules={[
@@ -87,7 +96,19 @@ export default function AddBookMarkBtn() {
           >
             <Input placeholder="https://www.naver.com" />
           </Form.Item>
-          <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
+          <Form.Item
+            label="저장할 사이트 내용"
+            name="contents"
+            rules={[
+              {
+                required: true,
+                message: '저장할 사이트 내용을 입력해주세요',
+              },
+            ]}
+          >
+            <BookmarkEditor />
+          </Form.Item>
+          <Form.Item label="폴더" name="folderId" rules={[{ required: true, message: '폴더를 선택해주세요' }]}>
             <Select placeholder="폴더를 선택해주세요">
               {allFolders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>

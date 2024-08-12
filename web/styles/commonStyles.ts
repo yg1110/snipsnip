@@ -16,3 +16,7 @@ export const lineClamp = (
 export const fullWidthStyle: React.CSSProperties = {
   width: '100%',
 };
+
+export const modalMarginStyle: React.CSSProperties = {
+  margin: '10vh 0',
+};

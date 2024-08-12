@@ -23,3 +23,12 @@ export const bookmarkItemStyle: React.CSSProperties = {
   cursor: 'pointer',
   width: '100%',
 };
+
+export const bookmarkUrlInputStyle: React.CSSProperties = {
+  width: '100%',
+};
+
+export const bookmarkUrlCheckButtonStyle: React.CSSProperties = {
+  marginBottom: '24px',
+  flexShrink: 0,
+};

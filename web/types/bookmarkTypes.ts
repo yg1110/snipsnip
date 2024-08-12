@@ -14,6 +14,7 @@ export type Bookmark = {
   metadataId: number;
   title: string;
   order: number;
+  contents: string;
   createdAt: Nullable<Date>;
   updatedAt: Nullable<Date>;
   deletedAt: Nullable<Date>;

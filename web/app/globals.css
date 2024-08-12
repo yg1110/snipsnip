@@ -84,3 +84,8 @@ a {
 .ant-list-item-meta-avatar {
   margin-top: 1px;
 }
+
+.toastui-editor-contents h1,
+.toastui-editor-contents h2 {
+  border-bottom: none !important;
+}

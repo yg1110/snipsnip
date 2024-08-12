@@ -1,19 +1,24 @@
 import { Button, Form, Input, message, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import { useUpdateBookmark } from '@/state/mutations/bookmarkMutation';
 import { useAllFolders } from '@/state/queries/folderQuery';
 import { Bookmark } from '@/types/bookmarkTypes';
 
+const BookmarkEditor = dynamic(() => import('../bookmark/BookmarkEditor'), { ssr: false });
+
 type EditBookmarkFormValue = {
   title: string;
   url: string;
+  contents: string;
   folderId: number;
 };
 
 export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [contents, setContents] = useState<string>('');
 
   const { data: allFolders } = useAllFolders();
   const updateBookmarkMutation = useUpdateBookmark();
@@ -23,6 +28,8 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
     form.setFieldValue('title', bookmark.title);
     form.setFieldValue('url', bookmark.metadata.url);
     form.setFieldValue('folderId', bookmark.folderId);
+    form.setFieldValue('contents', bookmark.contents);
+    setContents(bookmark.contents);
   }, [bookmark, form]);
 
   const openModal = () => {
@@ -88,6 +95,18 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
             ]}
           >
             <Input placeholder="https://www.naver.com" />
+          </Form.Item>
+          <Form.Item
+            label="저장할 사이트 내용"
+            name="contents"
+            rules={[
+              {
+                required: true,
+                message: '저장할 사이트 내용을 입력해주세요',
+              },
+            ]}
+          >
+            <BookmarkEditor initialData={contents} />
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
