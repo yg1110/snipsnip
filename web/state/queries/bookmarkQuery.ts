@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { message } from 'antd';
 
-import { fetchBookmarks } from '@/services/folders/bookmarkApi';
+import { fetchBookmarks } from '@/services/api/bookmarkApi';
 import { ApiError } from '@/shared/ApiError';
 import { Bookmark } from '@/types/bookmarkTypes';
 

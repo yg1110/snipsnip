@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { message } from 'antd';
 
-import { addBookmark, deleteBookmark, updateBookmark, updateBookmarksOrder } from '@/services/folders/bookmarkApi';
+import { addBookmark, deleteBookmark, updateBookmark, updateBookmarksOrder } from '@/services/api/bookmarkApi';
 import { ModifiedBookmark, NewBookmark, UpdateBookmarksOrderCommand } from '@/types/bookmarkTypes';
 
 export const useAddBookmark = () => {

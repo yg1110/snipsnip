@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { message } from 'antd';
 
-import { fetchAllFolders, fetchChildFolders, fetchFolder, fetchRootFolders } from '@/services/folders/folderApi';
+import { fetchAllFolders, fetchChildFolders, fetchFolder, fetchRootFolders } from '@/services/api/folderApi';
 import { ApiError } from '@/shared/ApiError';
 import { Folder } from '@/types/folderTypes';
 

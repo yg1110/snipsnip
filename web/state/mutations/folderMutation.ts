@@ -7,7 +7,7 @@ import {
   updateFolder,
   updateRootFoldersOrder,
   updateSubFoldersOrder,
-} from '@/services/folders/folderApi';
+} from '@/services/api/folderApi';
 import {
   ModifiedFolder,
   NewFolder,
