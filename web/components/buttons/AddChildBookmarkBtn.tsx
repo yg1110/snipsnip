@@ -85,6 +85,7 @@ export default function AddChildBookmarkCBtn({
         북마크 추가
       </Button>
       <Modal
+        className="modal"
         title="새 북마크 추가하기"
         open={isOpen}
         onOk={onAddBookmark}

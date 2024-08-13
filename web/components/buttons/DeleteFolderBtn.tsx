@@ -35,6 +35,7 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
         폴더 삭제
       </Button>
       <Modal
+        className="modal"
         okText="삭제"
         cancelText="취소"
         width={'70%'}

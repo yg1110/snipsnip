@@ -5,11 +5,7 @@ import { useState } from 'react';
 
 import { useDeleteBookmark } from '@/state/mutations/bookmarkMutation';
 
-export default function DeleteBookmarkBtn({
-  bookmarkId,
-}: {
-  bookmarkId: number;
-}) {
+export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: number }) {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const deleteBookmarkMutation = useDeleteBookmark();
@@ -39,6 +35,7 @@ export default function DeleteBookmarkBtn({
         북마크 삭제
       </Button>
       <Modal
+        className="modal"
         okText="삭제"
         cancelText="취소"
         width={'70%'}

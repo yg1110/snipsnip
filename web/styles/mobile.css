@@ -21,4 +21,16 @@
     width: 80vw !important;
     bottom: 5vh !important;
   }
+  .modal {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: unset !important;
+    max-height: unset !important;
+    margin: 0 !important;
+    align-items: center !important;
+    align-content: center !important;
+  }
+  .modal .ant-modal-content {
+    border-radius: 0 !important;
+  }
 }

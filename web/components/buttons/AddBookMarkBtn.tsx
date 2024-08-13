@@ -69,6 +69,7 @@ export default function AddBookMarkBtn() {
         북마크
       </Button>
       <Modal
+        className="modal"
         style={modalMarginStyle}
         title="새 북마크 추가하기"
         open={isOpen}

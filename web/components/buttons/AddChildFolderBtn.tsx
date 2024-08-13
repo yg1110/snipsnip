@@ -71,6 +71,7 @@ export default function AddChildFolderBtn({
         폴더 추가
       </Button>
       <Modal
+        className="modal"
         title="새 폴더 추가하기"
         open={addFolderModalOpen}
         onOk={addFolder}

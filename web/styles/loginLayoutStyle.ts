@@ -24,7 +24,7 @@ export const layoutStyle: React.CSSProperties = {
 
 export const flexStyle: React.CSSProperties = {
   width: '70vw',
-  maxWidth: '500px',
+  height: '100vh',
   margin: '0 auto',
   alignItems: 'center',
   justifyContent: 'center',

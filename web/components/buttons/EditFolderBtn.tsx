@@ -62,6 +62,7 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
         폴더 수정
       </Button>
       <Modal
+        className="modal"
         title="폴더명 변경하기"
         open={editModalOpen}
         onOk={editFolder}

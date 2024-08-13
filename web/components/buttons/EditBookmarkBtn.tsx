@@ -74,6 +74,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
         북마크 수정
       </Button>
       <Modal
+        className="modal"
         title="북마크 정보 수정"
         open={isModalOpen}
         onOk={onEditBookmark}
