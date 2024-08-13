@@ -11,6 +11,12 @@ export const fetchBookmarks = async (folderId: number) => {
   });
 };
 
+export const fetchBookmark = async (bookmarkId: number) => {
+  return apiClient<Bookmark>(`/bookmark/${bookmarkId}`, {
+    method: 'GET',
+  });
+};
+
 export const addBookmark = async (newBookmark: NewBookmark) => {
   return apiClient<Bookmark>('/bookmarks', {
     method: 'POST',

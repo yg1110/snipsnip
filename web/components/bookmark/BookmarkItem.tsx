@@ -3,6 +3,7 @@ import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button, Dropdown, Flex, List, MenuProps } from 'antd';
+import { useRouter } from 'next/navigation';
 import { useContext, useMemo } from 'react';
 import React from 'react';
 
@@ -44,6 +45,7 @@ const DragHandle: React.FC = () => {
 };
 
 export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
+  const router = useRouter();
   const imagePath = bookmark?.metadata?.thumbnail || 'image/default-thumbnail.png';
   const bookmarkMenuButtonGroup: MenuProps['items'] = [
     {
@@ -57,7 +59,7 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
   ];
 
   const goToBookmarkPage = () => {
-    window.open(bookmark.metadata.url, '_blank');
+    router.push(`/bookmark/${bookmark.id}`);
   };
 
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform, isDragging } = useSortable({

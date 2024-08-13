@@ -45,3 +45,21 @@ export const bookmarkContentTextStyle: React.CSSProperties = {
   whiteSpace: 'pre-wrap',
   ...lineClamp(2),
 };
+
+export const bookmarkContentWrapperStyle: React.CSSProperties = {
+  padding: '20px',
+};
+
+export const bookmarkContentStyle: React.CSSProperties = {
+  paddingBottom: '10vh',
+};
+
+export const openLinkButtonStyle: React.CSSProperties = {
+  position: 'fixed',
+  bottom: '10vh',
+  height: '40px',
+  width: 'calc(70vw)',
+  left: 0,
+  right: 0,
+  margin: '0 auto',
+};

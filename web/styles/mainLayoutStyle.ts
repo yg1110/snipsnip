@@ -27,6 +27,7 @@ export const contentStyle: React.CSSProperties = {
   height: '80vh',
   overflow: 'auto',
   background: 'white',
+  position: 'relative',
 };
 
 export const logoStyle: React.CSSProperties = {

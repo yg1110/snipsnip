@@ -17,4 +17,8 @@
     flex-direction: column !important;
     gap: 10px !important;
   }
+  .open-link-button {
+    width: 80vw !important;
+    bottom: 5vh !important;
+  }
 }

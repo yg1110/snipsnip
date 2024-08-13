@@ -43,7 +43,7 @@ export default function Login() {
         Cookies.set('id', newId.toString(), {
           expires: new Date(Date.now() + Number(process.env.NEXT_PUBLIC_REFRESH_TOKEN_EXPIRES_IN) || 0),
         });
-        router.push('/bookmarks');
+        router.push('/bookmark');
       },
     });
   };
