@@ -64,6 +64,10 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
     );
   };
 
+  const onEditBookmark = () => {
+    form.submit();
+  };
+
   return (
     <>
       <Button type="link" onClick={openModal} style={{ color: '#faad14' }}>
@@ -72,14 +76,14 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
       <Modal
         title="북마크 정보 수정"
         open={isModalOpen}
-        onOk={onSubmit}
+        onOk={onEditBookmark}
         onCancel={closeModal}
         okText="수정"
         cancelText="취소"
         width={'70%'}
         centered
       >
-        <Form name="edit-bookmark" form={form} layout="vertical">
+        <Form name="edit-bookmark" form={form} layout="vertical" onFinish={onSubmit}>
           <Form.Item label="제목" name="title">
             <Input placeholder="제목을 입력해주세요" />
           </Form.Item>
@@ -113,7 +117,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {allFolders?.map(folder => (
+              {allFolders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

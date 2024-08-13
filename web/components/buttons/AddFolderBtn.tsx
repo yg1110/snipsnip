@@ -26,6 +26,11 @@ export default function AddFolderBtn() {
       return;
     }
 
+    if (!folderName) {
+      message.error('폴더명을 입력해주세요.');
+      return;
+    }
+
     addFolderMutation.mutate(
       {
         name: folderName,
@@ -71,7 +76,7 @@ export default function AddFolderBtn() {
       >
         <Input
           value={folderName}
-          onChange={e => setFolderName(e.target.value)}
+          onChange={(e) => setFolderName(e.target.value)}
           placeholder="폴더명을 입력해주세요"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}

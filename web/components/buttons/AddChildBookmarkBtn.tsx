@@ -75,6 +75,10 @@ export default function AddChildBookmarkCBtn({
     );
   };
 
+  const onAddBookmark = () => {
+    form.submit();
+  };
+
   return (
     <>
       <Button type="link" onClick={openModal}>
@@ -83,7 +87,7 @@ export default function AddChildBookmarkCBtn({
       <Modal
         title="새 북마크 추가하기"
         open={isOpen}
-        onOk={onSubmit}
+        onOk={onAddBookmark}
         onCancel={closeModal}
         confirmLoading={addBookmarkMutation.isPending}
         okText="추가"
@@ -91,8 +95,17 @@ export default function AddChildBookmarkCBtn({
         width={'70%'}
         centered
       >
-        <Form name="add-child-bookmark" form={form} layout="vertical">
-          <Form.Item label="제목" name="title">
+        <Form name="add-child-bookmark" form={form} layout="vertical" onFinish={onSubmit}>
+          <Form.Item
+            label="제목"
+            name="title"
+            rules={[
+              {
+                required: true,
+                message: '제목을 입력해주세요',
+              },
+            ]}
+          >
             <Input placeholder="제목을 입력해주세요" />
           </Form.Item>
           <Form.Item
@@ -125,7 +138,7 @@ export default function AddChildBookmarkCBtn({
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {folders?.map(folder => (
+              {folders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

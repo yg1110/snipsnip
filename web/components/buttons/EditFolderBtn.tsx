@@ -25,6 +25,11 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
       return;
     }
 
+    if (!folderName) {
+      message.error('폴더명을 입력해주세요.');
+      return;
+    }
+
     editFolderMutation.mutate(
       {
         id: folder.id,
@@ -69,7 +74,7 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
       >
         <Input
           value={folderName}
-          onChange={e => setFolderName(e.target.value)}
+          onChange={(e) => setFolderName(e.target.value)}
           placeholder="type your folder name"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}

@@ -44,7 +44,6 @@ export default function AddBookMarkBtn() {
     }
 
     const newBookmark = form.getFieldsValue();
-
     addBookmarkMutation.mutate(
       {
         ...newBookmark,
@@ -60,6 +59,10 @@ export default function AddBookMarkBtn() {
     );
   };
 
+  const onAddBookmark = () => {
+    form.submit();
+  };
+
   return (
     <>
       <Button type="primary" icon={<BookFilled />} onClick={openModal}>
@@ -69,7 +72,7 @@ export default function AddBookMarkBtn() {
         style={modalMarginStyle}
         title="새 북마크 추가하기"
         open={isOpen}
-        onOk={onSubmit}
+        onOk={onAddBookmark}
         onCancel={closeModal}
         confirmLoading={addBookmarkMutation.isPending}
         okText="추가"
@@ -77,8 +80,17 @@ export default function AddBookMarkBtn() {
         width={'70%'}
         centered
       >
-        <Form name="add-bookmark" form={form} layout="vertical">
-          <Form.Item label="제목" name="title">
+        <Form name="add-bookmark" form={form} layout="vertical" onFinish={onSubmit}>
+          <Form.Item
+            label="제목"
+            name="title"
+            rules={[
+              {
+                required: true,
+                message: '제목을 입력해주세요',
+              },
+            ]}
+          >
             <Input placeholder="제목을 입력해주세요" />
           </Form.Item>
           <Form.Item
@@ -110,13 +122,9 @@ export default function AddBookMarkBtn() {
           >
             <BookmarkEditor />
           </Form.Item>
-          <Form.Item
-            label="폴더"
-            name="folderId"
-            rules={[{ required: true, message: '폴더를 선택해주세요' }]}
-          >
+          <Form.Item label="폴더" name="folderId" rules={[{ required: true, message: '폴더를 선택해주세요' }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {allFolders?.map(folder => (
+              {allFolders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>
