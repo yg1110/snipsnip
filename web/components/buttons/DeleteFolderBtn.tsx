@@ -37,7 +37,8 @@ export default function DeleteFolderBtn({ folderId }: { folderId: number }) {
       <Modal
         okText="삭제"
         cancelText="취소"
-        width={400}
+        width={'70%'}
+        centered
         title={
           <Space>
             <ExclamationCircleFilled style={{ color: '#f03e3e' }} />

@@ -66,7 +66,8 @@ export default function AddFolderBtn() {
         confirmLoading={addFolderMutation.isPending}
         okText="추가"
         cancelText="취소"
-        width={400}
+        width={'70%'}
+        centered
       >
         <Input
           value={folderName}

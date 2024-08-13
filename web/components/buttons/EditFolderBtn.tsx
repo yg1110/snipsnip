@@ -63,12 +63,13 @@ export default function EditFolderBtn({ folder }: { folder: Folder }) {
         onCancel={closeModal}
         okText="변경"
         cancelText="취소"
-        width={400}
+        width={'70%'}
+        centered
         confirmLoading={editFolderMutation.isPending}
       >
         <Input
           value={folderName}
-          onChange={(e) => setFolderName(e.target.value)}
+          onChange={e => setFolderName(e.target.value)}
           placeholder="type your folder name"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}

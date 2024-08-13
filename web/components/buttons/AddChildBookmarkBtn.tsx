@@ -1,9 +1,14 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { Button, Form, Input, message, Modal, Select } from 'antd';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import { useAddBookmark } from '@/state/mutations/bookmarkMutation';
 import { useChildFolders, useFolder } from '@/state/queries/folderQuery';
+
+const BookmarkEditor = dynamic(() => import('../bookmark/BookmarkEditor'), {
+  ssr: false,
+});
 
 type AddChildBookmarkFormValue = {
   title: string;
@@ -83,7 +88,8 @@ export default function AddChildBookmarkCBtn({
         confirmLoading={addBookmarkMutation.isPending}
         okText="추가"
         cancelText="취소"
-        width={400}
+        width={'70%'}
+        centered
       >
         <Form name="add-child-bookmark" form={form} layout="vertical">
           <Form.Item label="제목" name="title">
@@ -104,6 +110,18 @@ export default function AddChildBookmarkCBtn({
             ]}
           >
             <Input placeholder="https://www.naver.com" />
+          </Form.Item>
+          <Form.Item
+            label="저장할 사이트 내용"
+            name="contents"
+            rules={[
+              {
+                required: true,
+                message: '저장할 사이트 내용을 입력해주세요',
+              },
+            ]}
+          >
+            <BookmarkEditor />
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">

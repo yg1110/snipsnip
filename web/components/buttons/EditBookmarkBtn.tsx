@@ -7,7 +7,9 @@ import { useUpdateBookmark } from '@/state/mutations/bookmarkMutation';
 import { useAllFolders } from '@/state/queries/folderQuery';
 import { Bookmark } from '@/types/bookmarkTypes';
 
-const BookmarkEditor = dynamic(() => import('../bookmark/BookmarkEditor'), { ssr: false });
+const BookmarkEditor = dynamic(() => import('../bookmark/BookmarkEditor'), {
+  ssr: false,
+});
 
 type EditBookmarkFormValue = {
   title: string;
@@ -74,7 +76,8 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
         onCancel={closeModal}
         okText="수정"
         cancelText="취소"
-        width={400}
+        width={'70%'}
+        centered
       >
         <Form name="edit-bookmark" form={form} layout="vertical">
           <Form.Item label="제목" name="title">
@@ -110,7 +113,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {allFolders?.map((folder) => (
+              {allFolders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>
