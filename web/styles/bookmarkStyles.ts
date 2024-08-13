@@ -32,3 +32,16 @@ export const bookmarkUrlCheckButtonStyle: React.CSSProperties = {
   marginBottom: '24px',
   flexShrink: 0,
 };
+
+export const bookmarkContentsStyle: React.CSSProperties = {
+  background: '#f8f9fa',
+  width: '100%',
+  padding: '12px 16px',
+  borderRadius: '8px',
+};
+
+export const bookmarkContentTextStyle: React.CSSProperties = {
+  color: '#495057',
+  whiteSpace: 'pre-wrap',
+  ...lineClamp(2),
+};
