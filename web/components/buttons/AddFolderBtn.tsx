@@ -33,6 +33,7 @@ export default function AddFolderBtn() {
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['allFolders'] });
           queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
           queryClient.invalidateQueries({ queryKey: ['childFolders'] });
           message.success('새로운 폴더가 생성되었습니다.');
@@ -69,7 +70,7 @@ export default function AddFolderBtn() {
       >
         <Input
           value={folderName}
-          onChange={(e) => setFolderName(e.target.value)}
+          onChange={e => setFolderName(e.target.value)}
           placeholder="폴더명을 입력해주세요"
           prefix={<FolderTwoTone />}
           onKeyUp={submit}

@@ -9,7 +9,9 @@ import { useAllFolders } from '@/state/queries/folderQuery';
 import { bookmarkUrlInputStyle } from '@/styles/bookmarkStyles';
 import { modalMarginStyle } from '@/styles/commonStyles';
 
-const BookmarkEditor = dynamic(() => import('../bookmark/BookmarkEditor'), { ssr: false });
+const BookmarkEditor = dynamic(() => import('../bookmark/BookmarkEditor'), {
+  ssr: false,
+});
 
 type AddBookmarkFormValue = {
   title: string;
@@ -108,9 +110,13 @@ export default function AddBookMarkBtn() {
           >
             <BookmarkEditor />
           </Form.Item>
-          <Form.Item label="폴더" name="folderId" rules={[{ required: true, message: '폴더를 선택해주세요' }]}>
+          <Form.Item
+            label="폴더"
+            name="folderId"
+            rules={[{ required: true, message: '폴더를 선택해주세요' }]}
+          >
             <Select placeholder="폴더를 선택해주세요">
-              {allFolders?.map((folder) => (
+              {allFolders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>

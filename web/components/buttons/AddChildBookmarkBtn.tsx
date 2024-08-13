@@ -107,7 +107,7 @@ export default function AddChildBookmarkCBtn({
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
             <Select placeholder="폴더를 선택해주세요">
-              {folders?.map((folder) => (
+              {folders?.map(folder => (
                 <Select.Option key={folder.id} value={folder.id}>
                   {folder.name}
                 </Select.Option>
