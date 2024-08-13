@@ -15,20 +15,29 @@ export class MetadataService {
   ) {}
 
   async fetchMetadata(url: string): Promise<Metadata> {
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-    const title = $('meta[property="og:title"]').attr('content') || $('title').text();
-    const description =
-      $('meta[property="og:description"]').attr('content') ||
-      $('meta[name="description"]').attr('content');
-    const thumbnail = $('meta[property="og:image"]').attr('content');
-
-    return this.metadataRepository.create({
-      url,
-      title,
-      description,
-      thumbnail,
-    });
+    try {
+      const { data } = await axios.get(url);
+      const $ = cheerio.load(data);
+      const title = $('meta[property="og:title"]').attr('content') || $('title').text();
+      const description =
+        $('meta[property="og:description"]').attr('content') ||
+        $('meta[name="description"]').attr('content');
+      const thumbnail = $('meta[property="og:image"]').attr('content');
+      return this.metadataRepository.create({
+        url,
+        title,
+        description,
+        thumbnail,
+      });
+    } catch (error) {
+      // CSRF 적용된 URL 예외처리
+      return this.metadataRepository.create({
+        url,
+        title: '',
+        description: '',
+        thumbnail: '',
+      });
+    }
   }
 
   async create(createMetadataDto: CreateMetadataDto): Promise<Metadata> {

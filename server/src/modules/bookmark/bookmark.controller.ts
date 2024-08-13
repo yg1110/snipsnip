@@ -32,7 +32,7 @@ export class BookmarkController {
         contents: `<div>
             <h1>네이버</h1>
             <p>네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요</p>
-          </div`,
+          </div>`,
         folderId: 1,
       },
     },
@@ -42,7 +42,11 @@ export class BookmarkController {
   @Post('bookmarks')
   create(@Body() createBookmarkDto: CreateBookmarkDto, @Req() req) {
     const userId = req.user.id;
-    return this.bookmarkService.create({ ...createBookmarkDto, userId });
+    const { origin } = new URL(createBookmarkDto.url);
+    if (!origin) {
+      throw new InternalServerErrorException('유효하지 않은 URL입니다.');
+    }
+    return this.bookmarkService.create({ ...createBookmarkDto, userId, url: origin });
   }
 
   @ApiOperation({
@@ -58,10 +62,10 @@ export class BookmarkController {
         "createdAt": "2024-05-31T03:06:14.000Z",
         "updatedAt": "2024-05-31T03:06:14.000Z",
         "deletedAt": null,
-        "contents": <div>
+        "contents": "<div>
             <h1>네이버</h1>
             <p>네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요</p>
-          </div>,
+          </div>",
         "metadata": {
           "url": "https://www.naver.com",
           "title": "네이버",
