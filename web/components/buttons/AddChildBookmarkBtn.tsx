@@ -132,6 +132,12 @@ export default function AddChildBookmarkCBtn({
               {
                 required: true,
                 message: '저장할 사이트 내용을 입력해주세요',
+                validator: async (_, value) => {
+                  if (value === '' || value === '<p><br></p>') {
+                    return Promise.reject();
+                  }
+                  return Promise.resolve();
+                },
               },
             ]}
           >

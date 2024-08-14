@@ -59,6 +59,10 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
   ];
 
   const goToBookmarkPage = () => {
+    if (!bookmark.contents) {
+      window.open(bookmark.metadata.url, '_blank');
+      return;
+    }
     router.push(`/bookmark/${bookmark.id}`);
   };
 
