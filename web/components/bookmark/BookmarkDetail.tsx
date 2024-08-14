@@ -23,7 +23,11 @@ export default function BookmarkDetail({ bookmark }: BookmarkDetailProps) {
 
   return (
     <Flex style={bookmarkContentWrapperStyle}>
-      <div style={bookmarkContentStyle} dangerouslySetInnerHTML={sanitizedData(bookmark.contents)} />
+      <div
+        className="toastui-editor-contents"
+        style={bookmarkContentStyle}
+        dangerouslySetInnerHTML={sanitizedData(bookmark.contents)}
+      />
       <Button style={openLinkButtonStyle} type="primary" className="open-link-button" onClick={goLinkPage}>
         링크 바로가기
       </Button>

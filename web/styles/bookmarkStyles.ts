@@ -62,6 +62,7 @@ export const openLinkButtonStyle: React.CSSProperties = {
   left: 0,
   right: 0,
   margin: '0 auto',
+  zIndex: 100,
 };
 
 export const backButtonStyle: React.CSSProperties = {

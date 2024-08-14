@@ -1,8 +1,8 @@
 'use client';
-
+import '@/styles/toastui-editor-viewer.css';
 import '@/styles/mobile.css';
 
-import { Flex, Layout, Space, Typography } from 'antd';
+import { Flex, Layout, Typography } from 'antd';
 import { useRouter } from 'next/navigation';
 import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 
@@ -10,15 +10,7 @@ import BookmarkDetail from '@/components/bookmark/BookmarkDetail';
 import { useBookmark } from '@/state/queries/bookmarkQuery';
 import { backButtonStyle } from '@/styles/bookmarkStyles';
 import { fullWidthStyle } from '@/styles/commonStyles';
-import {
-  centerHeaderStyle,
-  contentStyle,
-  flexStyle,
-  headerStyle,
-  layoutStyle,
-  logoStyle,
-  titleStyle,
-} from '@/styles/mainLayoutStyle';
+import { centerHeaderStyle, contentStyle, flexStyle, layoutStyle, titleStyle } from '@/styles/mainLayoutStyle';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
