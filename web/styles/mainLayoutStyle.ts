@@ -5,7 +5,13 @@ export const layoutStyle: React.CSSProperties = {
 };
 
 export const headerStyle: React.CSSProperties = {
-  paddingInline: 48,
+  backgroundColor: '#e0e0e0',
+};
+
+export const centerHeaderStyle: React.CSSProperties = {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
   backgroundColor: '#e0e0e0',
 };
 
@@ -33,6 +39,15 @@ export const contentStyle: React.CSSProperties = {
 export const logoStyle: React.CSSProperties = {
   fontFamily: 'ONE-Mobile-POP',
   marginBottom: 0,
+};
+
+export const titleStyle: React.CSSProperties = {
+  fontFamily: 'ONE-Mobile-POP',
+  marginBottom: 0,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  flex: 1,
 };
 
 export const notFoundContentStyle: React.CSSProperties = {

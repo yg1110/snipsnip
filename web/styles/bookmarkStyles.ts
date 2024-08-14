@@ -63,3 +63,9 @@ export const openLinkButtonStyle: React.CSSProperties = {
   right: 0,
   margin: '0 auto',
 };
+
+export const backButtonStyle: React.CSSProperties = {
+  cursor: 'pointer',
+  marginTop: '4px',
+  flexShrink: 0,
+};

@@ -28,3 +28,7 @@ body {
 .toastui-editor-contents h2 {
   border-bottom: none !important;
 }
+
+.ant-layout-header {
+  padding: 0 24px !important;
+}
