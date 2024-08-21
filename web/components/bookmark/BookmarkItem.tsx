@@ -47,6 +47,8 @@ const DragHandle: React.FC = () => {
 export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
   const router = useRouter();
   const imagePath = bookmark?.metadata?.thumbnail || 'image/default-thumbnail.png';
+  const hasContents = bookmark.contents && bookmark.contents !== '<p><br></p>';
+
   const bookmarkMenuButtonGroup: MenuProps['items'] = [
     {
       label: <EditBookmarkBtn bookmark={bookmark} />,
@@ -59,7 +61,7 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
   ];
 
   const goToBookmarkPage = () => {
-    if (!bookmark.contents) {
+    if (!hasContents) {
       window.open(bookmark.metadata.url, '_blank');
       return;
     }
@@ -104,7 +106,7 @@ export default function BookmarkItem({ bookmark }: { bookmark: Bookmark }) {
                       <p style={bookmarkDescriptionStyle}>{bookmark.metadata.description || '-'}</p>
                     </Flex>
                   </Flex>
-                  {bookmark.contents && (
+                  {hasContents && (
                     <Flex style={bookmarkContentsStyle}>
                       <p style={bookmarkContentTextStyle}>{extractPlainTextFromHTML(bookmark.contents.toString())}</p>
                     </Flex>

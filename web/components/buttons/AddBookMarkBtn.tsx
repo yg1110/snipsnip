@@ -111,22 +111,7 @@ export default function AddBookMarkBtn() {
           >
             <Input placeholder="https://www.naver.com" />
           </Form.Item>
-          <Form.Item
-            label="저장할 사이트 내용"
-            name="contents"
-            rules={[
-              {
-                required: true,
-                message: '저장할 사이트 내용을 입력해주세요',
-                validator: async (_, value) => {
-                  if (value === '' || value === '<p><br></p>') {
-                    return Promise.reject();
-                  }
-                  return Promise.resolve();
-                },
-              },
-            ]}
-          >
+          <Form.Item label="저장할 사이트 내용" name="contents">
             <BookmarkEditor />
           </Form.Item>
           <Form.Item label="폴더" name="folderId" rules={[{ required: true, message: '폴더를 선택해주세요' }]}>

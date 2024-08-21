@@ -1,7 +1,0 @@
-.toastui-editor-contents h1 {
-  border-bottom: none; /* 기본 하단 border 제거 */
-  font-size: 2em; /* HTML의 기본 H1 크기 */
-  font-weight: bold; /* HTML의 기본 H1 글씨 굵기 */
-  margin: 0.67em 0; /* HTML의 기본 H1 margin */
-  padding-bottom: 0; /* Padding 제거 */
-}

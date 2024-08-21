@@ -20,7 +20,6 @@ type EditBookmarkFormValue = {
 
 export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [contents, setContents] = useState<string>('');
 
   const { data: allFolders } = useAllFolders();
   const updateBookmarkMutation = useUpdateBookmark();
@@ -31,7 +30,6 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
     form.setFieldValue('url', bookmark.metadata.url);
     form.setFieldValue('folderId', bookmark.folderId);
     form.setFieldValue('contents', bookmark.contents);
-    setContents(bookmark.contents);
   }, [bookmark, form]);
 
   const openModal = () => {
@@ -40,6 +38,7 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    form.resetFields();
   };
 
   const onSubmit = () => {
@@ -85,7 +84,16 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
         centered
       >
         <Form name="edit-bookmark" form={form} layout="vertical" onFinish={onSubmit}>
-          <Form.Item label="제목" name="title">
+          <Form.Item
+            label="제목"
+            name="title"
+            rules={[
+              {
+                required: true,
+                message: '제목을 입력해주세요',
+              },
+            ]}
+          >
             <Input placeholder="제목을 입력해주세요" />
           </Form.Item>
           <Form.Item
@@ -104,25 +112,10 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
           >
             <Input placeholder="https://www.naver.com" />
           </Form.Item>
-          <Form.Item
-            label="저장할 사이트 내용"
-            name="contents"
-            rules={[
-              {
-                required: true,
-                message: '저장할 사이트 내용을 입력해주세요',
-                validator: async (_, value) => {
-                  if (value === '' || value === '<p><br></p>') {
-                    return Promise.reject();
-                  }
-                  return Promise.resolve();
-                },
-              },
-            ]}
-          >
-            <BookmarkEditor initialData={contents} />
+          <Form.Item label="저장할 사이트 내용" name="contents">
+            <BookmarkEditor />
           </Form.Item>
-          <Form.Item label="폴더" name="folderId" rules={[{ required: true }]}>
+          <Form.Item label="폴더" name="folderId" rules={[{ required: true, message: '폴더를 선택해주세요' }]}>
             <Select placeholder="폴더를 선택해주세요">
               {allFolders?.map((folder) => (
                 <Select.Option key={folder.id} value={folder.id}>
