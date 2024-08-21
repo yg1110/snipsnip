@@ -38,7 +38,6 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    form.resetFields();
   };
 
   const onSubmit = () => {
@@ -57,7 +56,6 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
         onSuccess: () => {
           message.success('북마크가 정보가 수정되었습니다.');
           closeModal();
-          form.resetFields();
         },
       },
     );

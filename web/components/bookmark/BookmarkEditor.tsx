@@ -16,9 +16,12 @@ export interface BookmarkEditorProps {
 const BookmarkEditor = ({ value, onChange }: BookmarkEditorProps): JSX.Element => {
   const editorRef = useRef<ToastEditor>(null);
 
-  const onEditorChange = (value: string) => {
-    const data = editorRef.current?.getInstance().getHTML();
-    onChange?.(data);
+  const onEditorChange = () => {
+    const editorInstance = editorRef.current?.getInstance();
+    const markdown = editorInstance?.getMarkdown();
+    if (markdown) {
+      onChange?.(markdown);
+    }
   };
 
   const onUploadImage = async (blob: Blob, callback: (imageUrl: string, imageType: string) => void) => {
@@ -35,10 +38,10 @@ const BookmarkEditor = ({ value, onChange }: BookmarkEditorProps): JSX.Element =
         onChange={onEditorChange}
         initialValue={value || ' '}
         previewStyle="vertical"
-        height="500px"
+        height="28vh"
         initialEditType="markdown"
         hideModeSwitch={true}
-        usageStatistics={false}
+        useCommandShortcut={true}
         plugins={[colorSyntax]}
         hooks={{ addImageBlobHook: onUploadImage }}
       />

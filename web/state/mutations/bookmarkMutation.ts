@@ -26,7 +26,10 @@ export const useUpdateBookmark = () => {
     mutationFn: (modifiedBookmark: ModifiedBookmark) => {
       return updateBookmark(modifiedBookmark);
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['bookmarks'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookmark'] });
+      queryClient.invalidateQueries({ queryKey: ['bookmarks'] });
+    },
     onError: (error) => {
       const errorMessage = error?.message || '북마크 수정에 실패했습니다.';
       message.error(errorMessage);

@@ -1,12 +1,14 @@
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button, message, Modal, Space } from 'antd';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useDeleteBookmark } from '@/state/mutations/bookmarkMutation';
 
 export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: number }) {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const deleteBookmarkMutation = useDeleteBookmark();
 
@@ -21,10 +23,15 @@ export default function DeleteBookmarkBtn({ bookmarkId }: { bookmarkId: number }
   const deleteBookmark = () => {
     deleteBookmarkMutation.mutate(bookmarkId, {
       onSuccess: () => {
+        const pathName = window.location.pathname;
         queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
         queryClient.invalidateQueries({ queryKey: ['childFolders'] });
         message.success('북마크가 삭제되었습니다.');
         closeModal();
+
+        if (pathName !== '/bookmark') {
+          router.replace('/bookmark');
+        }
       },
     });
   };

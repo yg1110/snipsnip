@@ -12,6 +12,7 @@ export const centerHeaderStyle: React.CSSProperties = {
   width: '100%',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   backgroundColor: '#e0e0e0',
 };
 
