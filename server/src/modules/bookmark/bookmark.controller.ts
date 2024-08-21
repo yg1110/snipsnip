@@ -46,7 +46,7 @@ export class BookmarkController {
     if (!origin) {
       throw new InternalServerErrorException('유효하지 않은 URL입니다.');
     }
-    return this.bookmarkService.create({ ...createBookmarkDto, userId, url: origin });
+    return this.bookmarkService.create({ ...createBookmarkDto, userId });
   }
 
   @ApiOperation({
