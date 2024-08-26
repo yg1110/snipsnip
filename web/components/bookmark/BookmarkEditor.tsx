@@ -18,9 +18,9 @@ const BookmarkEditor = ({ value, onChange }: BookmarkEditorProps): JSX.Element =
 
   const onEditorChange = () => {
     const editorInstance = editorRef.current?.getInstance();
-    const markdown = editorInstance?.getMarkdown();
-    if (markdown) {
-      onChange?.(markdown);
+    const html = editorInstance?.getHTML();
+    if (html) {
+      onChange?.(html);
     }
   };
 
@@ -39,7 +39,7 @@ const BookmarkEditor = ({ value, onChange }: BookmarkEditorProps): JSX.Element =
         initialValue={value || ' '}
         previewStyle="vertical"
         height="28vh"
-        initialEditType="markdown"
+        initialEditType="wysiwyg"
         hideModeSwitch={true}
         useCommandShortcut={true}
         plugins={[colorSyntax]}

@@ -26,10 +26,15 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
   const [form] = useForm<EditBookmarkFormValue>();
 
   useEffect(() => {
+    const contetns = bookmark.contents
+      .replaceAll('<code>', '')
+      .replaceAll('</code>', '')
+      .replaceAll('<pre>', '<div>')
+      .replaceAll('</pre>', '</div>');
     form.setFieldValue('title', bookmark.title);
     form.setFieldValue('url', bookmark.metadata.url);
     form.setFieldValue('folderId', bookmark.folderId);
-    form.setFieldValue('contents', bookmark.contents);
+    form.setFieldValue('contents', contetns);
   }, [bookmark, form]);
 
   const openModal = () => {
