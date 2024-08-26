@@ -180,6 +180,19 @@ export class FolderService {
       if (!folder) {
         throw new NotFoundException('폴더를 찾을 수 없습니다.');
       }
+      if (!folder.parentFolderId) {
+        const subFolders = await this.folderRepository
+          .createQueryBuilder('folder')
+          .select()
+          .where('folder.userId = :userId', { userId })
+          .andWhere('folder.parentFolderId = :parentFolderId', { parentFolderId: id })
+          .andWhere('folder.deletedAt IS NULL')
+          .getMany();
+        subFolders.forEach(async (subFolder) => {
+          await this.bookmarkService.clearAllBookmarkWithId(subFolder.id);
+          await this.folderRepository.update(subFolder.id, { deletedAt: new Date() });
+        });
+      }
       await this.bookmarkService.clearAllBookmarkWithId(id);
       await this.folderRepository.update(id, { deletedAt: new Date() });
       return { status: 204, message: '폴더를 삭제했습니다.' };
