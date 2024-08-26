@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { Button, Form, Input, message, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import dynamic from 'next/dynamic';
@@ -19,6 +20,7 @@ type EditBookmarkFormValue = {
 };
 
 export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { data: allFolders } = useAllFolders();
@@ -59,6 +61,8 @@ export default function EditBookmarkBtn({ bookmark }: { bookmark: Bookmark }) {
       },
       {
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['rootFolders'] });
+          queryClient.invalidateQueries({ queryKey: ['childFolders'] });
           message.success('북마크가 정보가 수정되었습니다.');
           closeModal();
         },
