@@ -3,7 +3,6 @@
 ## 1. 소개 및 개요
 
 - 프로젝트 소개 : 북마크의 순간을 기록하는 서비스
-- 배포 URL : [🔗 SnipSnip](https://www.snipsnip.site)
 - Test ID / PW : tour / tour
 
 ## 2. 기술 및 개발 환경
